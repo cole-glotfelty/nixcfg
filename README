@@ -1,0 +1,114 @@
+== Cole Glotfelty's NixOS Configuration (V2) ==
+Currently under reconstruction. Issues below.
+
+Current Issues:
+[System]
+- Diagnose MPV freezing hyprland on a black screen for a few seconds when going
+full screen
+- Do I need the most up-to-date hyprland? would using the one from nixpkgs be 
+better at least for compilation?
+- verify auto garbage collection
+- figure out what's happening with the display manager/login manager. Why do I
+need to force lightDM/other DMs off?
+- look into why there are so many packages installed or listed in fastfetch
+- configure hypridle for sleeping, locking, and hybernation
+- configure gamemode?
+- look into gamescope and gamescopeSession on steam settings
+- agenix initalHash for password and ssh keys
+- configure ssh-keygen on system install
+- look into font manager
+- look into expanding the nix.settings.download-buffer for extra chunky rebuilds
+and updates
+- do I need blueman applet or nm-applet or can I just make waybar nice?
+- look into firejail
+- graphic driver and monitor specific settings for systems (for when I have
+balthazar and melchior again
+- setting up virtualization with QEMU and KVMs (kernal virtual machines)
+- nix-colors to flake and integrate with either mutagen or just a single custom
+color scheme to theme the whole system.
+- maybe try stylix again? didn't go too well the last time though
+- apple color emoji as system emoji font
+- Nimbus Sans as system sans serif font
+- Look into secure boot
+- fix boot/firmware bug: `[DMAR] - no firmware reserved region can cover this 
+PMRR`
+- Do I need other fonts? Apple system fonts?
+
+
+[Applications]
+- firefox/librewolf configuration (with profiles) forcing plugins and config
+declaritively
+- ungoogled chromium define extensions (NUR) or maybe brave?
+- thunderbird configuration
+- diagnose firefox random freezes
+- rely on more variables in the config for setting default apps
+- try zen browser
+- firefox bitwarden plugin opens a floating window not tiled
+- firefox picture in picture mdoe with floating pinned hyprland window pinned
+to active workspace
+- figure out if there's a way to by default prefix steam game execs with gamemode
+- research torrent clients
+- does it make sense to have a GUI file browser
+- plex media desktop app
+- xdg-open discord not working
+
+
+[CLI/Terminal]
+- zsh and terminal launch is slow, why?
+- alacritty font package?
+- git.nix config usiing more variables 
+- hardware accelrated mpv
+- ranger image previews in alacritty and kitty
+- maybe switch back to bash? or fix having to escape # when using nix shell
+- box.com cloud storage access
+- sshfs alias for halligan, mounting with agenix and nix
+- MPD or some other music player/system
+- local way to search nixos and home-manger options
+- look at other fetches (flowetch) or customize fastfetch
+- go down the doom emacs rabbit hole again
+- update tmux config to preserve the state of the session on reboot, inc 
+vim/nvim sessions
+
+
+[Desktop/Ricing/Hyprland]
+- Hyprlock config
+- hyprland monitor configuration per host only if hyprland option is enabled
+- GTK and QT color/icon themes set to the same theme based on wallpaper, or just
+some preexisting base 16 color scheme
+- nwg-loog for wlroots based GTK setting editing
+- wallpaper gitlab repo as a flake input to set wallpaper randomly?
+- wallpaper based themeing with mutagen and base16
+- support of multiple waller papers and hot wallpaper switching
+- figure out notification system: dunst or move to EWW or sway-nc
+    - notification sound for generic notifications
+    - dont show in fullscreen (youtube, mpv, games, etc)
+    - Do not disturb
+- waybar ricing and animation
+    - wlogout support
+    - look into EWW
+    - figure out how tray icons work and change them to be cleaner
+- pulsemixer/pavucontrol on waybar
+- fuzzel ricing
+- emoji picker with bemoji
+- terminal themeing (transparent?)
+- additional hyprland keybindings
+    - MOD + r {hjkl} to resize a window
+    - MOD + f to fullscreen an application
+- figure out how I want to do screen shotting: hyprshot, slurp | grim or 
+flameshot
+- research commented out packages in wayland.nix
+- windows remember where tehy were on reboot
+- drop down/scratchpad terminal different than whatever MOD + S is
+- lightmode darkmode terminal / change theme on keybind
+- floating terminal option
+- PewDiePie style "homescreen" for when no windows are open on a desktop
+- better file launching with zathura, maybe ranger/nnn or fuzzel?
+
+
+[NixVim]
+- autoclose parenthesis hell )()())() - test is ongoing with nvim-autopairs
+    - err: makes new pairs at the end of words
+- look into primagen's telescope git file search and search for all instances of
+a word
+- look into lsp_signature
+- seperate into standalone flake so I can do nix run etc...
