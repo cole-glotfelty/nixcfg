@@ -5,11 +5,9 @@ Current Issues:
 [System]
 - Diagnose MPV freezing hyprland on a black screen for a few seconds when going
 full screen
-- Do I need the most up-to-date hyprland? would using the one from nixpkgs be 
-better at least for compilation?
+    - Works on melchior seems to be a casper only issue? maybe graphics driver
+    related?
 - verify auto garbage collection
-- figure out what's happening with the display manager/login manager. Why do I
-need to force lightDM/other DMs off?
 - look into why there are so many packages installed or listed in fastfetch
 - configure hypridle for sleeping, locking, and hybernation
 - configure gamemode?
@@ -54,7 +52,6 @@ to active workspace
 
 
 [CLI/Terminal]
-- zsh and terminal launch is slow, why?
 - alacritty font package?
 - git.nix config usiing more variables 
 - hardware accelrated mpv

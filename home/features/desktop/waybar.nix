@@ -10,9 +10,9 @@ in {
     # TODO: Colors and CSS Themeing 
     programs.waybar = {
       enable = true;
-      package = (pkgs.waybar.overrideAttrs (oldAtts: {
-        mesonFlags = oldAtts.mesonFlags ++ [ "-Dexperimental=true" ];
-      }));
+      # package = (pkgs.waybar.overrideAttrs (oldAtts: {
+      #   mesonFlags = oldAtts.mesonFlags ++ [ "-Dexperimental=true" ];
+      # }));
       settings = {
         mainBar = {
           height = 30;

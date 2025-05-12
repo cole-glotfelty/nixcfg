@@ -5,6 +5,7 @@ let cfg = config.features.wm.wayland;
 in {
   options.features.wm.wayland.enable = mkEnableOption "enable wayland system level support";
 
+  # TODO: What is the module actually doing? Seems like nothing
   config = mkIf cfg.enable {
     # Enable touchpad support (enabled default in most desktopManager).
     services.libinput.enable = true;
@@ -13,7 +14,6 @@ in {
 
     # Configure xwayland
     services.xserver = {
-      enable = true;
       excludePackages = [ pkgs.xterm ];
       # Configure keymap in X11
       xkb = {

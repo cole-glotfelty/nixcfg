@@ -5,8 +5,8 @@
 { inputs, pkgs, ... }:
 
 let
-  pkgs-hyprland =
-    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  # pkgs-hyprland =
+  #   inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [ ./hardware-configuration.nix ./disk-config.nix ];
 
@@ -16,7 +16,7 @@ in {
 
   # Enable Networking
   networking.hostName = "melchior";
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8"]; # Cloudflare/Google
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ]; # Cloudflare/Google
   networking.networkmanager.enable = true;
 
   # Set your time zone.
@@ -70,8 +70,7 @@ in {
     enable = true;
     wlr.enable = true;
     configPackages =
-      [ pkgs-hyprland.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+      [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   };
   system.stateVersion = "24.11"; # Did you read the comment? DO NOT CHANGE
 }
-

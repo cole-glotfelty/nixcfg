@@ -192,6 +192,7 @@ in {
           "$mainMod SHIFT, Q, killactive"
           "$mainMod, D, exec, $menu"
           "$mainMod, M, exit"
+          "$mainMod, F, fullscreen"
           ''$mainMod SHIFT, S, exec, grim -l 0 -g "$(slurp)" - | wl-copy''
 
           # Moving focus with hjkl

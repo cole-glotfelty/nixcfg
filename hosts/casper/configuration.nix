@@ -5,8 +5,8 @@
 { inputs, pkgs, ... }:
 
 let
-  pkgs-hyprland =
-    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  # pkgs-hyprland =
+  #   inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [ ./hardware-configuration.nix ];
 
@@ -78,7 +78,7 @@ in {
     enable = true;
     wlr.enable = true;
     configPackages =
-      [ pkgs-hyprland.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+      [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   };
 
   # This value determines the NixOS release from which the default

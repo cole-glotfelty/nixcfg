@@ -3,8 +3,8 @@
 with lib;
 let
   cfg = config.features.wm.hyprland;
-  pkgs-hyprland =
-    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  # pkgs-hyprland =
+  #   inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   options.features.wm.hyprland.enable =
     mkEnableOption "enable hyprland system level settings";
@@ -24,7 +24,9 @@ in {
     # TODO: Reference Sascha Koenig's Setup
     # TODO: I shouldn't need this line, but I do
     # figure out what's making lightDM get installed (pam.d)
-    services.xserver.displayManager.lightdm.enable = mkForce false;
+    # services.xserver.displayManager.lightdm.enable = mkForce false;
+    # services.xserver.displayManager.lightdm.enable = false;
+    services.displayManager.ly.enable = true;
 
     # Setup Polkit
     environment.systemPackages = with pkgs; [ hyprpolkitagent ];
@@ -45,9 +47,9 @@ in {
 
     programs.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
       xwayland.enable = true;
-      portalPackage = pkgs-hyprland.xdg-desktop-portal-hyprland;
+      # portalPackage = pkgs-hyprland.xdg-desktop-portal-hyprland;
       # withUWSM = true;
     };
 
