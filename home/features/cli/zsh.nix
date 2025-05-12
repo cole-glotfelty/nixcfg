@@ -10,6 +10,7 @@ in {
       enable = true;
       enableZshIntegration = true;
       settings = {
+        cmd_duration.disabled = true;
         character = {
           success_symbol = "[>](bold green)";
           error_symbol = "[x](bold red)";
