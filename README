@@ -33,9 +33,6 @@ PMRR`
 
 
 [Applications]
-- firefox/librewolf configuration (with profiles) forcing plugins and config
-declaritively
-- ungoogled chromium define extensions (NUR) or maybe brave?
 - thunderbird configuration
 - diagnose firefox random freezes
 - rely on more variables in the config for setting default apps
@@ -44,10 +41,11 @@ declaritively
 - firefox picture in picture mdoe with floating pinned hyprland window pinned
 to active workspace
 - figure out if there's a way to by default prefix steam game execs with gamemode
-- research torrent clients
 - does it make sense to have a GUI file browser
-- plex media desktop app
-- xdg-open discord not working
+- firefox/librewolf configuration (with profiles) forcing plugins and config
+declaritively
+- ungoogled chromium define extensions (NUR) or maybe brave?
+- plex media desktop app, some graphical borkiness
 
 
 [CLI/Terminal]

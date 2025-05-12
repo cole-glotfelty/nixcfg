@@ -88,6 +88,12 @@
       url = "github:StevenBlack/hosts";
       flake = false;
     };
+
+    zen-browser = {
+      url = "github:MarceColl/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # apple-emoji = {
     #   url = "github:zhdsmy/apple-emoji";
     #   flake = false;

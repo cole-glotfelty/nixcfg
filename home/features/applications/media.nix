@@ -12,9 +12,10 @@ in {
       zathura #pdf viewer
       mpv #video player
       feh #image viewer
-      qbittorrent #torrent client # NOTE: TBD on this as a torrent client
+      transmission_4-gtk # torrent client
       cmus # music player # NOTE: potenitally replace with MPD and Client
       yt-dlp # webvideo downloading
+      # TODO: fix plex desktop being borked
       # plex-desktop # personal streamed media
       # plexamp
       # cider # apple music client (electron bleh)

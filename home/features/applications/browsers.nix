@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 with lib;
 let cfg = config.features.applications.browsers;
@@ -98,6 +98,7 @@ in {
 
     home.sessionVariables = { BROWSER = "librewolf"; };
 
-    # home.packages = with pkgs; [ ungoogled-chromium ];
+    home.packages = 
+      [ inputs.zen-browser.packages.x86_64-linux.default ];
   };
 }
