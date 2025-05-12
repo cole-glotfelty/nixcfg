@@ -3,22 +3,22 @@ Currently under reconstruction. Issues below.
 
 Current Issues:
 [System]
+- sops-nix initalHash for password and ssh keys
+- configure ssh-keygen on system install
+- graphic driver and monitor specific settings for systems (for when I have
+        balthazar and melchior again
+- configure hypridle for sleeping, locking, and hybernation
 - Diagnose MPV freezing hyprland on a black screen for a few seconds when going
 full screen
     - Works on melchior seems to be a casper only issue? maybe graphics driver
     related?
 - look into why there are so many packages installed or listed in fastfetch
-- configure hypridle for sleeping, locking, and hybernation
 - configure gamemode?
 - look into gamescope and gamescopeSession on steam settings
-- agenix initalHash for password and ssh keys
-- configure ssh-keygen on system install
 - look into expanding the nix.settings.download-buffer for extra chunky rebuilds
 and updates
 - do I need blueman applet or nm-applet or can I just make waybar nice?
 - look into firejail
-- graphic driver and monitor specific settings for systems (for when I have
-balthazar and melchior again
 - setting up virtualization with QEMU and KVMs (kernal virtual machines)
 - nix-colors to flake and integrate with either mutagen or just a single custom
 color scheme to theme the whole system.
@@ -33,9 +33,8 @@ PMRR`
 
 [Applications]
 - thunderbird configuration
-- diagnose firefox random freezes
+- diagnose firefox random freezes - resources?
 - rely on more variables in the config for setting default apps
-- try zen browser
 - firefox bitwarden plugin opens a floating window not tiled
 - firefox picture in picture mdoe with floating pinned hyprland window pinned
 to active workspace
@@ -49,23 +48,27 @@ declaritively
 
 [CLI/Terminal]
 - alacritty font package?
-- git.nix config usiing more variables 
-- hardware accelrated mpv
 - ranger image previews in alacritty and kitty
-- maybe switch back to bash? or fix having to escape # when using nix shell
+- git.nix config using more variables 
+- hardware accelrated mpv
 - box.com cloud storage access
 - sshfs alias for halligan, mounting with agenix and nix
+- maybe switch back to bash? or fix having to escape # when using nix shell
 - MPD or some other music player/system
 - local way to search nixos and home-manger options
 - look at other fetches (flowetch) or customize fastfetch
-- go down the doom emacs rabbit hole again
 - update tmux config to preserve the state of the session on reboot, inc 
-vim/nvim sessions
+vim/nvim sessions, but also update the environment
+- go down the doom emacs rabbit hole again
 
 
 [Desktop/Ricing/Hyprland]
-- Hyprlock config
+- additional hyprland keybindings
+- MOD + r {hjkl} to resize a window
+- research commented out packages in wayland.nix
 - hyprland monitor configuration per host only if hyprland option is enabled
+- windows remember where tehy were on reboot
+- Hyprlock config
 - GTK and QT color/icon themes set to the same theme based on wallpaper, or just
 some preexisting base 16 color scheme
 - nwg-loog for wlroots based GTK setting editing
@@ -84,13 +87,8 @@ some preexisting base 16 color scheme
 - fuzzel ricing
 - emoji picker with bemoji
 - terminal themeing (transparent?)
-- additional hyprland keybindings
-    - MOD + r {hjkl} to resize a window
-    - MOD + f to fullscreen an application
 - figure out how I want to do screen shotting: hyprshot, slurp | grim or 
 flameshot
-- research commented out packages in wayland.nix
-- windows remember where tehy were on reboot
 - drop down/scratchpad terminal different than whatever MOD + S is
 - lightmode darkmode terminal / change theme on keybind
 - floating terminal option
