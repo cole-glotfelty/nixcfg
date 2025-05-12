@@ -20,22 +20,4 @@
       config.allowUnfree = true;
     };
   };
-
-  dwarf-fortress = final: prev: {
-    dwarf-fortress-packages.dwarf-fortress-full =
-      prev.dwarf-fortress-packages.dwarf-fortress-full.overrideAttrs
-      (oldAttrs: rec {
-        installPhase = ''
-          # Create directories for tileset and initialization files
-          mkdir -p $out/share/df_linux/data/art
-          cp /path/to/your/wanderlust.png $out/share/df_linux/data/art/Wanderlust.png
-          mkdir -p $out/share/df_linux/data/init
-
-          # Modify init file to use Wanderlust tileset
-          sed -i 's/FONT:curses_640x300.png/FONT:Wanderlust.png/' $out/share/df_linux/data/init/init_default.txt
-          sed -i 's/FULLFONT:curses_640x300.png/FULLFONT:Wanderlust.png/' $out/share/df_linux/data/init/init_default.txt
-          sed -i 's/BASIC_FONT:curses_640x300.png/BASIC_FONT:Wanderlust.png/' $out/share/df_linux/data/init/init_default.txt
-        '';
-      });
-  };
 }

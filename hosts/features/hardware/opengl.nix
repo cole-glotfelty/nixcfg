@@ -7,9 +7,14 @@ in {
     mkEnableOption "enable opengl";
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ ffmpeg-full libva vulkan-loader ];
-
-    hardware.nvidia.modesetting.enable = true;
+# TODO: Lookinto these are they needed or already installed?
+    environment.systemPackages = with pkgs; [ 
+		ffmpeg-full
+		vulkan-loader 
+		libvdpau-va-gl
+		libva-vdpau-driver
+		libva
+	];
 
     hardware.graphics = {
       enable = true;

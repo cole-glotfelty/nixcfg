@@ -8,5 +8,6 @@
     ./opengl.nix
     ./printing.nix
     ./udisks2.nix
+	./nvidia.nix
   ];
 }

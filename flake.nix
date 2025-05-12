@@ -1,6 +1,6 @@
 {
   description = "System Configuration of Cole Glotfelty (V2)";
-  # Portions adapted from Sascha Koenig
+  # Portions adapted from Sascha Koenig && Jbwar22
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, ... }@inputs:
     let
@@ -24,6 +24,13 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/casper ];
         };
+        melchior = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ 
+			  ./hosts/melchior 
+			  inputs.disko.nixosModules.disko
+		  ];
+        };
       };
       darwinConfigurations = {
         "alpha-1-5" = nix-darwin.lib.darwinSystem {
@@ -37,6 +44,11 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/pharo/casper.nix ];
         };
+        "pharo@melchior" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ ./home/pharo/melchior.nix ];
+        };
       };
     };
 
@@ -48,6 +60,11 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+	disko = {
+		url = "github:nix-community/disko";
+		inputs.nixpkgs.follows = "nixpkgs";
+	};
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
