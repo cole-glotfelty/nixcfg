@@ -9,7 +9,7 @@ in {
     xdg.desktopEntries.discord = {
       name = "Discord";
       exec =
-        "discord --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime";
+        "discord --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime -- %u";
       icon = "discord";
       type = "Application";
       terminal = false;

@@ -7,7 +7,6 @@ Current Issues:
 full screen
     - Works on melchior seems to be a casper only issue? maybe graphics driver
     related?
-- verify auto garbage collection
 - look into why there are so many packages installed or listed in fastfetch
 - configure hypridle for sleeping, locking, and hybernation
 - configure gamemode?

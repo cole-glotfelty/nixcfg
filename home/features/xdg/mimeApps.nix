@@ -19,6 +19,7 @@ in {
           "application/pdf" = [ "zathura.desktop" ];
           "x-scheme-handler/https" = [ "librewolf.desktop" ]; # Links
           "x-scheme-handler/http" = [ "librewolf.desktop" ]; # Links
+          "x-scheme-handler/discord" = [ "discord.desktop" ];
           #"x-scheme-handler/mailto" = ["firefox.desktop"]; # Email
         };
       };

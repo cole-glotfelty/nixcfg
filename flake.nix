@@ -16,7 +16,8 @@
     in {
       packages =
         # forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-        forAllSystems (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; });
+        forAllSystems
+        (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; });
       overlays = import ./overlays { inherit inputs; };
 
       nixosConfigurations = {
@@ -26,10 +27,7 @@
         };
         melchior = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [ 
-			  ./hosts/melchior 
-			  inputs.disko.nixosModules.disko
-		  ];
+          modules = [ ./hosts/melchior inputs.disko.nixosModules.disko ];
         };
       };
       darwinConfigurations = {
@@ -61,10 +59,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-	disko = {
-		url = "github:nix-community/disko";
-		inputs.nixpkgs.follows = "nixpkgs";
-	};
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
