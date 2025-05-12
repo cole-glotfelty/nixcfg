@@ -1,7 +1,12 @@
 { lib, inputs, outputs, pkgs, ... }:
 
 {
-  imports = [ ./users inputs.home-manager.nixosModules.home-manager ];
+  imports = [
+    ./users
+    inputs.home-manager.nixosModules.home-manager
+    inputs.disko.nixosModules.disko
+    inputs.sops-nix.nixosModules.sops
+  ];
 
   home-manager = {
     useUserPackages = true;

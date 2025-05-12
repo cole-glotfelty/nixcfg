@@ -13,7 +13,6 @@ full screen
 - look into gamescope and gamescopeSession on steam settings
 - agenix initalHash for password and ssh keys
 - configure ssh-keygen on system install
-- look into font manager
 - look into expanding the nix.settings.download-buffer for extra chunky rebuilds
 and updates
 - do I need blueman applet or nm-applet or can I just make waybar nice?

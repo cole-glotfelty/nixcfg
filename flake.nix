@@ -27,7 +27,7 @@
         };
         melchior = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/melchior inputs.disko.nixosModules.disko ];
+          modules = [ ./hosts/melchior ];
         };
       };
       darwinConfigurations = {
@@ -91,6 +91,11 @@
 
     zen-browser = {
       url = "github:MarceColl/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
