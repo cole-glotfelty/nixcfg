@@ -101,5 +101,6 @@ flameshot
     - err: makes new pairs at the end of words
 - look into primagen's telescope git file search and search for all instances of
 a word
+- look into tab to next part of a completion
 - look into lsp_signature
 - seperate into standalone flake so I can do nix run etc...

@@ -255,7 +255,8 @@ in {
         setopt HIST_REDUCE_BLANKS
 
         # Color man pages
-        export MANPAGER="less -R -use-color -Dd+r -Du+b"
+        export GROFF_NO_SGR=0
+        export MANPAGER="less -R --use-color -Dd+r -Du+b"
       '';
 
       history = {

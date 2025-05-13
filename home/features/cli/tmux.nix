@@ -7,8 +7,9 @@ in {
   config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
-      keyMode = "vi";
       mouse = true;
+      clock24 = true;
+      keyMode = "vi";
       prefix = "C-a";
       baseIndex = 1;
       terminal = "screen-256color";
