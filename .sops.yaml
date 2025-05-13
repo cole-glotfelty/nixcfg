@@ -1,9 +1,14 @@
 # .sops.yaml
 
 keys:
-  - &primary age1yhgr35tuq8uqgjhpz2cztyrec5t7kzgjz5qf6smn5p0eeqlnmetq99z09l
+  - &users:
+    - &pharo age1dz7636s49gdvz4lnpqz2mwlgv8wy34vz6fhkgl3fql5qs040zyjs4eugpm
+  - &hosts:
+    - &melchior age1ts27wn7fayfz2wsxj853srk0s480tn6dx4qudj8du2hrgg03aqxqd9fe4c
+
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
+  - path_regex: secrets.yaml$
     key_groups:
     - age:
-      - *primary
+      - *pharo
+      - *melchior

@@ -26,6 +26,7 @@
       blocklist.enable = true;
       doas.enable = false; # This breaks devenv+standalone home-manager
       polkit.enable = true;
+      sops.enable = true;
     };
 
     apps = {

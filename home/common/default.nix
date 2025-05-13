@@ -1,7 +1,7 @@
-{ config, lib, outputs, pkgs, ... }:
+{ inputs, config, lib, outputs, pkgs, ... }:
 
 {
-  imports = [ ./options.nix ];
+  imports = [ ./options.nix inputs.sops-nix.homeManagerModules.sops ];
 
   nixpkgs = {
     # You can add overlays here
