@@ -15,7 +15,7 @@
     hardware = {
       bluetooth.enable = true;
       zenKernel.enable = true;
-	  nvidia.enable = true;
+      nvidia.enable = true;
       QMKKeyboard.enable = true;
       opengl.enable = true;
       udisks2.enable = true;
@@ -41,6 +41,7 @@
       fonts.enable = true;
       dbus.enable = true;
       fcitx5.enable = true;
+      plymouth.enable = false; # Fix this so that from the boot loader it just gives loading screen
     };
   };
 }

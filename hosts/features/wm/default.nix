@@ -8,5 +8,6 @@
     ./wayland.nix
     ./hyprland.nix
     ./fcitx5.nix
+    ./plymouth.nix
   ];
 }

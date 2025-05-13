@@ -4,6 +4,7 @@ Currently under reconstruction. Issues below.
 Current Issues:
 [System]
 - sops-nix initalHash for password and ssh keys
+    - key generation on install
 - configure ssh-keygen on system install
 - graphic driver and monitor specific settings for systems (for when I have
         balthazar and melchior again
@@ -22,6 +23,7 @@ and updates
 - setting up virtualization with QEMU and KVMs (kernal virtual machines)
 - nix-colors to flake and integrate with either mutagen or just a single custom
 color scheme to theme the whole system.
+- plymouth / GUI/TUI for unencrypting luks vol
 - maybe try stylix again? didn't go too well the last time though
 - apple color emoji as system emoji font
 - Nimbus Sans as system sans serif font
@@ -47,12 +49,11 @@ declaritively
 
 
 [CLI/Terminal]
-- ranger image previews in alacritty and kitty
+- ranger image previews in alacritty and kitty - maybe change to yazi?
+- look at alacritty replacement? ghostty or wezterm?
 - git.nix config using more variables 
-- hardware accelrated mpv
 - box.com cloud storage access
 - sshfs alias for halligan, mounting with agenix and nix
-- maybe switch back to bash? or fix having to escape # when using nix shell
 - MPD or some other music player/system
 - local way to search nixos and home-manger options
 - look at other fetches (flowetch) or customize fastfetch

@@ -56,7 +56,7 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ vim git nixd just ];
+  environment.systemPackages = with pkgs; [ vim git nixd just sops ];
 
   services.openssh = {
     enable = true;

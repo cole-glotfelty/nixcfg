@@ -241,6 +241,7 @@ in {
         eval "$(zoxide init zsh --cmd cd)"
 
         # Some opts taken from zsh/supercharge
+        unsetopt BEEP
         setopt GLOB_DOTS
         setopt MENU_COMPLETE
 
