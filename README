@@ -47,7 +47,6 @@ declaritively
 
 
 [CLI/Terminal]
-- alacritty font package?
 - ranger image previews in alacritty and kitty
 - git.nix config using more variables 
 - hardware accelrated mpv

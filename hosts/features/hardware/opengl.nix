@@ -3,18 +3,20 @@
 with lib;
 let cfg = config.features.hardware.opengl;
 in {
-  options.features.hardware.opengl.enable =
-    mkEnableOption "enable opengl";
+  options.features.hardware.opengl.enable = mkEnableOption "enable opengl";
 
   config = mkIf cfg.enable {
-# TODO: Lookinto these are they needed or already installed?
-    environment.systemPackages = with pkgs; [ 
-		ffmpeg-full
-		vulkan-loader 
-		libvdpau-va-gl
-		libva-vdpau-driver
-		libva
-	];
+    # TODO: Lookinto these are they needed or already installed?
+    environment.systemPackages = with pkgs; [
+      ffmpeg-full
+      vulkan-loader
+      vulkan-tools
+      libvdpau-va-gl
+      libva-vdpau-driver
+      libva-utils
+      vdpauinfo
+      libva
+    ];
 
     hardware.graphics = {
       enable = true;

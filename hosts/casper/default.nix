@@ -52,5 +52,6 @@
     intel-compute-runtime
     intel-media-driver
     intel-vaapi-driver
+    mesa
   ];
 }
