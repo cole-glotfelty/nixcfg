@@ -5,6 +5,7 @@ keys:
     - &pharo age1dz7636s49gdvz4lnpqz2mwlgv8wy34vz6fhkgl3fql5qs040zyjs4eugpm
   - &hosts:
     - &melchior age1ts27wn7fayfz2wsxj853srk0s480tn6dx4qudj8du2hrgg03aqxqd9fe4c
+    - &casper age1crrg9qeefvuhf4srllnhn6ycgsyj6hdpldc387as3p08ms2wvy6snyyvuz
 
 creation_rules:
   - path_regex: secrets.yaml$
@@ -12,3 +13,4 @@ creation_rules:
     - age:
       - *pharo
       - *melchior
+      - *casper

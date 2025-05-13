@@ -25,6 +25,7 @@
       blocklist.enable = true;
       doas.enable = false;
       polkit.enable = true;
+      sops.enable = true;
     };
 
     apps = {
