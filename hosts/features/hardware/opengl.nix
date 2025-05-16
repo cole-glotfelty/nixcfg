@@ -11,6 +11,9 @@ in {
       ffmpeg-full
       vulkan-loader
       vulkan-tools
+    ];
+
+    hardware.graphics.extraPackages = with pkgs; [
       libvdpau-va-gl
       libva-vdpau-driver
       libva-utils

@@ -3,7 +3,7 @@ Currently under reconstruction. Issues below.
 
 Current Issues:
 [System]
-- sops-nix initalHash for password and ssh keys
+- sops-nix ssh keys
     - key generation on install
 - configure ssh-keygen on system install
 - graphic driver and monitor specific settings for systems (for when I have

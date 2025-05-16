@@ -9,5 +9,6 @@
     ./printing.nix
     ./udisks2.nix
 	./nvidia.nix
+    ./intel.nix
   ];
 }

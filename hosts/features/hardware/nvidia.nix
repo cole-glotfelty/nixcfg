@@ -17,7 +17,7 @@ in {
     # (example) https://code.m3tam3re.com/m3tam3re/nixos-config/src/commit/39e11879486183522a9ecb5cdb44d7c96db508ee/home/m3tam3re/m3-kratos.nix
 	# For nvidia GPU + intel CPU w/ iGPU
 	hardware.graphics.extraPackages = with pkgs; [
-		intel-media-driver
+		# intel-media-driver
 		nvidia-vaapi-driver
 	];
 
