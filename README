@@ -21,7 +21,7 @@ PMRR`
 and updates - Watch this
 
 [System/Short Term]
-- configure hypridle for sleeping, locking, and hybernation [hyprlock]
+o configure hypridle for sleeping, locking, and hybernation [hyprlock]
 - nix-colors to flake and integrate with either mutagen or just a single custom
 color scheme to theme the whole system.
 - setting up virtualization with QEMU and KVMs (kernal virtual machines)

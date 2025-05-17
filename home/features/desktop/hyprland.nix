@@ -30,12 +30,31 @@ in {
       # };
     };
 
-    # TODO: Configure Hypridle
     services.hypridle = {
       enable = true;
-      # settings = {
-      #
-      # };
+      settings = {
+        general = {
+          lock_cmd =
+            "pidof hyprlock || hyprlock"; # avoid starting multiple hyprlock instances.
+          before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
+          after_sleep_cmd =
+            "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
+        };
+        listener = [
+          {
+            timeout = 600; # in seconds.
+            on-timeout = "loginctl lock-session";
+          }
+          {
+            timeout = 1800; # in seconds.
+            on-timeout = "systemctl suspend";
+          }
+          {
+            timeout = 3600; # in seconds.
+            on-timeout = "systemctl hibernate";
+          }
+        ];
+      };
     };
 
     wayland.windowManager.hyprland = {
@@ -46,7 +65,7 @@ in {
       portalPackage = null;
       systemd.variables = [ "--all" ];
       settings = {
-        # Settings Programs to Use
+        # Setting Programs to Use
         "$terminal" = "kitty";
         "$menu" = "fuzzel";
 
@@ -67,6 +86,7 @@ in {
           "waybar &"
           "nm-applet &"
           "fcitx5 &"
+          "hypridle &"
         ];
 
         ## INPUTS ##
@@ -318,14 +338,14 @@ in {
 
         # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
         # bind = $mainMod, V, togglefloating,
-        # Figure out what these do
+        # TODO: Figure out what these do
         # bind = $mainMod, P, pseudo, # dwindle
         # bind = $mainMod, J, togglesplit, # dwindle
 
 
         # Move/resize windows with mainMod + LMB/RMB and dragging
         bindm = $mainMod, mouse:272, movewindow
-        # bindm = $mainMod, mouse:273, resizewindow
+        bindm = $mainMod, mouse:273, resizewindow
       '';
     };
   };
