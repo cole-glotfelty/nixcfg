@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, ... }:
 
 with lib;
-let cfg = config.features.security.sops;
+let sops = config.features.security.sops;
 in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.pharo = mkMerge [
@@ -21,12 +21,13 @@ in {
         "qemu-libvirtd"
         "libvirtd"
         "flatpak"
+        "gamemode"
       ];
       packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
     }
 
     # Conditionally set password if sops is setup
-    (mkIf cfg.enable {
+    (mkIf sops.enable {
       hashedPasswordFile = config.sops.secrets.pharo-passwd.path;
     })
   ];

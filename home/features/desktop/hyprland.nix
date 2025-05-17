@@ -11,8 +11,6 @@ in {
       networkmanagerapplet
       swww
       hyprpicker
-      # TODO: Configure Hypridle
-      # TODO: Add hyprlock config and use it here
       playerctl
     ];
 
@@ -22,6 +20,22 @@ in {
       name = "Bibata-Modern-Classic";
       size = 24;
       gtk.enable = true;
+    };
+
+    # TODO: Add hyprlock config and use it here
+    programs.hyprlock = {
+      enable = true;
+      # settings = {
+      #
+      # };
+    };
+
+    # TODO: Configure Hypridle
+    services.hypridle = {
+      enable = true;
+      # settings = {
+      #
+      # };
     };
 
     wayland.windowManager.hyprland = {
@@ -191,6 +205,7 @@ in {
           "$mainMod, RETURN, exec, $terminal"
           "$mainMod SHIFT, Q, killactive"
           "$mainMod, D, exec, $menu"
+          "$mainMod, L, exec, hyprlock"
           "$mainMod, M, exit"
           "$mainMod, F, fullscreen"
           ''$mainMod SHIFT, S, exec, grim -l 0 -g "$(slurp)" - | wl-copy''

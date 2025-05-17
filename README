@@ -2,39 +2,36 @@
 Currently under reconstruction. Issues below.
 
 Current Issues:
-[System]
+[System Bugs/Long Term]
 - sops-nix ssh keys
-    - key generation on install
-- configure ssh-keygen on system install
-- graphic driver and monitor specific settings for systems (for when I have
-        balthazar and melchior again
-- configure hypridle for sleeping, locking, and hybernation
+    - key generation and addition on install 
 - Diagnose MPV freezing hyprland on a black screen for a few seconds when going
 full screen
     - Works on melchior seems to be a casper only issue? maybe graphics driver
     related?
 - look into why there are so many packages installed or listed in fastfetch
-- configure gamemode?
-- look into gamescope and gamescopeSession on steam settings
-- look into expanding the nix.settings.download-buffer for extra chunky rebuilds
-and updates
-- do I need blueman applet or nm-applet or can I just make waybar nice?
-- look into firejail
-- setting up virtualization with QEMU and KVMs (kernal virtual machines)
-- nix-colors to flake and integrate with either mutagen or just a single custom
-color scheme to theme the whole system.
-- plymouth / GUI/TUI for unencrypting luks vol
-- maybe try stylix again? didn't go too well the last time though
-- apple color emoji as system emoji font
-- Nimbus Sans as system sans serif font
 - Look into secure boot
 - fix boot/firmware bug: `[DMAR] - no firmware reserved region can cover this 
 PMRR`
 - Do I need other fonts? Apple system fonts?
+- apple color emoji as system emoji font
+- Nimbus Sans as system sans serif font
+- maybe try stylix again? didn't go too well the last time though
+- look into expanding the nix.settings.download-buffer for extra chunky rebuilds
+and updates - Watch this
+
+[System/Short Term]
+- configure hypridle for sleeping, locking, and hybernation [hyprlock]
+- nix-colors to flake and integrate with either mutagen or just a single custom
+color scheme to theme the whole system.
+- setting up virtualization with QEMU and KVMs (kernal virtual machines)
+- look into firejail
+- note about gamemode/gamescope - needs to be prefixed in steam or before game command 
 
 
 [Applications]
 - thunderbird configuration
+- look into replaceing chrome w brave
 - diagnose firefox random freezes - resources?
 - rely on more variables in the config for setting default apps
 - firefox bitwarden plugin opens a floating window not tiled
@@ -50,25 +47,27 @@ declaritively
 
 [CLI/Terminal]
 - ranger image previews in alacritty and kitty - maybe change to yazi?
+    - maybe there's a better way to preview images inside the terminal?
 - look at alacritty replacement? ghostty or wezterm?
 - git.nix config using more variables 
 - box.com cloud storage access
-- sshfs alias for halligan, mounting with agenix and nix
+- sshfs alias for halligan, mounting with sops-nix and nix
 - MPD or some other music player/system
 - local way to search nixos and home-manger options
-- look at other fetches (flowetch) or customize fastfetch
 - update tmux config to preserve the state of the session on reboot, inc 
 vim/nvim sessions, but also update the environment
+- tmux bar on top instead of bottom? (https://github.com/vimichael/terminal-setup)
+- look at other fetches (flowetch) or customize fastfetch
 - go down the doom emacs rabbit hole again
 
 
 [Desktop/Ricing/Hyprland]
 - additional hyprland keybindings
-- MOD + r {hjkl} to resize a window
+    - MOD + r {hjkl} to resize a window
 - research commented out packages in wayland.nix
 - hyprland monitor configuration per host only if hyprland option is enabled
-- windows remember where tehy were on reboot
-- Hyprlock config
+- windows remember where tehy were on reboot - potentially have to use UWSM?
+- Hyprlock config - takes a sec when launching and dekstop items disapear before reappearing
 - GTK and QT color/icon themes set to the same theme based on wallpaper, or just
 some preexisting base 16 color scheme
 - nwg-loog for wlroots based GTK setting editing
@@ -83,10 +82,11 @@ some preexisting base 16 color scheme
     - wlogout support
     - look into EWW
     - figure out how tray icons work and change them to be cleaner
+    - do I need blueman applet or nm-applet or can I just make waybar nice?
 - pulsemixer/pavucontrol on waybar
 - fuzzel ricing
 - emoji picker with bemoji
-- terminal themeing (transparent?)
+- terminal themeing (transparent? [toggleable?])
 - figure out how I want to do screen shotting: hyprshot, slurp | grim or 
 flameshot
 - drop down/scratchpad terminal different than whatever MOD + S is
@@ -94,6 +94,7 @@ flameshot
 - floating terminal option
 - PewDiePie style "homescreen" for when no windows are open on a desktop
 - better file launching with zathura, maybe ranger/nnn or fuzzel?
+- plymouth / GUI/TUI for unencrypting luks vol
 
 
 [NixVim]
@@ -101,6 +102,8 @@ flameshot
     - err: makes new pairs at the end of words
 - look into primagen's telescope git file search and search for all instances of
 a word
+- Use Harpoon with <leader>1,2,3,4,5 (in addition to "tabs" for now eventually see what works)
 - look into tab to next part of a completion
 - look into lsp_signature
+- look into lsp-format
 - seperate into standalone flake so I can do nix run etc...

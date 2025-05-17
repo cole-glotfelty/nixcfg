@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, config, ... }:
 
 {
   imports = [
@@ -66,8 +66,7 @@
     };
   };
 
-  # TODO: make this dependent on hyprland option being enabled
-  wayland.windowManager.hyprland = {
+  wayland.windowManager.hyprland = lib.mkIf config.features.desktop.hyprland.enable {
     settings = { monitor = [ "HDMI-A-1,1920x1080@60,auto,auto" ]; };
   };
 }

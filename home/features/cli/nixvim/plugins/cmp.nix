@@ -46,6 +46,7 @@ in {
       };
       none-ls = {
         enable = true;
+        # TODO: Set this up
         # enableLspFormat = true;
         sources = {
           formatting = {
@@ -54,6 +55,7 @@ in {
             markdownlint.enable = true;
             shellharden.enable = true;
             black.enable = true;
+            google_java_format.enable = true;
           };
         };
       };
