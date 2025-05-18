@@ -11,6 +11,7 @@ in {
     home.packages = with pkgs; [
       grim
       slurp
+      qt5.qtwayland
       qt6.qtwayland
       # waypipe
       # wf-recorder
