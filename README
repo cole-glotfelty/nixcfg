@@ -21,7 +21,6 @@ PMRR`
 and updates - Watch this
 
 [System/Short Term]
-o configure hypridle for sleeping, locking, and hybernation [hyprlock]
 - nix-colors to flake and integrate with either mutagen or just a single custom
 color scheme to theme the whole system.
 - setting up virtualization with QEMU and KVMs (kernal virtual machines)
@@ -30,15 +29,13 @@ color scheme to theme the whole system.
 
 
 [Applications]
-- thunderbird configuration
-- look into replaceing chrome w brave
-- diagnose firefox random freezes - resources?
-- rely on more variables in the config for setting default apps
 - firefox bitwarden plugin opens a floating window not tiled
-- firefox picture in picture mdoe with floating pinned hyprland window pinned
+- firefox picture in picture mode with floating pinned hyprland window pinned
 to active workspace
-- figure out if there's a way to by default prefix steam game execs with gamemode
-- does it make sense to have a GUI file browser
+- rely on more variables in the config for setting default apps - more mkDefault on modules?
+- thunderbird configuration
+- look into replaceing chrome w/ brave
+- diagnose firefox random freezes - resources?
 - firefox/librewolf configuration (with profiles) forcing plugins and config
 declaritively
 - ungoogled chromium define extensions (NUR) or maybe brave?
@@ -46,12 +43,11 @@ declaritively
 
 
 [CLI/Terminal]
+- sshfs alias for halligan, mounting with sops-nix and nix
+- box.com cloud storage access
 - ranger image previews in alacritty and kitty - maybe change to yazi?
     - maybe there's a better way to preview images inside the terminal?
-- look at alacritty replacement? ghostty or wezterm?
 - git.nix config using more variables 
-- box.com cloud storage access
-- sshfs alias for halligan, mounting with sops-nix and nix
 - MPD or some other music player/system
 - local way to search nixos and home-manger options
 - update tmux config to preserve the state of the session on reboot, inc 
@@ -62,8 +58,8 @@ vim/nvim sessions, but also update the environment
 
 
 [Desktop/Ricing/Hyprland]
-- additional hyprland keybindings
-    - MOD + r {hjkl} to resize a window
+- additional hyprland keybindings 
+    - MOD + r {hjkl} to resize a window (currently MOD + RMB)
 - research commented out packages in wayland.nix
 - hyprland monitor configuration per host only if hyprland option is enabled
 - windows remember where tehy were on reboot - potentially have to use UWSM?
@@ -79,7 +75,7 @@ some preexisting base 16 color scheme
     - dont show in fullscreen (youtube, mpv, games, etc)
     - Do not disturb
 - waybar ricing and animation
-    - wlogout support
+    - wlogout support - ricing the menu, MOD+SHIFT+L works don't need a mouse button
     - look into EWW
     - figure out how tray icons work and change them to be cleaner
     - do I need blueman applet or nm-applet or can I just make waybar nice?

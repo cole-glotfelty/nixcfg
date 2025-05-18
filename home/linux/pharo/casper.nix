@@ -62,7 +62,8 @@
       productivity.enable = true;
       games.enable = true;
       kitty.enable = true;
-      alacritty.enable = true;
+      ghostty.enable = true;
+      alacritty.enable = false;
     };
   };
 

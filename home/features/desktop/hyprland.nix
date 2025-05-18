@@ -226,6 +226,7 @@ in {
           "$mainMod SHIFT, Q, killactive"
           "$mainMod, D, exec, $menu"
           "$mainMod, L, exec, hyprlock"
+          "$mainMod SHIFT, L, exec, wlogout"
           "$mainMod, M, exit"
           "$mainMod, F, fullscreen"
           ''$mainMod SHIFT, S, exec, grim -l 0 -g "$(slurp)" - | wl-copy''

@@ -14,6 +14,14 @@ in {
 
       # Video Calling
       zoom-us
+
+      # Email
+      thunderbird
     ];
+
+    # Email
+    # programs.thunderbird = {
+    #   enable = true;
+    # };
   };
 }

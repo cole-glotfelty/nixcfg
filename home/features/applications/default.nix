@@ -10,6 +10,7 @@
     ./games.nix
     ./electron.nix
     ./productivity.nix
+    ./ghostty.nix
   ];
 
   home.packages = with pkgs;
