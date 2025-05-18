@@ -61,6 +61,8 @@ in {
           rust_analyzer.installRustc = true;
           # YAML
           yamlls.enable = true;
+          # Java
+          java_language_server.enable = true;
         };
 
         keymaps.lspBuf = {

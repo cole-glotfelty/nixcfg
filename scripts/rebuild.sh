@@ -7,7 +7,7 @@ set -e
 if [[ $OSTYPE == "linux-gnu" ]]; then
     pushd ~/Projects/nixcfg
 elif [[ $OSTYPE == "darwin"* ]]; then
-    pushd ~/Git/nixos-config
+    pushd ~/Git/nixcfg
 fi
 
 # Early return if no changes were detected (thanks @singiamtel!)

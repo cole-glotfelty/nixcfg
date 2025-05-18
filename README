@@ -82,6 +82,9 @@ some preexisting base 16 color scheme
 - pulsemixer/pavucontrol on waybar
 - fuzzel ricing
 - emoji picker with bemoji
+- Figure out if foliate can do the thing that iBooks does where it replaces 
+white in black and white images with like the background of the book (also see
+if I can get the similar sepia color)
 - terminal themeing (transparent? [toggleable?])
 - figure out how I want to do screen shotting: hyprshot, slurp | grim or 
 flameshot
@@ -94,6 +97,8 @@ flameshot
 
 
 [NixVim]
+- Java LSP doesn't seem to be doing proper space indendation
+    - see if there's a way to get completions from classes in other files in scope
 - autoclose parenthesis hell )()())() - test is ongoing with nvim-autopairs
     - err: makes new pairs at the end of words
 - look into primagen's telescope git file search and search for all instances of
