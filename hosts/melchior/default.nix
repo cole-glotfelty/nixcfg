@@ -1,5 +1,5 @@
 # HOST: Melchior
-{ lib, pkgs, ... }:
+{ lib, ... }:
 
 {
   imports = [
@@ -15,11 +15,11 @@
     hardware = {
       bluetooth.enable = true;
       zenKernel.enable = true;
-      nvidia.enable = true;
       QMKKeyboard.enable = true;
       opengl.enable = true;
       udisks2.enable = true;
       printing.enable = true;
+      nvidia.enable = true;
     };
 
     security = {

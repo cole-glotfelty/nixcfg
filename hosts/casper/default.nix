@@ -45,5 +45,4 @@
       plymouth.enable = false; # Fix this so that from the boot loader it just gives loading screen
     };
   };
-
 }
