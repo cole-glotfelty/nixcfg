@@ -48,7 +48,7 @@ declaritively
 - ranger image previews in alacritty and kitty - maybe change to yazi?
     - maybe there's a better way to preview images inside the terminal?
 - git.nix config using more variables 
-- MPD or some other music player/system
+- MPD or some other music player/system - rmpc (MPD client)
 - local way to search nixos and home-manger options
 - update tmux config to preserve the state of the session on reboot, inc 
 vim/nvim sessions, but also update the environment
