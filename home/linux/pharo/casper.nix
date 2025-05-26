@@ -68,6 +68,6 @@
   };
 
   wayland.windowManager.hyprland = lib.mkIf config.features.desktop.hyprland.enable {
-    settings = { monitor = [ "HDMI-A-1,1920x1080@60,auto,auto" ]; };
+    settings = { monitor = [ "HDMI-A-1,1920x1080@75,auto,auto" "HDMI-A-2,1920x1080@75,auto,auto" ]; };
   };
 }

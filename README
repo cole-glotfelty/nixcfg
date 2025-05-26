@@ -21,6 +21,7 @@ PMRR`
 and updates - Watch this
 
 [System/Short Term]
+- nix specializations for one two monitors for casper
 - nix-colors to flake and integrate with either mutagen or just a single custom
 color scheme to theme the whole system.
 - setting up virtualization with QEMU and KVMs (kernal virtual machines)
