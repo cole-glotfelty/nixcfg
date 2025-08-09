@@ -8,6 +8,7 @@
     packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
   };
 
-  home-manager.users.coleglotfelty =
-      import ../../../../home/darwin/coleglotfelty/${config.networking.hostName}.nix;
+  system.primaryUser = "coleglotfelty";
+  home-manager.users.coleglotfelty = import
+    ../../../../home/darwin/coleglotfelty/${config.networking.hostName}.nix;
 }

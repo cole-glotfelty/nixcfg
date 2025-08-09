@@ -12,7 +12,7 @@ in {
         autoUpdate = true; # Auto-update brew packages on activation
         cleanup = "zap"; # Remove all unmanaged homebrew packages
       };
-      brews = [ ];
+      brews = [ "mpv" ];
     };
   };
 }
