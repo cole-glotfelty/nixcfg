@@ -41,6 +41,7 @@ This is a comprehensive NixOS/nix-darwin configuration using flakes for multi-sy
   - `home/{platform}/{user}/`: User-specific configurations per platform
 - **`pkgs/`**: Custom package definitions
 - **`overlays/`**: Nixpkgs overlays for package modifications
+- **`lib/`**: Extended lib functions for home-manager integration
 - **`scripts/`**: Build and maintenance scripts
 
 ### Modular Feature System
@@ -125,6 +126,54 @@ custom.user = {
   email = "work@company.com";
 };
 ```
+
+### Home-Driven Host Module Pattern
+
+**Philosophy**: Home Manager configuration is the single source of truth for user features, automatically enabling required host-level system components.
+
+**Implementation**: Uses extended lib functions to detect home-manager user configurations and reactively enable host modules.
+
+**Extended Lib Functions** (`lib/extensions.nix`):
+- `lib.mkIfAnyHMOpt config predicate` - Enable host config if ANY home user matches predicate
+- `lib.mkIfAllHMOpt config predicate` - Enable host config if ALL home users match predicate  
+- `lib.checkHMOpt config testFunc predicate` - Core function to check home users with custom test function
+
+**Current Implementations**:
+- **Hyprland**: `hosts/features/wm/hyprland.nix` auto-enables when any user has `features.desktop.hyprland.enable = true`
+
+**Self-Contained Modules** (no host coordination needed):
+- **DevEnv**: Fully contained in `home/features/cli/devenv.nix` with cross-platform cache configuration
+
+**Usage Pattern**:
+```nix
+# Home-driven modules (auto-enable host components)
+features.desktop.hyprland.enable = true;  # Auto-enables host Hyprland system components
+
+# Self-contained modules (no host coordination)  
+features.cli.devenv.enable = true;        # Includes cache config, works everywhere
+
+# Host module automatically detects and enables (no manual config needed)
+config = lib.mkIfAnyHMOpt config (hmCfg: hmCfg.features.desktop.hyprland.enable or false) {
+  programs.hyprland.enable = true;
+  # ... rest of system configuration
+};
+```
+
+**Creating New Home-Driven Modules**:
+1. Remove `options` section from host module
+2. Wrap config in `lib.mkIfAnyHMOpt config (predicate) { ... }`  
+3. Add documentation to home module explaining auto-enabled system components
+4. Test with `nix flake check`
+
+**When to Use Each Pattern**:
+- **Home-Driven**: Features that require both user config AND system services (e.g., Hyprland needs compositor + user config)
+- **Self-Contained**: Features that work entirely at user level (e.g., DevEnv with cache optimization)
+
+**Benefits**:
+- Single source of truth (home config drives system config)
+- Cross-platform compatibility (works on NixOS, nix-darwin, standalone Home Manager) 
+- No duplication between host/home configurations
+- Automatic system dependency management
 
 ### Development Notes
 
