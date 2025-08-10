@@ -49,5 +49,6 @@
     pandoc
     imagemagick
     hugo
+    claude-code
   ];
 }
