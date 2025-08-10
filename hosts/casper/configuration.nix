@@ -24,7 +24,7 @@ in {
 
   # Enable Networking
   networking.hostName = "casper";
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8"]; # Cloudflare/Google
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ]; # Cloudflare/Google
   networking.networkmanager.enable = true;
 
   # Set your time zone.
@@ -67,7 +67,6 @@ in {
   # ZSH Default Shell
   programs.zsh.enable = true;
   environment.shells = with pkgs; [ zsh bash dash ];
-  # users.defaultUserShell = pkgs.zsh;
 
   # Change /bin/(ba)sh to /bin/dash
   # TODO: Determine if this should be here (or in default or in common)

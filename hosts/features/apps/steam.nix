@@ -5,7 +5,22 @@
 with lib;
 let cfg = config.features.apps.steam;
 in {
-  options.features.apps.steam.enable = mkEnableOption "enable steam";
+  options.features.apps.steam = {
+    enable = mkEnableOption (lib.mdDoc ''
+      Steam gaming platform with optimized performance configurations.
+      
+      Features:
+      - Steam client with Proton compatibility layer for Windows games
+      - GameScope session for dedicated gaming mode
+      - GameMode for automatic performance optimizations
+      - Xbox controller support via xone driver
+      - ProtonUp for managing Proton compatibility tools
+      
+      Use case: Linux gaming and Windows game compatibility
+      Dependencies: Graphics drivers (NVIDIA/Intel/AMD), audio system
+      Note: Linux only - Steam on macOS uses native Mac version
+    '');
+  };
 
   config = mkIf cfg.enable {
     # XBox Controller support

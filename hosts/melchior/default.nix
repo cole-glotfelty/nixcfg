@@ -33,6 +33,7 @@
       mullvad-vpn.enable = true;
       steam.enable = true;
       nixd.enable = true;
+      devenv.enable = true;
     };
 
     wm = {

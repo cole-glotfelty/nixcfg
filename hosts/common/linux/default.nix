@@ -1,4 +1,6 @@
-{ lib, inputs, outputs, pkgs, ... }:
+{ lib, inputs, outputs, pkgs, config, ... }:
+
+with lib;
 
 {
   imports = [
@@ -23,7 +25,12 @@
     config.allowUnfree = true;
   };
 
-  nix = let flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  nix = let 
+    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    # Automatically get all users in the wheel group (admin users)
+    wheelUsers = lib.filter (name: 
+      lib.elem "wheel" (config.users.users.${name}.extraGroups or [])
+    ) (lib.attrNames config.users.users);
   in {
     registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
     nixPath = [ "/etc/nix/path" ] ++ [ "nixpkgs=${inputs.nixpkgs}" ]
@@ -31,27 +38,22 @@
       flakeInputs;
 
     settings = {
-      experimental-features = "nix-command flakes";
-      download-buffer-size = 134217728;
-      # TODO: figure out if I can modify this with users
-      trusted-users = [ "root" "pharo" ];
-      substituters = [
+      experimental-features = mkDefault "nix-command flakes";
+      download-buffer-size = mkDefault 134217728;
+      # Dynamically include root + all wheel group users as trusted
+      trusted-users = mkDefault ([ "root" ] ++ wheelUsers);
+      substituters = mkDefault [
         "https://cache.nixos.org"
-        "https://hyprland.cachix.org"
-        "https://devenv.cachix.org"
       ];
-      trusted-public-keys = [
+      trusted-public-keys = mkDefault [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       ];
-
     };
 
-    optimise.automatic = true;
+    optimise.automatic = mkDefault true;
     gc = {
-      automatic = true;
-      options = "--delete-older-than 30d";
+      automatic = mkDefault true;
+      options = mkDefault "--delete-older-than 30d";
     };
   };
 

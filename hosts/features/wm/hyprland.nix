@@ -6,10 +6,47 @@ let
   # pkgs-hyprland =
   #   inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
-  options.features.wm.hyprland.enable =
-    mkEnableOption "enable hyprland system level settings";
+  options.features.wm.hyprland = {
+    enable = mkEnableOption (lib.mdDoc ''
+      Hyprland Wayland compositor with system-level configuration.
+      
+      Features:
+      - Modern tiling Wayland compositor with animations
+      - Hyprpolkitagent for privilege escalation dialogs
+      - Ly display manager for lightweight session management
+      - GNOME Keyring integration for credential storage
+      - Electron app Wayland optimization
+      - Hardware cursor workaround for compatibility
+      
+      Use case: Modern Linux desktop with tiling window management
+      Dependencies: Wayland-compatible hardware, Linux system
+      Note: Linux only - Hyprland is not available on macOS
+    '');
+  };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = !pkgs.stdenv.isDarwin;
+        message = ''
+          Hyprland module is enabled but you're running on macOS.
+          
+          Hyprland is a Linux-only Wayland compositor and is not available on macOS.
+          For macOS window management, consider using built-in window management
+          or third-party tools like Rectangle, Amethyst, or yabai.
+          
+          Disable this module: features.wm.hyprland.enable = false;
+        '';
+      }
+    ];
+
+    # Add Hyprland binary cache for faster builds
+    nix.settings = {
+      substituters = mkAfter [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = mkAfter [ 
+        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" 
+      ];
+    };
 
     # Security
     security = { pam.services.login.enableGnomeKeyring = true; };
