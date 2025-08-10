@@ -33,11 +33,9 @@
       mullvad-vpn.enable = true;
       steam.enable = true;
       nixd.enable = true;
-      devenv.enable = true;
     };
 
     wm = {
-      hyprland.enable = true;
       sound.enable = true;
       wayland.enable = true;
       fonts.enable = true;

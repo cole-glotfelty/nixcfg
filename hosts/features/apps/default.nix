@@ -1,5 +1,5 @@
 { ... }:
 
 {
-  imports = [./mullvad-vpn.nix ./steam.nix ./nixd.nix ./devenv.nix];
+  imports = [./mullvad-vpn.nix ./steam.nix ./nixd.nix];
 }

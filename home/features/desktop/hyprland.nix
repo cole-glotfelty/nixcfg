@@ -4,7 +4,21 @@ with lib;
 let cfg = config.features.desktop.hyprland;
 in {
   options.features.desktop.hyprland = {
-    enable = mkEnableOption "enable hyprland";
+    enable = mkEnableOption (lib.mdDoc ''
+      Hyprland Wayland compositor for the user environment.
+      
+      **System Dependencies**: Enabling this option automatically configures
+      the following system-level components on NixOS hosts:
+      • Hyprland compositor system package
+      • Ly display manager for session management  
+      • GNOME Keyring integration
+      • Wayland environment variables and optimizations
+      • Hyprpolkitagent for privilege escalation
+      • Hardware cursor workarounds for compatibility
+      
+      This ensures the desktop environment works seamlessly without
+      manual host configuration.
+    '');
     
     monitors = mkOption {
       type = types.listOf (types.strMatching "^[^,]+,[^,]+,[^,]+,[^,]+$");
