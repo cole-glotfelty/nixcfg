@@ -3,17 +3,48 @@
 with lib;
 let cfg = config.features.hardware.printing;
 in {
-  options.features.hardware.printing.enable =
-    mkEnableOption "enable printing";
+  options.features.hardware.printing = {
+    enable = mkEnableOption (lib.mdDoc ''
+      CUPS printing system with network printer discovery.
+      
+      Features:
+      - CUPS printing service for local and network printers
+      - Avahi service discovery for automatic network printer detection
+      - CUPS filters for enhanced printer compatibility
+      - Firewall configuration for network printing protocols
+      
+      Use case: Systems that need to print documents to local or network printers
+      Dependencies: Physical printer hardware or network printer access
+      Note: On macOS, printing is managed by system preferences
+    '');
+  };
 
   config = mkIf cfg.enable {
-    # Enable printing
-    services.printing.enable = true;
+    assertions = [
+      {
+        assertion = !pkgs.stdenv.isDarwin;
+        message = ''
+          Printing module is enabled but you're running on macOS.
+          
+          On macOS, printing is managed through System Preferences.
+          This NixOS module will have no effect on Darwin systems.
+          
+          Consider disabling: features.hardware.printing.enable = false;
+        '';
+      }
+    ];
 
-    # Related to printing
-    services.avahi.enable = true;
-    services.avahi.nssmdns4 = true;
-    services.avahi.openFirewall = true;
-    environment.systemPackages = [ pkgs.cups-filters ];
+    # Enable printing
+    services.printing.enable = mkDefault true;
+
+    # Network printer discovery
+    services.avahi = {
+      enable = mkDefault true;
+      nssmdns4 = mkDefault true;
+      openFirewall = mkDefault true;
+    };
+    
+    # Additional printer support
+    environment.systemPackages = mkDefault [ pkgs.cups-filters ];
   };
 }
