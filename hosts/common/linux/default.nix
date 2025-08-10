@@ -32,6 +32,7 @@
 
     settings = {
       experimental-features = "nix-command flakes";
+      download-buffer-size = 134217728;
       # TODO: figure out if I can modify this with users
       trusted-users = [ "root" "pharo" ];
       substituters = [
