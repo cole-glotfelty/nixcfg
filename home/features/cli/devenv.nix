@@ -3,7 +3,21 @@
 with lib;
 let cfg = config.features.cli.devenv;
 in {
-  options.features.cli.devenv.enable = mkEnableOption "enable devenv";
+  options.features.cli.devenv = {
+    enable = mkEnableOption (lib.mdDoc ''
+      Devenv development environment tool with direnv integration.
+      
+      Features:
+      - Project-specific development environments
+      - Automatic environment activation via direnv
+      - Nix-based dependency management
+      - Shell integration for seamless workflow
+      - Project isolation and reproducible environments
+      
+      Includes: devenv package, direnv with nix-direnv, Zsh integration
+      Use case: Managing project-specific development dependencies and shell environments
+    '');
+  };
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ devenv ];

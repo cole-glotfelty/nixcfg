@@ -20,7 +20,7 @@
       zoxide.enable = true;
       tmux.enable = true;
       latex.enable = true;
-      vim.enable = true;
+      vim.enable = false;
       nixvim.enable = true;
       git.enable = true;
       ranger.enable = true;
@@ -67,8 +67,9 @@
     };
   };
 
-  # TODO: make this dependent on hyprland option being enabled
-  wayland.windowManager.hyprland = lib.mkIf config.features.desktop.hyprland.enable {
-    settings = { monitor = [ "DP-1,2560x1440@154.85,auto,auto" "DP-4,1920x1080@60,auto,auto" ]; };
-  };
+  # Configure dual monitor setup for melchior  
+  features.desktop.hyprland.monitors = [
+    "DP-1,2560x1440@154.85,auto,auto"
+    "DP-4,1920x1080@60,auto,auto"
+  ];
 }

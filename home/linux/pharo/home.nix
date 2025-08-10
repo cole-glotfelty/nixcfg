@@ -22,12 +22,27 @@
   # environment.
   # home.packages = with pkgs; [];
 
+  # Configure user identity and preferences (user-level priority)
+  custom.user = {
+    name = lib.mkOverride 500 "Cole Glotfelty";
+    email = lib.mkOverride 500 "git@postagepaid.cc";
+  };
+
+  custom.defaults = {
+    terminal = lib.mkOverride 500 "kitty";
+    browser = lib.mkOverride 500 "librewolf";
+    editor = lib.mkOverride 500 "nvim";
+    fileManager = lib.mkOverride 500 "ranger";
+    copyCommand = lib.mkOverride 500 "wl-copy";
+    mailClient = lib.mkOverride 500 "thunderbird";
+  };
+
   home.sessionVariables = {
-    EDITOR = "nvim";
-    TERMINAL = "kitty";
+    EDITOR = config.custom.defaults.editor;
+    TERMINAL = config.custom.defaults.terminal;
     NIX_PATH = "nixpkgs=channel:nixos-unstable";
     NIX_LOG = "info";
-    PROJECT_DIRS = "$HOME $HOME/Projects $HOME/Remote/Halligan/cs21";
+    PROJECT_DIRS = "$HOME ${config.custom.paths.projects} ${config.custom.paths.remote}/Halligan/cs21";
   };
 
   # Let Home Manager install and manage itself.

@@ -3,8 +3,20 @@
 with lib;
 let cfg = config.features.desktop.defaultFonts;
 in {
-  options.features.desktop.defaultFonts.enable =
-    mkEnableOption "enable defaultFonts";
+  options.features.desktop.defaultFonts = {
+    enable = mkEnableOption (lib.mdDoc ''
+      System-wide default font configuration for consistent typography.
+      
+      Font Stack:
+      - Serif: Times New Roman → Noto Serif → Liberation Serif
+      - Sans Serif: Noto Sans → Liberation Sans
+      - Monospace: FiraCode Nerd Font Mono → Liberation Mono  
+      - Emoji: Noto Color Emoji
+      
+      Provides: Consistent font fallbacks across all applications
+      Benefits: Programming ligatures, emoji support, cross-platform compatibility
+    '');
+  };
 
   config = mkIf cfg.enable {
     fonts.fontconfig = {

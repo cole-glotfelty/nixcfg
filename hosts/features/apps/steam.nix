@@ -27,9 +27,10 @@ in {
     programs.gamemode.enable = true;
 
     environment.systemPackages = with pkgs; [ protonup ];
+    
+    # Create a script that sets the correct path based on the current user
     environment.sessionVariables = {
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-        "/home/pharo/.steam/root/compatibilitytools.d";
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = mkDefault "$HOME/.steam/root/compatibilitytools.d";
     };
   };
 }

@@ -7,7 +7,7 @@ in {
 
   config = mkIf cfg.enable {
     fonts = {
-      packages = with pkgs; [
+      packages = mkDefault (with pkgs; [
         # TODO: Look into more font packages
         # TODO: Look into fontconfig option
         # TODO: Look into Apple Emoji font for system emoji font
@@ -21,29 +21,29 @@ in {
         noto-fonts-cjk-serif
         noto-fonts-emoji
         noto-fonts-extra
-      ];
+      ]);
 
       fontconfig = {
-        enable = true;
-        includeUserConf = true;
+        enable = mkDefault true;
+        includeUserConf = mkDefault true;
 
         # Font rendering settings to fix spacing issues
-        antialias = true;
+        antialias = mkDefault true;
         hinting = {
-          enable = true;
-          style = "slight"; # Preserves font metrics better than "full"
-          autohint = false; # Prefer built-in hinting instructions
+          enable = mkDefault true;
+          style = mkDefault "slight"; # Preserves font metrics better than "full"
+          autohint = mkDefault false; # Prefer built-in hinting instructions
         };
 
         # Subpixel rendering options (for LCD screens)
         subpixel = {
-          rgba = "rgb"; # Common LCD pixel layout
-          lcdfilter = "default"; # Standard filtering
+          rgba = mkDefault "rgb"; # Common LCD pixel layout
+          lcdfilter = mkDefault "default"; # Standard filtering
         };
 
         # Bitmap font handling
-        allowBitmaps = false; # Disable bitmap fonts which cause spacing issues
-        useEmbeddedBitmaps = false;
+        allowBitmaps = mkDefault false; # Disable bitmap fonts which cause spacing issues
+        useEmbeddedBitmaps = mkDefault false;
 
         # Advanced configurations for spacing-related issues
         localConf = ''

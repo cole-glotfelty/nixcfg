@@ -10,19 +10,25 @@ in {
     # Doas instead of sudo
     security.doas.enable = true;
     security.sudo.enable = false;
-    # TODO: change these so it's in terms of a variable
-    security.doas.extraRules = [
-      {
-        users = [ "pharo" ];
-        keepEnv = true;
-        persist = true;
-      }
-      {
-        users = [ "pharo" ];
-        cmd = "tee";
-        noPass = true;
-      }
-    ];
+    
+    # Get all users in the wheel group (admin users)
+    security.doas.extraRules = 
+      let
+        wheelUsers = lib.filter (name: 
+          lib.elem "wheel" (config.users.users.${name}.extraGroups or [])
+        ) (lib.attrNames config.users.users);
+      in [
+        {
+          users = mkDefault wheelUsers;
+          keepEnv = mkDefault true;
+          persist = mkDefault true;
+        }
+        {
+          users = mkDefault wheelUsers;
+          cmd = "tee";
+          noPass = mkDefault true;
+        }
+      ];
 
     environment.systemPackages =
       [ (pkgs.writeScriptBin "sudo" ''exec doas "$@"'') ];

@@ -3,9 +3,56 @@
 with lib;
 let cfg = config.features.desktop.hyprland;
 in {
-  options.features.desktop.hyprland.enable = mkEnableOption "enable hyprland";
+  options.features.desktop.hyprland = {
+    enable = mkEnableOption "enable hyprland";
+    
+    monitors = mkOption {
+      type = types.listOf (types.strMatching "^[^,]+,[^,]+,[^,]+,[^,]+$");
+      default = [ "auto,auto,auto,1" ];
+      description = "Monitor configuration strings for Hyprland (only used when Hyprland is enabled)";
+      example = [
+        "HDMI-A-1,1920x1080@75,0x0,1"
+        "HDMI-A-2,1920x1080@75,1920x0,1"
+      ];
+    };
+  };
 
   config = mkIf cfg.enable {
+    warnings = optional pkgs.stdenv.isDarwin
+      "Hyprland is enabled but you're on macOS. Hyprland is a Linux Wayland compositor and won't work on macOS.";
+
+    assertions = [
+      {
+        assertion = pkgs.stdenv.isLinux;
+        message = ''
+          Hyprland is only supported on Linux systems.
+          
+          Current platform: ${pkgs.stdenv.system}
+          
+          Hyprland is a Wayland compositor for Linux. For other platforms:
+            • macOS: Use native window management or tools like yabai
+            • Other systems: Consider alternative window managers
+        '';
+      }
+      {
+        assertion = config.features.desktop.wayland.enable;
+        message = ''
+          Hyprland requires Wayland utilities to function properly.
+          
+          Missing dependency: features.desktop.wayland.enable = false
+          
+          Fix by adding to your configuration:
+            features.desktop.wayland.enable = true;
+          
+          This provides essential tools:
+            • grim + slurp: Screenshot capture and area selection
+            • wl-clipboard: Wayland clipboard utilities (wl-copy, wl-paste)  
+            • wlogout: Logout menu integration
+            • Qt Wayland support for GUI applications
+        '';
+      }
+    ];
+    
     home.packages = with pkgs; [
       pavucontrol
       networkmanagerapplet
@@ -66,8 +113,8 @@ in {
       systemd.variables = [ "--all" ];
       settings = {
         # Setting Programs to Use
-        "$terminal" = "kitty";
-        "$menu" = "fuzzel";
+        "$terminal" = mkDefault config.custom.defaults.terminal;
+        "$menu" = mkDefault "fuzzel";
 
         # See https://wiki.hyprland.org/Configuring/Environment-variables/
         env = [
@@ -78,6 +125,9 @@ in {
           "HYPRCURSOR_SIZE,24"
           "XCURSOR_SIZE,24"
         ];
+
+        ## MONITORS ##
+        monitor = cfg.monitors;
 
         ## AUTOSTART ##
         exec-once = [
