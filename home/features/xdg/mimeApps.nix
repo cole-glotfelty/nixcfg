@@ -10,17 +10,16 @@ in {
     xdg = {
       mimeApps = {
         enable = true;
-        # TODO: Come back and replace some with values from variables .editor, .browser
         defaultApplications = {
-          "text/plain" = [ "nvim.desktop" ];
-          "text/*" = [ "nvim.desktop" ];
-          "image/*" = [ "feh.desktop" ];
-          "video/*" = [ "mpv.desktop" ];
-          "application/pdf" = [ "zathura.desktop" ];
-          "x-scheme-handler/https" = [ "librewolf.desktop" ]; # Links
-          "x-scheme-handler/http" = [ "librewolf.desktop" ]; # Links
-          "x-scheme-handler/discord" = [ "discord.desktop" ];
-          #"x-scheme-handler/mailto" = ["firefox.desktop"]; # Email
+          "text/plain" = mkDefault [ "${config.custom.defaults.editor}.desktop" ];
+          "text/*" = mkDefault [ "${config.custom.defaults.editor}.desktop" ];
+          "image/*" = mkDefault [ "feh.desktop" ];
+          "video/*" = mkDefault [ "mpv.desktop" ];
+          "application/pdf" = mkDefault [ "zathura.desktop" ];
+          "x-scheme-handler/https" = mkDefault [ "${config.custom.defaults.browser}.desktop" ]; # Links
+          "x-scheme-handler/http" = mkDefault [ "${config.custom.defaults.browser}.desktop" ]; # Links
+          "x-scheme-handler/discord" = mkDefault [ "discord.desktop" ];
+          "x-scheme-handler/mailto" = mkDefault [ "${config.custom.defaults.mailClient}.desktop" ]; # Email
         };
       };
     };

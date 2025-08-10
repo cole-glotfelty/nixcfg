@@ -23,6 +23,7 @@
 
     applications = {
       kitty.enable = true;
+      browsers.enable = true;
     };
   };
 }

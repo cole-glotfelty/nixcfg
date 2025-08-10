@@ -13,7 +13,7 @@ in {
         Host halligan
           User cglotf01
           HostName homework.cs.tufts.edu
-          IdentityFile /home/pharo/.ssh/id_ed25519
+          IdentityFile ${config.custom.user.homeDirectory}/.ssh/id_ed25519
           ServerAliveInterval 15
           Port 22
 

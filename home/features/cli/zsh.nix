@@ -3,12 +3,25 @@
 with lib;
 let cfg = config.features.cli.zsh;
 in {
-  options.features.cli.zsh.enable =
-    mkEnableOption "enable extended ZSH configuration";
+  options.features.cli.zsh = {
+    enable = mkEnableOption (lib.mdDoc ''
+      Extended ZSH configuration with Starship prompt, syntax highlighting, 
+      autosuggestions, and optimized performance settings.
+      
+      Includes:
+      - Starship prompt with custom symbols and git integration
+      - Deferred loading of syntax highlighting and autosuggestions for fast startup
+      - Enhanced history settings with deduplication
+      - Modern aliases using eza and bat
+      - Hyprland auto-launch from tty1
+      
+      Requires: starship, zsh-defer, zsh-syntax-highlighting, zsh-autosuggestions, eza, bat
+    '');
+  };
   config = mkIf cfg.enable {
     programs.starship = {
-      enable = true;
-      enableZshIntegration = true;
+      enable = mkDefault true;
+      enableZshIntegration = mkDefault true;
       settings = {
         cmd_duration.disabled = true;
         character = {
@@ -213,16 +226,11 @@ in {
 
     programs.zsh = {
       enable = true;
-      zprof.enable = false; # If prompt is slow enable to profile
-      autocd = true;
-      autosuggestion.enable = false;
-      syntaxHighlighting.enable = false;
-      enableCompletion = true;
-
-      antidote = {
-        enable = false;
-        plugins = [ "zap-zsh/supercharge" "zap-zsh/atmachine-prompt" ];
-      };
+      zprof.enable = mkDefault false; # If prompt is slow enable to profile
+      autocd = mkDefault true;
+      autosuggestion.enable = mkDefault false;
+      syntaxHighlighting.enable = mkDefault false;
+      enableCompletion = mkDefault true;
 
       initContent = ''
         # Speeding up zsh launch times
@@ -261,11 +269,11 @@ in {
       '';
 
       history = {
-        size = 1000000;
-        save = 1000000;
+        size = mkDefault 1000000;
+        save = mkDefault 1000000;
       };
 
-      shellAliases = {
+      shellAliases = mkDefault {
         "..." = "cd ../..";
         ls = "${pkgs.eza}/bin/eza --icons";
         ll = "${pkgs.eza}/bin/eza -l --icons";
@@ -273,14 +281,6 @@ in {
         tree = "${pkgs.eza}/bin/eza -T --icons";
         cat = "${pkgs.bat}/bin/bat";
       };
-
-      # TODO: Declare these here or in home sessionVars?
-      # profileExtra = ''
-      #   export NIX_PATH=nixpkgs=channel:nixos-unstable
-      #   export NIX_LOG=info
-      #   export TERMINAL=kitty
-      #   export EDITOR=nvim
-      # '';
 
       # NOTE: This is specific to hyprland. also, this will need to be tested
       loginExtra = ''

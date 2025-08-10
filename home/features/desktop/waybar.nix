@@ -3,7 +3,25 @@
 with lib;
 let cfg = config.features.desktop.waybar;
 in {
-  options.features.desktop.waybar.enable = mkEnableOption "enable waybar";
+  options.features.desktop.waybar = {
+    enable = mkEnableOption (lib.mdDoc ''
+      Waybar status bar for Wayland compositors with comprehensive system monitoring.
+      
+      Features:
+      - Hyprland workspace and window integration
+      - System monitoring: CPU, memory, temperature, battery
+      - Network status with WiFi/Ethernet details  
+      - Audio control via PulseAudio
+      - MPD music player integration
+      - Power profile daemon integration
+      - Backlight controls for laptops
+      - System tray and custom power menu
+      - Idle inhibitor toggle
+      
+      Designed for: Hyprland, supports dual battery setups
+      Dependencies: PulseAudio, power-profiles-daemon, MPD (optional)
+    '');
+  };
 
   config = mkIf cfg.enable {
     # TODO: Rearrange modules, create new modules
@@ -13,7 +31,7 @@ in {
       # package = (pkgs.waybar.overrideAttrs (oldAtts: {
       #   mesonFlags = oldAtts.mesonFlags ++ [ "-Dexperimental=true" ];
       # }));
-      settings = {
+      settings = mkDefault {
         mainBar = {
           height = 30;
           spacing = 4;

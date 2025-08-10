@@ -20,7 +20,7 @@
       zoxide.enable = true;
       tmux.enable = true;
       latex.enable = true;
-      vim.enable = true;
+      vim.enable = false;
       nixvim.enable = true;
       git.enable = true;
       ranger.enable = true;
@@ -67,7 +67,9 @@
     };
   };
 
-  wayland.windowManager.hyprland = lib.mkIf config.features.desktop.hyprland.enable {
-    settings = { monitor = [ "HDMI-A-1,1920x1080@75,auto,auto" "HDMI-A-2,1920x1080@75,auto,auto" ]; };
-  };
+  # Configure dual monitor setup for casper
+  features.desktop.hyprland.monitors = [
+    "HDMI-A-1,1920x1080@75,auto,auto"
+    "HDMI-A-2,1920x1080@75,auto,auto"
+  ];
 }

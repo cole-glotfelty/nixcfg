@@ -3,9 +3,43 @@
 with lib;
 let cfg = config.features.cli.vim;
 in {
-  options.features.cli.vim.enable =
-    mkEnableOption "enable enxtended vim configuration";
+  options.features.cli.vim = {
+    enable = mkEnableOption (lib.mdDoc ''
+      Extended Vim configuration with modern keybindings and development settings.
+      
+      Features:
+      - Line numbers (absolute + relative) for efficient navigation
+      - Smart indentation with 4-space tabs (2-space for Nix files)
+      - Leader key mappings (space) for file operations
+      - Centered scrolling for better code focus
+      - Visual line movement and indentation controls
+      - Sorbet colorscheme with true color support
+      - No swap/backup files for clean development
+      
+      Alternative to: nixvim (for users preferring traditional Vim configuration)
+      Disabled when: nixvim is enabled (via mkForce)
+    '');
+  };
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = !config.features.cli.nixvim.enable;
+        message = ''
+          Cannot enable both vim and nixvim modules simultaneously.
+          
+          You have enabled:
+            ✓ features.cli.vim.enable = true
+            ✓ features.cli.nixvim.enable = true
+          
+          Choose one approach:
+            Option 1 (Traditional Vim): features.cli.vim.enable = true; features.cli.nixvim.enable = false;
+            Option 2 (NixVim - Recommended): features.cli.vim.enable = false; features.cli.nixvim.enable = true;
+          
+          NixVim provides a more Nix-native configuration with better plugin management.
+        '';
+      }
+    ];
+    
     programs.vim.enable = true;
     home.file.".vimrc".text = ''
       " Numbering
