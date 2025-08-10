@@ -246,7 +246,9 @@ in {
         bindkey '^ ' autosuggest-accept
 
         # Initialize zoxide with zsh integration
-        eval "$(zoxide init zsh --cmd cd)"
+        if [ -z "$DISABLE_ZOXIDE" ]; then
+          eval "$(zoxide init zsh --cmd cd)"
+        fi
 
         # Some opts taken from zsh/supercharge
         unsetopt BEEP

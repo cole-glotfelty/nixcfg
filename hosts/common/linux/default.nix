@@ -27,10 +27,6 @@ with lib;
 
   nix = let 
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-    # Automatically get all users in the wheel group (admin users)
-    wheelUsers = lib.filter (name: 
-      lib.elem "wheel" (config.users.users.${name}.extraGroups or [])
-    ) (lib.attrNames config.users.users);
   in {
     registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
     nixPath = [ "/etc/nix/path" ] ++ [ "nixpkgs=${inputs.nixpkgs}" ]
@@ -40,8 +36,8 @@ with lib;
     settings = {
       experimental-features = mkDefault "nix-command flakes";
       download-buffer-size = mkDefault 134217728;
-      # Dynamically include root + all wheel group users as trusted
-      trusted-users = mkDefault ([ "root" ] ++ wheelUsers);
+      # Include root and all wheel group users as trusted
+      trusted-users = [ "root" "@wheel" ];
       substituters = mkDefault [
         "https://cache.nixos.org"
       ];
