@@ -2,29 +2,13 @@
 
 with lib;
 let
-  cfg = config.features.wm.hyprland;
   # pkgs-hyprland =
   #   inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
-  options.features.wm.hyprland = {
-    enable = mkEnableOption (lib.mdDoc ''
-      Hyprland Wayland compositor with system-level configuration.
-      
-      Features:
-      - Modern tiling Wayland compositor with animations
-      - Hyprpolkitagent for privilege escalation dialogs
-      - Ly display manager for lightweight session management
-      - GNOME Keyring integration for credential storage
-      - Electron app Wayland optimization
-      - Hardware cursor workaround for compatibility
-      
-      Use case: Modern Linux desktop with tiling window management
-      Dependencies: Wayland-compatible hardware, Linux system
-      Note: Linux only - Hyprland is not available on macOS
-    '');
-  };
+  # This module automatically enables when any home-manager user has Hyprland enabled
+  # No manual configuration needed - it's purely reactive to user preferences
 
-  config = mkIf cfg.enable {
+  config = lib.mkIfAnyHMOpt config (hmCfg: hmCfg.features.desktop.hyprland.enable or false) {
     assertions = [
       {
         assertion = !pkgs.stdenv.isDarwin;

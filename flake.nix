@@ -13,6 +13,11 @@
         "x86_64-darwin"
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
+      
+      # Extended lib with our custom functions
+      lib = nixpkgs.lib.extend (final: prev: 
+        import ./lib/extensions.nix final
+      );
     in {
       packages =
         # forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
@@ -21,11 +26,11 @@
       overlays = import ./overlays { inherit inputs; };
 
       nixosConfigurations = {
-        casper = nixpkgs.lib.nixosSystem {
+        casper = lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/casper ];
         };
-        melchior = nixpkgs.lib.nixosSystem {
+        melchior = lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/melchior ];
         };
@@ -40,12 +45,12 @@
         "pharo@casper" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/pharo/casper.nix ];
+          modules = [ ./home/linux/pharo/casper.nix ];
         };
         "pharo@melchior" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/pharo/melchior.nix ];
+          modules = [ ./home/linux/pharo/melchior.nix ];
         };
       };
     };
