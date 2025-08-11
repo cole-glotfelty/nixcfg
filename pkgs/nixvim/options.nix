@@ -25,7 +25,7 @@
     cursorline = true;
     wrap = false;
     swapfile = false;
-    undodir = "$HOME/.vim/undodir";
+    undodir = "~/.vim/undodir";
     backup = false;
     undofile = true;
 

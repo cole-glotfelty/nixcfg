@@ -18,9 +18,16 @@ in {
     '');
   };
 
-  config = mkIf cfg.enable {
-    # This was painful to come to. Nix Docs suck for latex
-    home.packages =
-      [ (pkgs.texliveInfraOnly.withPackages (ps: with ps; [ scheme-full ])) ];
-  };
+  config = mkMerge [
+    # Auto-enable LaTeX when nixvim is enabled (for vimtex integration)
+    (mkIf config.features.cli.nixvim.enable {
+      features.cli.latex.enable = mkDefault true;
+    })
+    
+    (mkIf cfg.enable {
+      # This was painful to come to. Nix Docs suck for latex
+      home.packages =
+        [ (pkgs.texliveInfraOnly.withPackages (ps: with ps; [ scheme-full ])) ];
+    })
+  ];
 }
