@@ -1,4 +1,5 @@
 final: {
+  # Credit goes to Jackson Warhover (@jbwar22) for these
   checkHMOpt = config: testFunc: predicate:
     let
       homeUsers = config.home-manager.users or {};

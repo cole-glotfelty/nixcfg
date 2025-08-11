@@ -21,6 +21,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - Git-tracked files only - commit changes before running flake check
   - Catches configuration errors early in development process
 
+### Portable Packages
+- `nix run .#nixvim` - Run portable nixvim from any system with Nix installed
+- `nix run .#tmux-sessionizer` - Run tmux session manager utility
+
 ## Architecture Overview
 
 This is a comprehensive NixOS/nix-darwin configuration using flakes for multi-system management. The repository manages configurations for:
@@ -39,7 +43,9 @@ This is a comprehensive NixOS/nix-darwin configuration using flakes for multi-sy
   - `home/common/`: Shared user configuration
   - `home/features/`: Modular user features (cli, desktop, applications, style)
   - `home/{platform}/{user}/`: User-specific configurations per platform
-- **`pkgs/`**: Custom package definitions
+- **`pkgs/`**: Custom package definitions and portable applications
+  - `pkgs/nixvim/`: Standalone nixvim configuration with modular structure
+  - `pkgs/tmux-sessionizer/`: Tmux session manager utility
 - **`overlays/`**: Nixpkgs overlays for package modifications
 - **`lib/`**: Extended lib functions for home-manager integration
 - **`scripts/`**: Build and maintenance scripts
@@ -55,7 +61,7 @@ The configuration uses a modular approach with feature toggles:
 - `apps/`: System-level applications (Steam, VPN, etc.)
 
 **User Features** (`home/features/`):
-- `cli/`: Command-line tools and configurations (zsh, tmux, git, nixvim)
+- `cli/`: Command-line tools and configurations (zsh, tmux, git, portable nixvim)
 - `desktop/`: Desktop environment configs (Hyprland, waybar, fuzzel)
 - `applications/`: User applications (browsers, media, productivity)
 - `style/`: Theming and visual configurations
@@ -143,6 +149,7 @@ custom.user = {
 
 **Self-Contained Modules** (no host coordination needed):
 - **DevEnv**: Fully contained in `home/features/cli/devenv.nix` with cross-platform cache configuration
+- **NixVim**: Portable standalone configuration in `pkgs/nixvim/` consumed by home-manager integration
 
 **Usage Pattern**:
 ```nix
@@ -151,6 +158,7 @@ features.desktop.hyprland.enable = true;  # Auto-enables host Hyprland system co
 
 # Self-contained modules (no host coordination)  
 features.cli.devenv.enable = true;        # Includes cache config, works everywhere
+features.cli.nixvim.enable = true;        # Portable nixvim, also runnable via `nix run .#nixvim`
 
 # Host module automatically detects and enables (no manual config needed)
 config = lib.mkIfAnyHMOpt config (hmCfg: hmCfg.features.desktop.hyprland.enable or false) {
@@ -175,12 +183,44 @@ config = lib.mkIfAnyHMOpt config (hmCfg: hmCfg.features.desktop.hyprland.enable 
 - No duplication between host/home configurations
 - Automatic system dependency management
 
+### Standalone-First Architecture Pattern
+
+**Philosophy**: Build portable applications that work independently but can be consumed by home-manager for seamless integration.
+
+**Implementation** (`pkgs/nixvim/` as reference):
+- **Standalone Config**: Primary configuration in `pkgs/{app}/config.nix` with modular imports
+- **Package Builder**: `pkgs/{app}/default.nix` creates runnable package with `makeNixvimWithModule`
+- **Config Exposure**: Uses `passthru.config` to expose configuration for home-manager consumption
+- **Home Integration**: Home module consumes standalone config: `programs.nixvim = outputs.packages.${pkgs.system}.nixvim.passthru.config // { enable = true; }`
+
+**Benefits**:
+- **Portability**: Run anywhere with `nix run .#{package}` without system configuration
+- **Modularity**: Maintains modular structure across standalone and home-manager versions
+- **Single Source**: Standalone config is primary, eliminating duplication between versions
+- **Cross-Platform**: Works on any system with Nix (NixOS, macOS, other Linux distros)
+
+**Usage**:
+```nix
+# Standalone usage (any system with Nix)
+nix run .#nixvim
+
+# Home Manager integration (same config, seamless experience)  
+features.cli.nixvim.enable = true;
+```
+
+**Creating New Standalone-First Packages**:
+1. Create modular config in `pkgs/{app}/` with `config.nix` importing modules
+2. Build package in `pkgs/{app}/default.nix` using appropriate builder
+3. Expose config via `passthru.config` for home-manager consumption
+4. Create home module that consumes exposed config with additional home-specific settings
+5. Add package to `pkgs/default.nix` and test both standalone and home-manager integration
+
 ### Development Notes
 
 - Uses `nixos-unstable` channel with some stable packages via overlay
 - ZSH is the default shell system-wide
 - Hyprland window manager with Wayland compositor
-- NixVim for Neovim configuration as a flake input
+- NixVim for Neovim configuration as a flake input (standalone-first architecture with home-manager integration)
 - Custom packages in `pkgs/` directory (e.g., tmux-sessionizer)
 - All modules are drop-in compatible and reusable by other users
 - Configuration follows Nix best practices with proper priority system
