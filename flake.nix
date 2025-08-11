@@ -22,7 +22,7 @@
       packages =
         # forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
         forAllSystems
-        (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; });
+        (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; inherit inputs; });
       overlays = import ./overlays { inherit inputs; };
 
       nixosConfigurations = {

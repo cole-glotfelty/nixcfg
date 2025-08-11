@@ -1,13 +1,10 @@
-{ config, lib, inputs, ... }:
+{ config, lib, inputs, outputs, pkgs, ... }:
 
 with lib;
 let cfg = config.features.cli.nixvim;
 in {
   imports = [
     inputs.nixvim.homeModules.nixvim
-    ./options.nix
-    ./keymaps.nix
-    ./plugins
   ];
 
   options.features.cli.nixvim.enable =
@@ -15,20 +12,10 @@ in {
 
   config = mkIf cfg.enable {
     programs.vim.enable = mkForce false;
-    programs.nixvim = {
+    programs.nixvim = outputs.packages.${pkgs.system}.nixvim.passthru.config // {
       enable = true;
-
-      # TODO: Get these working
-      viAlias = true;
-      vimAlias = true; # this could cause problems
-      vimdiffAlias = true;
-
-      luaLoader.enable = true;
-
-      colorschemes.tokyonight = {
-        enable = true;
-        settings.style = "night";
-      };
+      # Home-manager specific settings that aren't in standalone
+      vimdiffAlias = true; # this could cause problems
     };
   };
 }
