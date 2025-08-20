@@ -30,7 +30,7 @@
 
   custom.defaults = {
     terminal = lib.mkOverride 500 "kitty";
-    browser = lib.mkOverride 500 "librewolf";
+    browser = lib.mkOverride 500 "brave";
     editor = lib.mkOverride 500 "nvim";
     fileManager = lib.mkOverride 500 "ranger";
     copyCommand = lib.mkOverride 500 "wl-copy";

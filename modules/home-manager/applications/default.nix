@@ -5,6 +5,7 @@
     ./media.nix
     ./messaging.nix
     ./browsers.nix
+    ./brave.nix
     ./kitty.nix
     ./alacritty.nix
     ./games.nix
