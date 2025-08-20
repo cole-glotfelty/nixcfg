@@ -25,7 +25,7 @@
     cursorline = true;
     wrap = false;
     swapfile = false;
-    undodir = "~/.vim/undodir";
+    undodir = { __raw = "vim.fn.expand('~') .. '/.vim/undodir'"; };
     backup = false;
     undofile = true;
 

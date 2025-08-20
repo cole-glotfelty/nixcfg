@@ -1,8 +1,20 @@
 # HOST: alpha-1-5
 { ... }:
 
-{
-  imports = [ ../common/darwin ./configuration.nix ../features/homebrew ../features/apps ];
+rec {
+  # Metadata for flake auto-generation
+  _meta = {
+    system = "darwin";
+    architecture = "aarch64-darwin";
+    users = [ "coleglotfelty" ];
+  };
+
+  imports = [
+    (../../modules/common + "/${_meta.system}")
+    ./configuration.nix
+    ../../modules/darwin/homebrew
+    ../../modules/nixos/apps
+  ];
 
   features = {
     homebrew = {
