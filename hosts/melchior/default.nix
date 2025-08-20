@@ -1,14 +1,21 @@
 # HOST: Melchior
 { lib, ... }:
 
-{
+rec {
+  # Metadata for flake auto-generation
+  _meta = {
+    system = "nixos";
+    architecture = "x86_64-linux";
+    users = [ "pharo" ];
+  };
+
   imports = [
-    ../common/linux
+    (../../modules/common + "/${_meta.system}")
     ./configuration.nix
-    ../features/apps
-    ../features/hardware
-    ../features/security
-    ../features/wm
+    ../../modules/nixos/apps
+    ../../modules/nixos/hardware
+    ../../modules/nixos/security
+    ../../modules/nixos/wm
   ];
 
   features = {
