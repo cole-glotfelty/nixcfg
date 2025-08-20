@@ -5,15 +5,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Common Commands
 
 ### System Rebuilds
-- `just rebuild` - Primary command to rebuild the system (runs `./scripts/rebuild.sh`)
-- `just update` - Update flake inputs and rebuild (`nix flake update` + `just rebuild`)
-- `just gc` - Run garbage collection to clean old generations
+- `sudo nixos-rebuild switch --flake .` - Primary command to rebuild NixOS systems
+- `darwin-rebuild switch --flake .` - Primary command to rebuild macOS systems
+- `nix flake update && sudo nixos-rebuild switch --flake .` - Update flake inputs and rebuild
+- `sudo nix-collect-garbage --delete-old` - Run garbage collection to clean old generations
 
 ### Manual Commands
-- `sudo nixos-rebuild switch --flake .` - Linux system rebuild
-- `darwin-rebuild switch --flake .` - macOS system rebuild  
 - `nix flake update` - Update all flake inputs
-- `sudo nix-collect-garbage --delete-old` - Clean old generations
+- `nix build .#nixosConfigurations.{hostname}.config.system.build.toplevel` - Build specific host configuration
+- `nix build .#darwinConfigurations.{hostname}.config.system.build.toplevel` - Build specific Darwin configuration
+- `home-manager switch --flake .#pharo@{hostname}` - Switch home-manager configuration
 
 ### Development & Testing
 - `nix flake check` - **CRITICAL**: Validate flake syntax and configuration before commits
@@ -46,7 +47,8 @@ This is an advanced NixOS/nix-darwin configuration featuring metadata-driven aut
 - **`users/templates/`**: Consolidated user configuration templates
   - `users/templates/{user}/default.nix`: Home-manager features and configuration
   - `users/templates/{user}/home.nix`: Platform-specific settings (username, homeDirectory, etc.)
-  - `users/templates/{user}/system.nix`: System user account definition
+  - `users/templates/{user}/nixos.nix`: NixOS system user account definition
+  - `users/templates/{user}/darwin.nix`: macOS system user account definition
 - **`users/common/`**: Shared user configuration (identity, defaults, paths)
 - **`pkgs/`**: Custom package definitions and portable applications
   - `pkgs/nixvim/`: Standalone nixvim configuration with modular structure
@@ -99,11 +101,11 @@ The configuration uses a modular approach with clean separation between system a
 
 ### Build Process
 
-The `rebuild.sh` script handles:
-1. OS detection (Linux vs macOS)
-2. Git diff display of `.nix` changes
-3. System rebuild with error handling and logging
-4. Automatic git commit with generation metadata (Linux only)
+The V3 architecture uses direct system rebuilds:
+1. **NixOS**: `sudo nixos-rebuild switch --flake .` 
+2. **macOS**: `darwin-rebuild switch --flake .`
+3. **Home Manager**: `home-manager switch --flake .#user@hostname`
+4. **Validation**: Always run `nix flake check` before rebuilding
 
 ### Centralized Configuration System
 

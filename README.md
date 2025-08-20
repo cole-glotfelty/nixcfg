@@ -50,10 +50,19 @@ Advanced NixOS/nix-darwin configuration featuring metadata-driven auto-generatio
 
 ## Usage
 ```bash
-just rebuild           # Rebuild system
-nix flake check        # Validate configuration and metadata consistency
-nix run .#nixvim       # Run portable applications
-nix run .#tmux-sessionizer
+# System rebuilds
+sudo nixos-rebuild switch --flake .      # Rebuild NixOS systems
+darwin-rebuild switch --flake .          # Rebuild macOS systems
+
+# Development & validation
+nix flake check                          # Validate configuration and metadata consistency
+
+# Portable applications
+nix run .#nixvim                         # Run portable nixvim
+nix run .#tmux-sessionizer               # Run tmux session manager
+
+# Home Manager (standalone)
+home-manager switch --flake .#pharo@{hostname}
 ```
 
 See [CLAUDE.md](./CLAUDE.md) for comprehensive documentation and architecture details.
