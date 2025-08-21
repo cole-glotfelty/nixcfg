@@ -52,6 +52,7 @@
       media.enable = lib.mkDefault true;
       messaging.enable = lib.mkDefault true;
       browsers.enable = lib.mkDefault true;
+      brave.enable = lib.mkDefault true;
       electronTweaks.enable = lib.mkDefault true;
       productivity.enable = lib.mkDefault true;
       games.enable = lib.mkDefault true;

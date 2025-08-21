@@ -1,5 +1,5 @@
 { ... }:
 
 {
-  imports = [./mullvad-vpn.nix ./steam.nix ./nixd.nix];
+  imports = [./mullvad-vpn.nix ./steam.nix ./nixd.nix ./brave-policies.nix];
 }
