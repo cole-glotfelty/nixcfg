@@ -7,18 +7,22 @@ in {
     enable = mkEnableOption (lib.mdDoc ''
       Brave browser with privacy-focused configuration.
       
-      Features:
-      - Privacy-first configuration with Brave bloat features disabled via --disable-features
-      - Disables: BraveRewards, BraveWallet, BraveNews, BraveToday, BraveTalk, AIChat, BraveVPN
-      - Hardware acceleration enabled for better performance
-      - Command-line optimizations for privacy and performance
+      Automated Configuration:
+      - Disables via command line: Leo AI Chat, Brave VPN, media router, translate UI
+      - Hardware acceleration and performance optimizations enabled
+      - Privacy-focused command-line arguments
+      
+      Manual Configuration Required:
+      Most Brave bloat features cannot be disabled via command line and require manual setup:
+      - Brave Rewards: Settings > Appearance > Hide Brave Rewards Icon
+      - Brave Wallet: brave://flags/#native-brave-wallet > Disabled
+      - Brave News: New Tab Page > Customize > Turn off news
+      - Brave Talk: Disable in settings when first prompted
       
       Extension Installation:
       Due to home-manager bug #2216, extensions require manual installation:
       - uBlock Origin: brave://settings/extensions/v2 (Manifest V2 version recommended)
-      - Bitwarden: brave://extensions/ or Chrome Web Store
-      - Zhongwen: brave://extensions/ or Chrome Web Store  
-      - Return YouTube Dislike: brave://extensions/ or Chrome Web Store
+      - Bitwarden, Zhongwen, Return YouTube Dislike: Chrome Web Store or brave://extensions/
       
       Extension IDs are configured for reference and potential future fixes.
       
@@ -55,8 +59,8 @@ in {
       ];
 
       commandLineArgs = mkDefault [
-        # Disable Brave-specific features using correct flags
-        "--disable-features=BraveRewards,BraveWallet,AIChat,BraveVPN,BraveNews,BraveToday,BraveTalk"
+        # Disable Brave features that actually work via command line
+        "--disable-features=AIChat,BraveVPN,MediaRouter,TranslateUI"
         
         # Privacy and security enhancements
         "--disable-background-networking"
@@ -72,7 +76,6 @@ in {
         
         # Additional privacy flags
         "--disable-default-apps"
-        "--disable-features=MediaRouter,TranslateUI"
         "--disable-ipc-flooding-protection"
       ];
     };
