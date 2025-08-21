@@ -5,16 +5,22 @@ let cfg = config.features.applications.brave;
 in {
   options.features.applications.brave = {
     enable = mkEnableOption (lib.mdDoc ''
-      Brave browser with privacy-focused configuration and essential extensions.
+      Brave browser with privacy-focused configuration.
       
       Features:
-      - Privacy-first configuration with Brave bloat features disabled
-      - Essential extensions: uBlock Origin, Bitwarden, Zhongwen, Return YouTube Dislike
+      - Privacy-first configuration with Brave bloat features disabled via --disable-features
+      - Disables: BraveRewards, BraveWallet, BraveNews, BraveToday, BraveTalk, AIChat, BraveVPN
       - Hardware acceleration enabled for better performance
       - Command-line optimizations for privacy and performance
       
-      Note: uBlock Origin may also be available through Brave's internal Manifest V2 system
-      at brave://settings/extensions/v2 for more reliable installation.
+      Extension Installation:
+      Due to home-manager bug #2216, extensions require manual installation:
+      - uBlock Origin: brave://settings/extensions/v2 (Manifest V2 version recommended)
+      - Bitwarden: brave://extensions/ or Chrome Web Store
+      - Zhongwen: brave://extensions/ or Chrome Web Store  
+      - Return YouTube Dislike: brave://extensions/ or Chrome Web Store
+      
+      Extension IDs are configured for reference and potential future fixes.
       
       Dependencies: pkgs.brave
     '');
@@ -25,10 +31,13 @@ in {
       enable = true;
       package = pkgs.brave;
       
+      # NOTE: Due to home-manager bug #2216, extensions may not auto-install for Brave
+      # Extensions are installed to wrong directory (.config/brave/ vs .config/BraveSoftware/Brave-Browser/)
+      # Manual installation recommended: brave://extensions/ or chrome://extensions/
       extensions = mkDefault [
         {
           # uBlock Origin - Ad and tracker blocker
-          # Note: Also available via brave://settings/extensions/v2 for more reliable installation
+          # Manual install: brave://settings/extensions/v2 (Manifest V2) or Chrome Web Store
           id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";
         }
         {
@@ -46,13 +55,8 @@ in {
       ];
 
       commandLineArgs = mkDefault [
-        # Disable Brave-specific bloat features
-        "--disable-brave-rewards"
-        "--disable-brave-ads"
-        "--disable-brave-wallet"
-        "--disable-brave-news"
-        "--disable-brave-search"
-        "--disable-brave-talk"
+        # Disable Brave-specific features using correct flags
+        "--disable-features=BraveRewards,BraveWallet,AIChat,BraveVPN,BraveNews,BraveToday,BraveTalk"
         
         # Privacy and security enhancements
         "--disable-background-networking"
@@ -68,8 +72,7 @@ in {
         
         # Additional privacy flags
         "--disable-default-apps"
-        "--disable-extensions-except"
-        "--disable-features=MediaRouter"
+        "--disable-features=MediaRouter,TranslateUI"
         "--disable-ipc-flooding-protection"
       ];
     };
