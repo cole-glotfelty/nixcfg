@@ -50,6 +50,9 @@ in {
         "--disable-brave-rewards"
         "--disable-brave-ads"
         "--disable-brave-wallet"
+        "--disable-brave-news"
+        "--disable-brave-search"
+        "--disable-brave-talk"
         
         # Privacy and security enhancements
         "--disable-background-networking"
