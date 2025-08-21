@@ -29,7 +29,7 @@
   };
 
   custom.defaults = {
-    terminal = lib.mkOverride 500 "kitty";
+    terminal = lib.mkOverride 500 "ghostty";
     browser = lib.mkOverride 500 "brave";
     editor = lib.mkOverride 500 "nvim";
     fileManager = lib.mkOverride 500 "ranger";
