@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "apple-emoji": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1741767731,
+        "narHash": "sha256-7w/WBSz2EQ5BC/DifgTBNMxIb2i08w8jnZN0rhjyiro=",
+        "owner": "zhdsmy",
+        "repo": "apple-emoji",
+        "rev": "97f4b6a6dabfb16e2f16655591174019fe2a339b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zhdsmy",
+        "repo": "apple-emoji",
+        "type": "github"
+      }
+    },
     "blocklist-hosts": {
       "flake": false,
       "locked": {
@@ -225,6 +241,7 @@
     },
     "root": {
       "inputs": {
+        "apple-emoji": "apple-emoji",
         "blocklist-hosts": "blocklist-hosts",
         "disko": "disko",
         "home-manager": "home-manager",

@@ -24,19 +24,27 @@ in {
   config = mkIf cfg.enable {
     fonts = {
       packages = mkDefault (with pkgs; [
-        # TODO: Look into more font packages
-        # TODO: Look into fontconfig option
-        # TODO: Look into Apple Emoji font for system emoji font
+        # Core programming and system fonts
         nerd-fonts.fira-code
         corefonts
         liberation_ttf
+        
+        # High-quality TeX Gyre fonts (includes Nimbus Sans equivalent)
+        gyre-fonts
+        
+        # CJK language support
         source-han-sans
         source-han-serif
-        noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-cjk-serif
+        
+        # Unicode and emoji support
+        noto-fonts
         noto-fonts-emoji
         noto-fonts-extra
+        
+        # Custom Apple Color Emoji font
+        outputs.packages.${pkgs.system}.apple-color-emoji
       ]);
 
       fontconfig = {
@@ -91,6 +99,32 @@ in {
               </test>
               <edit name="family" mode="assign" binding="same">
                 <string>Liberation Sans</string>
+              </edit>
+            </match>
+            
+            <!-- Default Chinese text to sans-serif fonts -->
+            <match target="pattern">
+              <test name="lang" compare="contains">
+                <string>zh</string>
+              </test>
+              <test name="family">
+                <string>serif</string>
+              </test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Source Han Sans</string>
+              </edit>
+            </match>
+            
+            <!-- Ensure Chinese sans-serif preference -->
+            <match target="pattern">
+              <test name="lang" compare="contains">
+                <string>zh</string>
+              </test>
+              <test name="family">
+                <string>sans-serif</string>
+              </test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Source Han Sans</string>
               </edit>
             </match>
           </fontconfig>

@@ -172,9 +172,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # apple-emoji = {
-    #   url = "github:zhdsmy/apple-emoji";
-    #   flake = false;
-    # };
+    apple-emoji = {
+      url = "github:zhdsmy/apple-emoji";
+      flake = false;
+    };
   };
 }
