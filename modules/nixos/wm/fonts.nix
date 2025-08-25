@@ -38,13 +38,13 @@ in {
         noto-fonts-cjk-sans
         noto-fonts-cjk-serif
         
-        # Unicode and emoji support
+        # Unicode support (emoji temporarily disabled for testing)
         noto-fonts
-        noto-fonts-emoji
+        # noto-fonts-emoji  # Temporarily disabled to test Apple Color Emoji
         noto-fonts-extra
         
         # Custom Apple Color Emoji font
-        outputs.packages.${pkgs.system}.apple-color-emoji
+        pkgs.apple-color-emoji
       ]);
 
       fontconfig = {
@@ -125,6 +125,34 @@ in {
               </test>
               <edit name="family" mode="prepend" binding="strong">
                 <string>Source Han Sans</string>
+              </edit>
+            </match>
+            
+            <!-- Force Apple Color Emoji for all emoji requests -->
+            <match target="pattern">
+              <test name="family" compare="contains">
+                <string>emoji</string>
+              </test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Apple Color Emoji</string>
+              </edit>
+            </match>
+            
+            <!-- Ensure Apple Color Emoji for common emoji font requests -->
+            <match target="pattern">
+              <test name="family">
+                <string>Segoe UI Emoji</string>
+              </test>
+              <edit name="family" mode="assign" binding="strong">
+                <string>Apple Color Emoji</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="family">
+                <string>Noto Color Emoji</string>
+              </test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Apple Color Emoji</string>
               </edit>
             </match>
           </fontconfig>

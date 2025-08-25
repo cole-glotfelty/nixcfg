@@ -6,10 +6,13 @@ stdenvNoCC.mkDerivation rec {
 
   src = apple-emoji;
 
+  dontBuild = true;
+  dontConfigure = true;
+
   installPhase = ''
     runHook preInstall
     
-    install -m444 -Dt $out/share/fonts/truetype/apple-color-emoji fonts/AppleColorEmoji.ttf
+    install -m444 -Dt $out/share/fonts/truetype fonts/AppleColorEmoji.ttf
     
     runHook postInstall
   '';

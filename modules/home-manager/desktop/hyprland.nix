@@ -146,7 +146,7 @@ in {
         ## AUTOSTART ##
         exec-once = [
           "swww-daemon &"
-          "swww img ../../../users/common/mountain_oblisk.jpg &"
+          "swww img ${../../../users/common/mountain_oblisk.jpg} &"
           "waybar &"
           "nm-applet &"
           "fcitx5 &"
