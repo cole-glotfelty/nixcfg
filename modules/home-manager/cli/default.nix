@@ -33,6 +33,7 @@
     ripgrep
     fd
     fzf
+    file
     htop
     bottom
     zip

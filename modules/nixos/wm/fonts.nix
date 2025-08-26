@@ -23,7 +23,7 @@ in {
 
   config = mkIf cfg.enable {
     fonts = {
-      packages = mkDefault (with pkgs; [
+      packages = with pkgs; [
         # Core programming and system fonts
         nerd-fonts.fira-code
         corefonts
@@ -44,8 +44,8 @@ in {
         noto-fonts-extra
         
         # Custom Apple Color Emoji font
-        pkgs.apple-color-emoji
-      ]);
+        apple-color-emoji
+      ];
 
       fontconfig = {
         enable = mkDefault true;
@@ -74,13 +74,22 @@ in {
           <?xml version="1.0"?>
           <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
           <fontconfig>
+            <!-- Set TeX Gyre Heros (Nimbus Sans) as default sans-serif -->
+            <alias>
+              <family>sans-serif</family>
+              <prefer>
+                <family>TeX Gyre Heros</family>
+                <family>Liberation Sans</family>
+              </prefer>
+            </alias>
+            
             <!-- Fix spacing in web applications by providing consistent substitutions -->
             <match target="pattern">
               <test qual="any" name="family">
                 <string>system-ui</string>
               </test>
               <edit name="family" mode="assign" binding="same">
-                <string>Liberation Sans</string>
+                <string>TeX Gyre Heros</string>
               </edit>
             </match>
             
@@ -90,7 +99,7 @@ in {
                 <string>-apple-system</string>
               </test>
               <edit name="family" mode="assign" binding="same">
-                <string>Liberation Sans</string>
+                <string>TeX Gyre Heros</string>
               </edit>
             </match>
             <match target="pattern">
@@ -98,7 +107,7 @@ in {
                 <string>San Francisco</string>
               </test>
               <edit name="family" mode="assign" binding="same">
-                <string>Liberation Sans</string>
+                <string>TeX Gyre Heros</string>
               </edit>
             </match>
             
@@ -128,6 +137,32 @@ in {
               </edit>
             </match>
             
+            <!-- Set Apple Color Emoji as default emoji font -->
+            <alias>
+              <family>emoji</family>
+              <prefer>
+                <family>Apple Color Emoji</family>
+              </prefer>
+            </alias>
+            
+            <!-- Add Apple Color Emoji to all generic font families -->
+            <match target="pattern">
+              <test name="family">
+                <string>sans-serif</string>
+              </test>
+              <edit name="family" mode="append" binding="strong">
+                <string>Apple Color Emoji</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="family">
+                <string>serif</string>
+              </test>
+              <edit name="family" mode="append" binding="strong">
+                <string>Apple Color Emoji</string>
+              </edit>
+            </match>
+            
             <!-- Force Apple Color Emoji for all emoji requests -->
             <match target="pattern">
               <test name="family" compare="contains">
@@ -151,7 +186,15 @@ in {
               <test name="family">
                 <string>Noto Color Emoji</string>
               </test>
-              <edit name="family" mode="prepend" binding="strong">
+              <edit name="family" mode="assign" binding="strong">
+                <string>Apple Color Emoji</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="family">
+                <string>Twitter Color Emoji</string>
+              </test>
+              <edit name="family" mode="assign" binding="strong">
                 <string>Apple Color Emoji</string>
               </edit>
             </match>
