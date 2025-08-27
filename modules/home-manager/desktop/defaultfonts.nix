@@ -9,9 +9,9 @@ in {
       
       Font Stack:
       - Serif: Times New Roman → Noto Serif → Liberation Serif
-      - Sans Serif: Noto Sans → Liberation Sans
+      - Sans Serif: TeX Gyre Heros → Noto Sans → Liberation Sans
       - Monospace: FiraCode Nerd Font Mono → Liberation Mono  
-      - Emoji: Noto Color Emoji
+      - Emoji: Apple Color Emoji → Noto Color Emoji
       
       Provides: Consistent font fallbacks across all applications
       Benefits: Programming ligatures, emoji support, cross-platform compatibility
@@ -23,11 +23,9 @@ in {
       enable = true;
       defaultFonts = {
         serif = [ "Times New Roman" "Noto Serif" "Liberation Serif" ];
-        # TODO: Look into Nimbus Sans for sansSerif
-        sansSerif = [ "Noto Sans" "Liberation Sans" ];
+        sansSerif = [ "TeX Gyre Heros" "Noto Sans" "Liberation Sans" ];
         monospace = [ "FiraCode Nerd Font Mono" "Liberation Mono" ];
-        # TODO: Look into Apple Emoji font for system emoji font
-        emoji = [ "Noto Color Emoji" ];
+        emoji = [ "Apple Color Emoji" "Noto Color Emoji" ];
       };
     };
   };
