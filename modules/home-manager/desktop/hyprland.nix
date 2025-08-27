@@ -289,8 +289,8 @@ in {
           "$mainMod, RETURN, exec, $terminal"
           "$mainMod SHIFT, Q, killactive"
           "$mainMod, D, exec, $menu"
-          "$mainMod, L, exec, hyprlock"
-          "$mainMod SHIFT, L, exec, wlogout"
+          "$mainMod SHIFT, L, exec, hyprlock"
+          "$mainMod, L, exec, wlogout"
           "$mainMod, M, exit"
           "$mainMod, F, fullscreen"
           ''$mainMod SHIFT, S, exec, grim -l 0 -g "$(slurp)" - | wl-copy''
