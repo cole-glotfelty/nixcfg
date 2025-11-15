@@ -27,7 +27,7 @@ with lib;
     };
   };
 
-  nix.settings = {
+  nix= {
     optimise.automatic = mkDefault true;
     gc = {
       automatic = mkDefault true;

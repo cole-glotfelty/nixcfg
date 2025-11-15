@@ -13,7 +13,6 @@ rec {
     (../../modules/common + "/${_meta.system}")
     ./configuration.nix
     ../../modules/darwin/homebrew
-    ../../modules/nixos/apps
   ];
 
   features = {
@@ -22,11 +21,11 @@ rec {
       casks.enable = true;
     };
     
-    apps = {
-      devenv.enable = true;
-      mullvad-vpn.enable = false;
-      steam.enable = false;
-      nixd.enable = false;
-    };
+    # apps = {
+    #   devenv.enable = false;
+    #   mullvad-vpn.enable = false;
+    #   steam.enable = false;
+    #   nixd.enable = false;
+    # };
   };
 }

@@ -21,8 +21,11 @@ in {
   };
   config = mkIf cfg.enable {
 
+    # TODO: This module needs love to be multi system supported
+
+    # HACK don't forget to re-eneable before rebuilding on a nixos system
     programs.librewolf = {
-      enable = true;
+      enable = false;
       package = mkDefault pkgs.stable.librewolf-wayland;
       settings = mkDefault {
         # Search Engine
@@ -47,9 +50,11 @@ in {
       };
     };
 
+    # TODO: Decouple this from the browser module
     home.sessionVariables = { BROWSER = config.custom.defaults.browser; };
 
-    home.packages = 
-      [ inputs.zen-browser.packages.x86_64-linux.default ];
+    # HACK: fix this so that it works on linux only
+    # home.packages = 
+    #   [ inputs.zen-browser.packages.x86_64-linux.default ];
   };
 }
