@@ -5,4 +5,7 @@
   
   # Temporarily disable devenv due to cachix build issues on macOS
   features.cli.devenv.enable = false;
+  
+  # Temporarily disable kitty due to fish build issues on macOS
+  features.applications.kitty.enable = false;
 }
