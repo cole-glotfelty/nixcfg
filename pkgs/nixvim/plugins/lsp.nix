@@ -38,8 +38,9 @@
       nixd = {
         enable = true;
         settings = {
-          schemaOverlays =
-            [{ fromPath = "${pkgs.devenv}/modules/devenv.nix"; }];
+          # Temporarily disabled due to cachix build issues on macOS
+          # schemaOverlays =
+          #   [{ fromPath = "${pkgs.devenv}/modules/devenv.nix"; }];
         };
       };
       # C/C++
