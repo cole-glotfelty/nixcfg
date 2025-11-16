@@ -16,7 +16,7 @@ in {
         "blender"
         "drawio"
         "makemkv"
-        "mullvadvpn"
+        "mullvad-vpn"
         "museeks"
         "musicbrainz-picard"
         "numi"

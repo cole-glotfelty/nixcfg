@@ -14,5 +14,8 @@ in {
       };
       brews = [ "mpv" ];
     };
+
+    # Ensure Homebrew is in PATH
+    environment.systemPath = [ "/opt/homebrew/bin" ];
   };
 }

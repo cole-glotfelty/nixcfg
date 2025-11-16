@@ -24,7 +24,7 @@
       git.enable = lib.mkDefault true;
       ranger.enable = lib.mkDefault true;
       sshHosts.enable = lib.mkDefault true;
-      devenv.enable = lib.mkDefault true;
+      # devenv.enable = lib.mkDefault true;
       abcde.enable = lib.mkDefault true;
       sops.enable = lib.mkDefault false;
     };

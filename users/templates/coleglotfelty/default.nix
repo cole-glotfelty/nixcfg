@@ -17,12 +17,13 @@
       tmux.enable = lib.mkDefault true;
       zoxide.enable = lib.mkDefault true;
       nixvim.enable = lib.mkDefault true;
-      devenv.enable = lib.mkDefault true;
+      # devenv.enable = lib.mkDefault true;
       sops.enable = lib.mkDefault false;
     };
 
     applications = {
-      kitty.enable = lib.mkDefault true;
+      kitty.enable = lib.mkDefault false;
+      alacritty.enable = lib.mkDefault true;
       browsers.enable = lib.mkDefault true;
     };
   };
