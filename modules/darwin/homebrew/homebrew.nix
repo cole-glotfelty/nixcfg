@@ -12,10 +12,7 @@ in {
         autoUpdate = true; # Auto-update brew packages on activation
         cleanup = "zap"; # Remove all unmanaged homebrew packages
       };
-      brews = [ "mpv" ];
+      brews = [ ];
     };
-
-    # Ensure Homebrew is in PATH
-    environment.systemPath = [ "/opt/homebrew/bin" ];
   };
 }

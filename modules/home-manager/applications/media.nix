@@ -23,21 +23,43 @@ in {
   config = mkIf cfg.enable {
     # TODO: Come back, bc some of thesse may require themeing or the such
     home.packages = with pkgs; [
-      foliate # epub reader
-      zathura # pdf viewer
-      feh # image viewer
-      transmission_4-gtk # torrent client
-      cmus # music player # NOTE: potenitally replace with MPD and Client
+      # Cross-platform packages
       yt-dlp # webvideo downloading
       # TODO: fix plex desktop being borked
       # plex-desktop # personal streamed media
       # plexamp
       # cider # apple music client (electron bleh)
+    ] ++ lib.optionals stdenv.isLinux [
+      # Linux-specific packages
+      foliate # epub reader
+      zathura # pdf viewer  
+      feh # image viewer
+      transmission_4-gtk # torrent client
+      cmus # music player # NOTE: potenitally replace with MPD and Client
     ];
 
     programs.mpv = {
       enable = true;
-      config = { hwdec = "auto"; };
+      config = {
+        # Hardware acceleration
+        hwdec = "auto";
+        # Video output - use gpu for better compatibility on macOS
+        vo = "gpu";
+        # GPU API - Use vulkan on macOS (metal not available in this build)
+        gpu-api = if pkgs.stdenv.isDarwin then "vulkan" else "auto";
+        # Better seeking and playback
+        hr-seek = "yes";
+        # Audio output
+        ao = if pkgs.stdenv.isDarwin then "coreaudio" else "auto";
+        # Window settings
+        geometry = "50%:50%";
+        autofit-larger = "90%x90%";
+        # Subtitle settings
+        sub-auto = "fuzzy";
+        # Cache settings
+        cache = "yes";
+        demuxer-max-bytes = "512MiB";
+      };
     };
   };
 }
