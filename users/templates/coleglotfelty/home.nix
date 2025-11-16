@@ -15,7 +15,7 @@
   };
 
   custom.defaults = {
-    terminal = lib.mkOverride 500 "kitty";
+    terminal = lib.mkOverride 500 "alacritty";
     browser = lib.mkOverride 500 "firefox";  # or whatever browser you prefer on macOS
     editor = lib.mkOverride 500 "nvim";
     copyCommand = lib.mkOverride 500 "pbcopy";  # macOS clipboard command

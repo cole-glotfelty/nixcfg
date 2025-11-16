@@ -41,7 +41,7 @@ in {
     # Will have to prefix executable with gamemoderun
     programs.gamemode.enable = true;
 
-    environment.systemPackages = with pkgs; [ protonup ];
+    environment.systemPackages = with pkgs; [ protonup-ng ];
     
     # Create a script that sets the correct path based on the current user
     environment.sessionVariables = {

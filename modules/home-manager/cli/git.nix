@@ -49,13 +49,15 @@ in {
 
     programs.git = {
       enable = true;
-      userName = mkDefault config.custom.user.name;
-      userEmail = mkDefault config.custom.user.email;
-      aliases = {
-        logg =
-          "log --graph --pretty=tformat:'%Cred%h %Cgreen%cd %C(bold blue)%an%Creset%C(yellow)%d%Creset %s' --date=short --all";
-      };
-      extraConfig = {
+      settings = {
+        user = {
+          name = mkDefault config.custom.user.name;
+          email = mkDefault config.custom.user.email;
+        };
+        alias = {
+          logg =
+            "log --graph --pretty=tformat:'%Cred%h %Cgreen%cd %C(bold blue)%an%Creset%C(yellow)%d%Creset %s' --date=short --all";
+        };
         init.defaultBranch = mkDefault "main";
         safe.directory =
           [ config.custom.paths.nixcfg "${config.custom.paths.nixcfg}/.git" ];

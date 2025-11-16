@@ -38,14 +38,15 @@
       nixd = {
         enable = true;
         settings = {
-          schemaOverlays =
-            [{ fromPath = "${pkgs.devenv}/modules/devenv.nix"; }];
+          # Temporarily disabled due to cachix build issues on macOS
+          # schemaOverlays =
+          #   [{ fromPath = "${pkgs.devenv}/modules/devenv.nix"; }];
         };
       };
       # C/C++
       clangd.enable = true;
       #Erlang
-      erlangls.enable = true;
+      # erlangls.enable = true; # HACK: Fix in the future - figure out which lsp works for erlang
       # Python
       #pylsp.enable = true;
       jedi_language_server.enable = true;

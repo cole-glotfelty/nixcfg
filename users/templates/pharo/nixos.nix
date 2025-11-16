@@ -6,6 +6,7 @@ let
   hostName = config.networking.hostName;
   userConfigPath = ../../../hosts/${hostName}/users/pharo.nix;
   userConfigExists = builtins.pathExists userConfigPath;
+# TODO: Check if this mkIf needs to be here?
 in mkIf userConfigExists {
   # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.pharo = mkMerge [
