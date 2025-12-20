@@ -45,8 +45,8 @@
       };
       # C/C++
       clangd.enable = true;
-      #Erlang
-      # erlangls.enable = true; # HACK: Fix in the future - figure out which lsp works for erlang
+      # Erlang
+      elp.enable = true;
       # Python
       #pylsp.enable = true;
       jedi_language_server.enable = true;

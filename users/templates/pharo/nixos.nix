@@ -28,7 +28,7 @@ in mkIf userConfigExists {
         "flatpak" # Install and manage Flatpak applications without root
         "gamemode" # Feral GameMode CPU/GPU performance optimizations for gaming
       ];
-      packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
+      packages = [ inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default ];
     }
 
     # Conditionally set password if sops is setup

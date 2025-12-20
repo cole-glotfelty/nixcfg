@@ -45,7 +45,7 @@ in {
 
         # TODO: Change around padding to match kitty
         # TODO: Change this to auto update w/ nix-colors
-        theme = "tokyonight_night";
+        theme = "TokyoNight Night";
       };
     };
   };

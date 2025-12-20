@@ -9,20 +9,24 @@ in {
   config = mkIf cfg.enable {
     programs.ssh = {
       enable = true;
-      extraConfig = ''
-        Host halligan
-          User cglotf01
-          HostName homework.cs.tufts.edu
-          IdentityFile ${config.custom.user.homeDirectory}/.ssh/id_ed25519
-          ServerAliveInterval 15
-          Port 22
+      enableDefaultConfig = false;
 
-        Host vmprojw3
-          ProxyJump halligan
-          User cglotf01
-          HostName vm-projectweb3
-          ServerAliveInterval 15
-      '';
+      matchBlocks = {
+        halligan = {
+          user = "cglotf01";
+          hostname = "homework.cs.tufts.edu";
+          identityFile = "${config.custom.user.homeDirectory}/.ssh/id_ed25519";
+          serverAliveInterval = 15;
+          port = 22;
+        };
+
+        vmprojw3 = {
+          proxyJump = "halligan";
+          user = "cglotf01";
+          hostname = "vm-projectweb3";
+          serverAliveInterval = 15;
+        };
+      };
     };
   };
 }

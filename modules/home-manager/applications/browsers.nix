@@ -23,9 +23,9 @@ in {
 
     # TODO: This module needs love to be multi system supported
 
-    # HACK don't forget to re-eneable before rebuilding on a nixos system
+    # HACK: don't forget to re-eneable before rebuilding on a nixos system
     programs.librewolf = {
-      enable = false;
+      enable = true;
       package = mkDefault pkgs.stable.librewolf-wayland;
       settings = mkDefault {
         # Search Engine
@@ -54,7 +54,8 @@ in {
     home.sessionVariables = { BROWSER = config.custom.defaults.browser; };
 
     # HACK: fix this so that it works on linux only
-    # home.packages = 
+    # Temporarily disabled due to wrapGAppsHook -> wrapGAppsHook3 migration issue
+    # home.packages =
     #   [ inputs.zen-browser.packages.x86_64-linux.default ];
   };
 }

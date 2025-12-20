@@ -1,8 +1,8 @@
 { pkgs, nixvim, ... }:
 
 let
-  nixvimLib = nixvim.lib.${pkgs.system};
-  nixvim' = nixvim.legacyPackages.${pkgs.system};
+  nixvimLib = nixvim.lib.${pkgs.stdenv.hostPlatform.system};
+  nixvim' = nixvim.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
   # Pure standalone nixvim configuration
   nixvimConfig = import ./config.nix { inherit pkgs; lib = pkgs.lib; };

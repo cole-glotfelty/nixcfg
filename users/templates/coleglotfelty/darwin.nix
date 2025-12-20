@@ -11,7 +11,7 @@ in mkIf userConfigExists ({
     name = "coleglotfelty";
     description = "Cole Glotfelty";
     home = "/Users/coleglotfelty";
-    packages = [ inputs.home-manager.packages.${pkgs.system}.default ];
+    packages = [ inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default ];
   };
 
   home-manager.users.coleglotfelty = import ./.;

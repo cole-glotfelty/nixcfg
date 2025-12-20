@@ -364,7 +364,7 @@ config = lib.mkIfAnyHMOpt config (hmCfg: hmCfg.features.desktop.hyprland.enable 
 - **Standalone Config**: Primary configuration in `pkgs/{app}/config.nix` with modular imports
 - **Package Builder**: `pkgs/{app}/default.nix` creates runnable package with `makeNixvimWithModule`
 - **Config Exposure**: Uses `passthru.config` to expose configuration for home-manager consumption
-- **Home Integration**: Home module consumes standalone config: `programs.nixvim = outputs.packages.${pkgs.system}.nixvim.passthru.config // { enable = true; }`
+- **Home Integration**: Home module consumes standalone config: `programs.nixvim = outputs.packages.${pkgs.stdenv.hostPlatform.system}.nixvim.passthru.config // { enable = true; }`
 
 **Benefits**:
 - **Portability**: Run anywhere with `nix run .#{package}` without system configuration

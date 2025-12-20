@@ -1,26 +1,29 @@
-# Standalone nixvim treesitter configuration  
+# Standalone nixvim treesitter configuration
 # Extracted from home/features/cli/nixvim/plugins/treesitter.nix
-{ ... }:
+{ pkgs, ... }:
 
 {
   plugins.treesitter = {
     enable = true;
+
+    # Install grammars via Nix (read-only, immutable)
+    grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+      python
+      cpp
+      c
+      lua
+      vim
+      vimdoc
+      yaml
+      toml
+      rust
+      nix
+      erlang
+    ];
+
     settings = {
-      auto_install = true;
+      auto_install = false;  # Disable runtime installation (would fail on read-only Nix store)
       sync_install = false;
-      ensure_installed = [
-        "python"
-        "cpp"
-        "c"
-        "lua"
-        "vim"
-        "vimdoc"
-        "yaml"
-        "toml"
-        "rust"
-        "nix"
-        "erlang"
-      ];
       highlight = {
         enable = true;
         additional_vim_regex_highlighting = false;

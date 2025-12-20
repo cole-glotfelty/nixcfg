@@ -12,7 +12,7 @@ in {
 
   config = mkIf cfg.enable {
     programs.vim.enable = mkForce false;
-    programs.nixvim = outputs.packages.${pkgs.system}.nixvim.passthru.config // {
+    programs.nixvim = outputs.packages.${pkgs.stdenv.hostPlatform.system}.nixvim.passthru.config // {
       enable = true;
       # Home-manager specific settings that aren't in standalone
       vimdiffAlias = true; # this could cause problems
