@@ -169,9 +169,6 @@ in {
           touchpad = { natural_scroll = false; };
         };
 
-        # https://wiki.hyprland.org/Configuring/Variables/#gestures
-        gestures = { workspace_swipe = false; };
-
         ## LOOK & FEEL ##
         # Refer to https://wiki.hyprland.org/Configuring/Variables/
         # https://wiki.hyprland.org/Configuring/Variables/#general
