@@ -49,8 +49,6 @@ in {
         gpu-api = if pkgs.stdenv.isDarwin then "vulkan" else "auto";
         # Better seeking and playback
         hr-seek = "yes";
-        # Audio output
-        ao = if pkgs.stdenv.isDarwin then "coreaudio" else "auto";
         # Window settings
         geometry = "50%:50%";
         autofit-larger = "90%x90%";
@@ -59,6 +57,9 @@ in {
         # Cache settings
         cache = "yes";
         demuxer-max-bytes = "512MiB";
+      } // lib.optionalAttrs pkgs.stdenv.isDarwin {
+        # Audio output - only set on macOS; Linux uses built-in auto-detection
+        ao = "coreaudio";
       };
     };
   };
