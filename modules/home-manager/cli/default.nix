@@ -38,6 +38,7 @@
     bottom
     zip
     unzip
+    unrar
     wget
     curl
     gdu
