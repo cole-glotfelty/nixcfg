@@ -53,5 +53,6 @@
     imagemagick
     hugo
     claude-code
+    gemini-cli
   ];
 }

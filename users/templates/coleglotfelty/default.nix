@@ -24,7 +24,6 @@
     applications = {
       kitty.enable = lib.mkDefault false;
       alacritty.enable = lib.mkDefault true;
-      browsers.enable = lib.mkDefault true;
       media.enable = lib.mkDefault true;
     };
   };

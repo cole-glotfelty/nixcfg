@@ -1,61 +1,34 @@
-{ inputs, config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 with lib;
-let cfg = config.features.applications.browsers;
+let
+  defaultBrowser = config.custom.defaults.browser;
 in {
-  options.features.applications.browsers = {
-    enable = mkEnableOption (lib.mdDoc ''
-      Web browser applications with privacy and performance optimizations.
-      
-      Includes:
-      - LibreWolf (privacy-focused Firefox) with Wayland support and anti-fingerprinting disabled for better dark mode
-      - Ungoogled Chromium for Chromium-based web compatibility
-      - Zen Browser (modern Firefox-based browser)
-      - Brave Browser available as separate module (features.applications.brave.enable)
-      - DuckDuckGo as default search engine across browsers
-      - Hardware acceleration enabled (WebRender, VAAPI)
-      - Browser environment variable set from custom.defaults.browser
-      
-      Dependencies: custom.defaults.browser, zen-browser flake input
-    '');
+  # Browser coordinator module - manages browser environment configuration.
+  #
+  # This module (always enabled):
+  # - Sets the BROWSER environment variable from custom.defaults.browser
+  # - Automatically enables the preferred browser module based on custom.defaults.browser
+  # - Provides a central coordination point for browser features
+  #
+  # Individual browser modules available:
+  # - features.applications.librewolf.enable - Privacy-focused Firefox fork
+  # - features.applications.firefox.enable - Mozilla Firefox
+  # - features.applications.brave.enable - Privacy-focused Chromium
+  # - features.applications.zen-browser.enable - Modern Firefox-based browser
+  #
+  # Dependencies: custom.defaults.browser
+
+  # Set browser environment variable
+  home.sessionVariables = {
+    BROWSER = defaultBrowser;
   };
-  config = mkIf cfg.enable {
 
-    # TODO: This module needs love to be multi system supported
-
-    # HACK: don't forget to re-eneable before rebuilding on a nixos system
-    programs.librewolf = {
-      enable = true;
-      package = mkDefault pkgs.stable.librewolf-wayland;
-      settings = mkDefault {
-        # Search Engine
-        "browser.search.defaultenginename" = "DuckDuckGo";
-        "browser.urlbar.placeholderName" = "DuckDuckGo";
-        "browser.search.selectedEngine" = "DuckDuckGo";
-
-        # Font Settings
-        "gfx.font_rendering.opentype_svg.enabled" = true;
-        "layout.css.font-visibility.level" = 1; # Improve web font rendering
-
-        # fingerprinting resist was what was blocking suggested darkmode
-        "privacy.resistFingerprinting" = false;
-        "privacy.resistFingerprinting.letterboxing" = false;
-
-        # Auto Install Extensions
-        "extensions.autoDisableScopes" = 0;
-
-        # Hardware Acceleration
-        "gfx.webrender.all" = true;
-        "media.ffmpeg.vaapi.enabled" = true;
-      };
-    };
-
-    # TODO: Decouple this from the browser module
-    home.sessionVariables = { BROWSER = config.custom.defaults.browser; };
-
-    # HACK: fix this so that it works on linux only
-    # Temporarily disabled due to wrapGAppsHook -> wrapGAppsHook3 migration issue
-    # home.packages =
-    #   [ inputs.zen-browser.packages.x86_64-linux.default ];
+  # Automatically enable the preferred browser module
+  features.applications = {
+    librewolf.enable = mkIf (defaultBrowser == "librewolf") (mkDefault true);
+    firefox.enable = mkIf (defaultBrowser == "firefox") (mkDefault true);
+    brave.enable = mkIf (defaultBrowser == "brave") (mkDefault true);
+    zen-browser.enable = mkIf (defaultBrowser == "zen-browser") (mkDefault true);
   };
 }
