@@ -27,9 +27,9 @@ in {
 
       settings = mkDefault {
         # Search Engine
-        "browser.search.defaultenginename" = "DuckDuckGo";
-        "browser.urlbar.placeholderName" = "DuckDuckGo";
-        "browser.search.selectedEngine" = "DuckDuckGo";
+        "browser.search.defaultenginename" = "ddg";
+        "browser.urlbar.placeholderName" = "ddg";
+        "browser.search.selectedEngine" = "ddg";
 
         # Font Settings
         "gfx.font_rendering.opentype_svg.enabled" = true;

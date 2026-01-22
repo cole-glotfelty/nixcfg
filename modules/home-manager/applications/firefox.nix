@@ -29,15 +29,15 @@ in {
         isDefault = true;
 
         search = {
-          default = "DuckDuckGo";
-          privateDefault = "DuckDuckGo";
+          default = "ddg";
+          privateDefault = "ddg";
           force = true;
         };
 
         settings = {
           # Search Engine
-          "browser.search.defaultenginename" = "DuckDuckGo";
-          "browser.urlbar.placeholderName" = "DuckDuckGo";
+          "browser.search.defaultenginename" = "ddg";
+          "browser.urlbar.placeholderName" = "ddg";
 
           # Font Settings
           "gfx.font_rendering.opentype_svg.enabled" = true;
