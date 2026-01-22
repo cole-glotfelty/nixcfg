@@ -17,7 +17,7 @@
       tmux.enable = lib.mkDefault true;
       zoxide.enable = lib.mkDefault true;
       nixvim.enable = lib.mkDefault true;
-      # devenv.enable = lib.mkDefault true;
+      devenv.enable = lib.mkDefault true;
       sops.enable = lib.mkDefault false;
     };
 

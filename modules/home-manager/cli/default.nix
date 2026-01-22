@@ -11,7 +11,7 @@
     ./git.nix
     ./latex.nix
     ./sshHosts.nix
-    # ./devenv.nix  # Temporarily disabled due to cachix build issues on macOS
+    ./devenv.nix  # Temporarily disabled due to cachix build issues on macOS
     ./abcde.nix
     ./nixvim
     ./sops.nix
