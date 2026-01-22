@@ -5,7 +5,10 @@
     ./media.nix
     ./messaging.nix
     ./browsers.nix
+    ./librewolf.nix
+    ./firefox.nix
     ./brave.nix
+    ./zen-browser.nix
     ./kitty.nix
     ./alacritty.nix
     ./games.nix

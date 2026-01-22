@@ -13,9 +13,17 @@ with lib;
 
     browser = mkOption {
       type = types.str;
-      default = "firefox";
-      description = "Default web browser";
-      example = "firefox";
+      default = "librewolf";
+      description = ''
+        Default web browser (sets BROWSER environment variable).
+
+        When features.applications.browsers.enable = true, automatically enables
+        the corresponding browser module. Multiple browsers can be installed by
+        manually enabling additional browser modules.
+
+        Available browsers: librewolf, firefox, brave, zen-browser
+      '';
+      example = "librewolf";
     };
 
     editor = mkOption {
@@ -86,14 +94,14 @@ with lib;
         '';
       }
       {
-        assertion = (config.custom.defaults.browser == "firefox") -> 
-                     config.features.applications.browsers.enable;
+        assertion = elem config.custom.defaults.browser ["librewolf" "firefox" "brave" "zen-browser"];
         message = ''
-          You're using the default browser "firefox" but the browsers module is not enabled.
-          
-          Fix by either:
-            1. Enable the module: features.applications.browsers.enable = true;
-            2. Or change to a different browser: custom.defaults.browser = "yourChoice";
+          Invalid browser selection: "${config.custom.defaults.browser}"
+
+          Valid options: librewolf, firefox, brave, zen-browser
+
+          Set a valid browser with:
+            custom.defaults.browser = "librewolf"; # or firefox, brave, zen-browser
         '';
       }
     ];

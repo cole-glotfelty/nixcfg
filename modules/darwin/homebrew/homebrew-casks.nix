@@ -11,7 +11,6 @@ in {
       enable = true;
       casks = [
         "claude"
-        "claude-code"
         "audacity"
         "blender"
         "drawio"
