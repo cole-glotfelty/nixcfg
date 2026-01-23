@@ -13,7 +13,7 @@ with lib;
 
     browser = mkOption {
       type = types.str;
-      default = "librewolf";
+      default = "";
       description = ''
         Default web browser (sets BROWSER environment variable).
 
@@ -22,6 +22,8 @@ with lib;
         manually enabling additional browser modules.
 
         Available browsers: librewolf, firefox, brave, zen-browser
+
+        Set to "" (empty string) to not specify a default browser.
       '';
       example = "librewolf";
     };
@@ -94,14 +96,15 @@ with lib;
         '';
       }
       {
-        assertion = elem config.custom.defaults.browser ["librewolf" "firefox" "brave" "zen-browser"];
+        assertion = elem config.custom.defaults.browser ["" "librewolf" "firefox" "brave" "zen-browser"];
         message = ''
           Invalid browser selection: "${config.custom.defaults.browser}"
 
-          Valid options: librewolf, firefox, brave, zen-browser
+          Valid options: "" (none), librewolf, firefox, brave, zen-browser
 
           Set a valid browser with:
             custom.defaults.browser = "librewolf"; # or firefox, brave, zen-browser
+            custom.defaults.browser = ""; # to not specify a default browser
         '';
       }
     ];
