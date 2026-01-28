@@ -19,8 +19,8 @@ in {
   #
   # Dependencies: custom.defaults.browser
 
-  # Set browser environment variable
-  home.sessionVariables = {
+  # Set browser environment variable (only if not empty)
+  home.sessionVariables = mkIf (defaultBrowser != "") {
     BROWSER = defaultBrowser;
   };
 
