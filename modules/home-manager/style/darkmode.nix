@@ -18,8 +18,8 @@ in {
         # package = pkgs.adwaita-icon-theme;
       };
       iconTheme = {
-        name = "Adwaita";
-        package = pkgs.adwaita-icon-theme;
+        name = "breeze-dark";
+        package = pkgs.kdePackages.breeze-icons;
       };
       cursorTheme = {
         name = "Bibata-Modern-Classic";

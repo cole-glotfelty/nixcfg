@@ -366,6 +366,24 @@ in {
 
           # Fix some dragging issues with XWayland
           "nofocus,class:^$,title:^$,xwayland:2,floating:1,fullscreen:0,pinned:0"
+
+          # Browser Picture-in-Picture: float, pin, size, and position in bottom-right
+          "float, title:^(Picture-in-Picture)$"
+          "pin, title:^(Picture-in-Picture)$"
+          "size 640 360, title:^(Picture-in-Picture)$"
+          "move 100%-660 100%-380, title:^(Picture-in-Picture)$"
+          "float, title:^(Firefox)$, class:^(firefox)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "pin, title:^(Firefox)$, class:^(firefox)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "size 640 360, title:^(Firefox)$, class:^(firefox)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "move 100%-660 100%-380, title:^(Firefox)$, class:^(firefox)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "float, class:^(LibreWolf)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "pin, class:^(LibreWolf)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "size 640 360, class:^(LibreWolf)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "move 100%-660 100%-380, class:^(LibreWolf)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "float, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "pin, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "size 640 360, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "move 100%-660 100%-380, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
         ];
       };
       # Thing I need to use unstable for this to work

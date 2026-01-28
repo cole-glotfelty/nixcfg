@@ -93,6 +93,20 @@ in {
               "AutoSavePeriod" = 30;
             };
           };
+
+          # Classic UI addon settings for tray icon appearance
+          addons = {
+            classicui.globalSection = {
+              # Show text label in tray (e.g., "EN", "拼")
+              "PreferTextIcon" = true;
+              # Use symbolic (minimal) icons
+              "Theme" = "breeze-dark";
+              # Vertical candidate list
+              "Vertical Candidate List" = false;
+              # Show tooltip when switching
+              "ShowLayoutNameWhenSwitching" = true;
+            };
+          };
         };
       };
     };
