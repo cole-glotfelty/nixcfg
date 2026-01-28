@@ -1,6 +1,6 @@
 # Standalone nixvim completion configuration
 # Extracted from home/features/cli/nixvim/plugins/cmp.nix
-{ ... }:
+{ pkgs, ... }:
 
 {
   plugins = {

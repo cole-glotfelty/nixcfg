@@ -226,6 +226,7 @@ in {
 
     programs.zsh = {
       enable = true;
+      dotDir = mkDefault "${config.xdg.configHome}/zsh";
       zprof.enable = mkDefault false; # If prompt is slow enable to profile
       autocd = mkDefault true;
       autosuggestion.enable = mkDefault false;
