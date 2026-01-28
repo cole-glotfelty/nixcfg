@@ -38,8 +38,10 @@ in {
       cmus # music player # NOTE: potenitally replace with MPD and Client
     ];
 
+    # NOTE: On Darwin, mpv uses pkgs.stable to avoid Swift build failures on unstable.
     programs.mpv = {
       enable = true;
+      package = if pkgs.stdenv.isDarwin then pkgs.stable.mpv else pkgs.mpv;
       config = {
         # Hardware acceleration
         hwdec = "auto";
