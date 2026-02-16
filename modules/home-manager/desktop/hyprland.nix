@@ -290,6 +290,7 @@ in {
           "$mainMod, L, exec, wlogout"
           "$mainMod, M, exit"
           "$mainMod, F, fullscreen"
+          "$mainMod, V, togglefloating"
           ''$mainMod SHIFT, S, exec, grim -l 0 -g "$(slurp)" - | wl-copy''
 
           # Moving focus with hjkl
@@ -330,6 +331,10 @@ in {
           # Scroll through existing workspaces with mainMod + scroll
           "$mainMod, mouse_down, workspace, e+1"
           "$mainMod, mouse_up, workspace, e-1"
+
+          # Move active window to workspace with mainMod + SHIFT + scroll
+          "$mainMod SHIFT, mouse_down, movetoworkspace, e+1"
+          "$mainMod SHIFT, mouse_up, movetoworkspace, e-1"
 
         ];
         bindel = [
@@ -384,6 +389,14 @@ in {
           "pin, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
           "size 640 360, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
           "move 100%-660 100%-380, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
+
+          # Bitwarden extension popups: float with reasonable size
+          # Brave: Match all extension windows by initialClass pattern
+          "float, initialClass:^brave-.*-Default$"
+          "size 400 600, initialClass:^brave-.*-Default$"
+          # LibreWolf/Firefox: Try matching on class + current title (not initialTitle)
+          "float, class:^(firefox|librewolf)$, title:.*Bitwarden.*"
+          "size 400 600, class:^(firefox|librewolf)$, title:.*Bitwarden.*"
         ];
       };
       # Thing I need to use unstable for this to work
