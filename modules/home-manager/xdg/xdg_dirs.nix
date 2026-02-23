@@ -20,12 +20,12 @@ in {
         desktop = null;
         publicShare = null;
         extraConfig = {
-          XDG_REMOTE_DIR = "${config.home.homeDirectory}/Remote";
-          XDG_PROJECTS_DIR = "${config.home.homeDirectory}/Projects";
-          XDG_PODCAST_DIR = "${config.home.homeDirectory}/Media/Podcasts";
-          XDG_BOOK_DIR = "${config.home.homeDirectory}/Media/Books";
-          XDG_GAME_DIR = "${config.home.homeDirectory}/Media/Games";
-          XDG_GAME_SAVE_DIR = "${config.home.homeDirectory}/Media/Game Saves";
+          REMOTE = "${config.home.homeDirectory}/Remote";
+          PROJECTS = "${config.home.homeDirectory}/Projects";
+          PODCAST = "${config.home.homeDirectory}/Media/Podcasts";
+          BOOK = "${config.home.homeDirectory}/Media/Books";
+          GAME = "${config.home.homeDirectory}/Media/Games";
+          GAME_SAVE = "${config.home.homeDirectory}/Media/Game Saves";
         };
       };
     };

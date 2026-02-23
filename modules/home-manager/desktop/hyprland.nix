@@ -366,37 +366,37 @@ in {
         # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
 
         # Ignore maximize requests from apps. You'll probably like this.
-        windowrulev2 = [
-          "suppressevent maximize, class:.*"
+        windowrule = [
+          "suppress_event maximize, match:class .*"
 
           # Fix some dragging issues with XWayland
-          "nofocus,class:^$,title:^$,xwayland:2,floating:1,fullscreen:0,pinned:0"
+          "no_focus on, match:class ^$, match:title ^$, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
 
           # Browser Picture-in-Picture: float, pin, size, and position in bottom-right
-          "float, title:^(Picture-in-Picture)$"
-          "pin, title:^(Picture-in-Picture)$"
-          "size 640 360, title:^(Picture-in-Picture)$"
-          "move 100%-660 100%-380, title:^(Picture-in-Picture)$"
-          "float, title:^(Firefox)$, class:^(firefox)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "pin, title:^(Firefox)$, class:^(firefox)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "size 640 360, title:^(Firefox)$, class:^(firefox)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "move 100%-660 100%-380, title:^(Firefox)$, class:^(firefox)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "float, class:^(LibreWolf)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "pin, class:^(LibreWolf)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "size 640 360, class:^(LibreWolf)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "move 100%-660 100%-380, class:^(LibreWolf)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "float, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "pin, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "size 640 360, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
-          "move 100%-660 100%-380, class:^(brave-browser)$, title:^(.*)(Picture-in-Picture)(.*)$"
+          "float on, match:title ^(Picture-in-Picture)$"
+          "pin on, match:title ^(Picture-in-Picture)$"
+          "size 640 360, match:title ^(Picture-in-Picture)$"
+          "move (monitor_w-660) (monitor_h-380), match:title ^(Picture-in-Picture)$"
+          "float on, match:class ^(firefox)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "pin on, match:class ^(firefox)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "size 640 360, match:class ^(firefox)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "move (monitor_w-660) (monitor_h-380), match:class ^(firefox)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "float on, match:class ^(LibreWolf)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "pin on, match:class ^(LibreWolf)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "size 640 360, match:class ^(LibreWolf)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "move (monitor_w-660) (monitor_h-380), match:class ^(LibreWolf)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "float on, match:class ^(brave-browser)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "pin on, match:class ^(brave-browser)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "size 640 360, match:class ^(brave-browser)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
+          "move (monitor_w-660) (monitor_h-380), match:class ^(brave-browser)$, match:title ^(.*)(Picture-in-Picture)(.*)$"
 
           # Bitwarden extension popups: float with reasonable size
           # Brave: Match all extension windows by initialClass pattern
-          "float, initialClass:^brave-.*-Default$"
-          "size 400 600, initialClass:^brave-.*-Default$"
+          "float on, match:initial_class ^brave-.*-Default$"
+          "size 400 600, match:initial_class ^brave-.*-Default$"
           # LibreWolf/Firefox: Try matching on class + current title (not initialTitle)
-          "float, class:^(firefox|librewolf)$, title:.*Bitwarden.*"
-          "size 400 600, class:^(firefox|librewolf)$, title:.*Bitwarden.*"
+          "float on, match:class ^(firefox|librewolf)$, match:title .*Bitwarden.*"
+          "size 400 600, match:class ^(firefox|librewolf)$, match:title .*Bitwarden.*"
         ];
       };
       # Thing I need to use unstable for this to work
