@@ -10,7 +10,6 @@ in {
     homebrew = {
       enable = true;
       casks = [
-        "claude"
         "audacity"
         "blender"
         "drawio"
