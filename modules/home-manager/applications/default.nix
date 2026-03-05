@@ -4,6 +4,7 @@
   imports = [
     ./media.nix
     ./messaging.nix
+    ./discord
     ./browsers.nix
     ./librewolf.nix
     ./firefox.nix
