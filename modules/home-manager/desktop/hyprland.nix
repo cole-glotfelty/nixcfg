@@ -41,7 +41,7 @@ in {
         message = ''
           Hyprland is only supported on Linux systems.
           
-          Current platform: ${pkgs.stdenv.system}
+          Current platform: ${pkgs.stdenv.hostPlatform.system}
           
           Hyprland is a Wayland compositor for Linux. For other platforms:
             • macOS: Use native window management or tools like yabai

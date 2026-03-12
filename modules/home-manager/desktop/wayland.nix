@@ -28,7 +28,7 @@ in {
         message = ''
           Wayland module is only supported on Linux systems.
           
-          Current platform: ${pkgs.stdenv.system}
+          Current platform: ${pkgs.stdenv.hostPlatform.system}
           
           This module provides Linux-specific Wayland tools:
             • grim, slurp (screenshot tools)

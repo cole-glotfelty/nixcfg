@@ -215,7 +215,6 @@ in
       updateLockFile = false;
     };
 
-    # NOTE: Colors match Hyprland's cyan/teal gradient: rgba(33ccffee) rgba(00ff99ee)
     # TODO: Replace with system-wide color/theme management when implemented.
     programs.waybar = {
       enable = true;

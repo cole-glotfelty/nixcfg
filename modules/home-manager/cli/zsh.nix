@@ -269,6 +269,15 @@ in {
         # Color man pages
         export GROFF_NO_SGR=0
         export MANPAGER="less -R --use-color -Dd+r -Du+b"
+
+        # NixOS rebuild switch — signals waybar nix-updates widget on success
+        nrs() {
+          sudo nixos-rebuild switch --flake "${config.custom.paths.nixcfg}" "$@" && \
+          if [ -f "$HOME/.cache/nix-update-update-flag" ]; then
+            touch "$HOME/.cache/nix-update-rebuild-flag"
+            pkill -x -RTMIN+12 .waybar-wrapped 2>/dev/null || true
+          fi
+        }
       '';
 
       history = {

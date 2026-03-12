@@ -61,11 +61,6 @@ in {
   environment.shells = with pkgs; [ zsh bash dash ];
   # users.defaultUserShell = pkgs.zsh;
 
-  # Change /bin/(ba)sh to /bin/dash
-  # TODO: Determine if this should be here (or in default or in common)
-  # TODO: Check if this is causing issues on startup
-  environment.binsh = "${pkgs.dash}/bin/dash";
-
   xdg.portal = {
     enable = true;
     wlr.enable = true;

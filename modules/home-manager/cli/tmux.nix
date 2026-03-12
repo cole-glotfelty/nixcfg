@@ -49,7 +49,6 @@ in {
       baseIndex = mkDefault 1;
       terminal = mkDefault "screen-256color";
       # TODO: Come back here and update colors to match nix-colors
-      # TODO: come back and packaged tmux-sessionizer script
       extraConfig = ''
         set -ga terminal-overrides ",screen-256color*:Tc"
         set -g status-style 'bg=#333333 fg=#5eacd3'

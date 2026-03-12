@@ -57,10 +57,12 @@ with lib;
     optimise.automatic = mkDefault true;
     gc = {
       automatic = mkDefault true;
-      options = mkDefault "--delete-older-than 30d";
+      dates = mkDefault "weekly";
+      options = mkDefault "--delete-older-than 14d";
     };
   };
 
   # ZSH Default Shell
   users.defaultUserShell = pkgs.zsh;
+  environment.binsh = "${pkgs.dash}/bin/dash";
 }
