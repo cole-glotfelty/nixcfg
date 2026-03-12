@@ -176,5 +176,10 @@
       url = "github:zhdsmy/apple-emoji";
       flake = false;
     };
+
+    waybar-nixos-updates = {
+      url = "github:guttermonk/waybar-nixos-updates";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

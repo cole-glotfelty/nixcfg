@@ -93,6 +93,80 @@ in {
                 <string>Liberation Sans</string>
               </edit>
             </match>
+
+            <!-- Prefer sans-serif CJK fonts in the sans-serif fallback chain -->
+            <alias>
+              <family>sans-serif</family>
+              <prefer>
+                <family>Noto Sans CJK JP</family>
+                <family>Noto Sans CJK SC</family>
+                <family>Noto Sans CJK TC</family>
+                <family>Noto Sans CJK KR</family>
+              </prefer>
+            </alias>
+
+            <!-- Prefer monospace CJK fonts in the monospace fallback chain (for terminals) -->
+            <alias>
+              <family>monospace</family>
+              <prefer>
+                <family>Noto Sans Mono CJK JP</family>
+                <family>Noto Sans Mono CJK SC</family>
+                <family>Noto Sans Mono CJK TC</family>
+                <family>Noto Sans Mono CJK KR</family>
+              </prefer>
+            </alias>
+
+            <!-- Language-specific CJK sans-serif defaults -->
+            <match target="pattern">
+              <test name="lang" compare="contains"><string>ja</string></test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Noto Sans CJK JP</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="lang" compare="contains"><string>zh-CN</string></test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Noto Sans CJK SC</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="lang" compare="contains"><string>zh-TW</string></test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Noto Sans CJK TC</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="lang" compare="contains"><string>ko</string></test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Noto Sans CJK KR</string>
+              </edit>
+            </match>
+
+            <!-- Language-specific CJK monospace defaults -->
+            <match target="pattern">
+              <test name="lang" compare="contains"><string>ja</string></test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Noto Sans Mono CJK JP</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="lang" compare="contains"><string>zh-CN</string></test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Noto Sans Mono CJK SC</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="lang" compare="contains"><string>zh-TW</string></test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Noto Sans Mono CJK TC</string>
+              </edit>
+            </match>
+            <match target="pattern">
+              <test name="lang" compare="contains"><string>ko</string></test>
+              <edit name="family" mode="prepend" binding="strong">
+                <string>Noto Sans Mono CJK KR</string>
+              </edit>
+            </match>
           </fontconfig>
         '';
       };

@@ -31,11 +31,17 @@ in {
         name = mkDefault "FiraCode Nerd Font Mono";
       };
 
+      extraConfig = mkDefault ''
+        # Map CJK unicode ranges to a monospace CJK font
+        symbol_map U+3000-U+9FFF,U+AC00-U+D7AF,U+F900-U+FAFF,U+FF00-U+FFEF Noto Sans Mono CJK JP
+      '';
+
       settings = mkDefault {
         cursor_shape = "block";
         cursor_blink_interval = 0;
         scrollback_lines = 10000;
         detect_urls = true;
+        background_opacity = "0.5";
       };
     };
   };

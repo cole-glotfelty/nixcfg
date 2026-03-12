@@ -148,7 +148,7 @@ in {
           "swww-daemon &"
           "swww img ${../../../users/common/mountain_oblisk.jpg} &"
           "waybar &"
-          "nm-applet &"
+          "mullvad-vpn &"
           "fcitx5 &"
           "hypridle &"
         ];

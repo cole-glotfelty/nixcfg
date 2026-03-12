@@ -32,7 +32,13 @@ in {
         cursor-style-blink = false;
         cursor-style = "block";
 
-        font-family = "FiraCode Nerd Font Mono";
+        font-family = [
+          "FiraCode Nerd Font Mono"
+          "Noto Sans Mono CJK JP"
+          "Noto Sans Mono CJK SC"
+          "Noto Sans Mono CJK TC"
+          "Noto Sans Mono CJK KR"
+        ];
         font-thicken = true;
         font-size = 11;
         font-feature = "+cv01,+cv02,+cv14,+ss04,+ss07,+ss09";
@@ -42,6 +48,7 @@ in {
         
         # Match kitty URL detection
         mouse-hide-while-typing = true;
+        background-opacity = 0.8;
 
         # TODO: Change around padding to match kitty
         # TODO: Change this to auto update w/ nix-colors

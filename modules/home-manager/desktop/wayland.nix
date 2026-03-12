@@ -53,8 +53,17 @@ in {
       # wl-mirror
       wl-clipboard
       wlogout
+      networkmanager_dmenu
       # wtype
       # ydotool
     ];
+
+    xdg.configFile."networkmanager-dmenu/config.ini".text = ''
+      [dmenu]
+      dmenu_command = fuzzel --dmenu
+
+      [editor]
+      terminal = ${config.custom.defaults.terminal}
+    '';
   };
 }

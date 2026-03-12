@@ -28,6 +28,7 @@ in {
       musicDirectory = musicDir;
       extraConfig = ''
         bind_to_address "localhost"
+        auto_update "yes"
 
         audio_output {
           type "pipewire"
@@ -47,6 +48,7 @@ in {
         pid_file            "${home}/.local/share/mpd/mpd.pid"
         state_file          "${home}/.local/share/mpd/mpdstate"
         bind_to_address     "localhost"
+        auto_update         "yes"
 
         audio_output {
           type "osx"
