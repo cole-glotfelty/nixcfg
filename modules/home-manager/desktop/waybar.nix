@@ -108,13 +108,70 @@ let
     ram_s=$(span "$mem_pct" "''${mem_used}G")
     disk_s=$(span "$disk_pct" "''${disk_free}G")
 
+    if [ -f /tmp/wb-sysinfo-compact ]; then
+      text="cpu $cpu_s | ram $ram_s | disk $disk_s"
+    else
+      text="$cpu_s | $ram_s | $disk_s"
+    fi
+
     ${pkgs.jq}/bin/jq -cn \
-      --arg text "cpu $cpu_s | ram $ram_s | disk $disk_s" \
+      --arg text "$text" \
       --arg tooltip "CPU   $cpu%
 RAM   ''${mem_used}G / ''${mem_total}G
 Swap  ''${swap_used}G / ''${swap_total}G
 Disk  ''${disk_free}G free" \
       '{text: $text, tooltip: $tooltip}'
+  '';
+
+  fcitxScript = pkgs.writeShellScript "waybar-fcitx5" ''
+    im=$(${pkgs.fcitx5}/bin/fcitx5-remote -n 2>/dev/null)
+    if [ -z "$im" ]; then
+      # No input context focused yet — check if fcitx5 is actually running
+      ${pkgs.fcitx5}/bin/fcitx5-remote > /dev/null 2>&1
+      rc=$?
+      if [ $rc -ne 1 ] && [ $rc -ne 2 ]; then
+        ${pkgs.jq}/bin/jq -cn '{text: "", tooltip: "FCITX5 not running"}'
+        exit 0
+      fi
+      im="keyboard-us"
+    fi
+
+    case "$im" in
+      keyboard-us)  label="EN" ;;
+      keyboard-*)   label=$(echo "''${im#keyboard-}" | tr '[:lower:]' '[:upper:]') ;;
+      pinyin)       label="拼" ;;
+      skk|mozc)     label="あ" ;;
+      *)            label="$im" ;;
+    esac
+
+    ${pkgs.jq}/bin/jq -cn \
+      --arg text "$label" \
+      --arg tooltip "Input method: $im" \
+      '{text: $text, tooltip: $tooltip}'
+  '';
+
+  fcitxCycle = pkgs.writeShellScript "waybar-fcitx5-cycle" ''
+    ims=(keyboard-us pinyin mozc)
+    current=$(${pkgs.fcitx5}/bin/fcitx5-remote -n 2>/dev/null)
+    for i in "''${!ims[@]}"; do
+      if [ "''${ims[$i]}" = "$current" ]; then
+        next=$(( (i + 1) % ''${#ims[@]} ))
+        ${pkgs.fcitx5}/bin/fcitx5-remote -s "''${ims[$next]}"
+        pkill -SIGRTMIN+9 waybar
+        exit 0
+      fi
+    done
+    ${pkgs.fcitx5}/bin/fcitx5-remote -s "''${ims[0]}"
+    pkill -SIGRTMIN+9 waybar
+  '';
+
+  sysToggle = pkgs.writeShellScript "waybar-sysinfo-toggle" ''
+    if [ -f /tmp/wb-sysinfo-compact ]; then
+      rm /tmp/wb-sysinfo-compact
+    else
+      touch /tmp/wb-sysinfo-compact
+    fi
+    pkill -SIGRTMIN+8 waybar
   '';
 
   nixUpdatesExec = pkgs.writeShellScript "nix-updates-waybar" ''
@@ -175,6 +232,7 @@ in
             "custom/nix-updates"
             "network"
             "pulseaudio"
+            "custom/fcitx5"
             "battery"
             "battery#bat2"
             "tray"
@@ -242,6 +300,8 @@ in
             exec = "${sysScript}";
             interval = 3;
             return-type = "json";
+            signal = 8;
+            on-click = "${sysToggle}";
           };
 
           "custom/nix-updates" = {
@@ -261,6 +321,15 @@ in
               disabled = "󱂱";
               error = "";
             };
+          };
+
+          "custom/fcitx5" = {
+            exec = "${fcitxScript}";
+            interval = 1;
+            return-type = "json";
+            signal = 9;
+            on-click = "${fcitxCycle}";
+            on-click-right = "${pkgs.fcitx5}/bin/fcitx5-configtool";
           };
 
           "network" = {
@@ -305,7 +374,7 @@ in
 
           "battery#bat2" = { bat = "BAT2"; };
 
-          "tray" = { spacing = 10; };
+          "tray" = { spacing = 10; ignored-addresses = [ "org.fcitx.Fcitx5" ]; };
         };
       };
 
@@ -318,7 +387,7 @@ in
         * {
           font-family: "FiraCode Nerd Font", "FiraCode Nerd Font Mono", sans-serif;
           font-size: 13px;
-          font-weight: 500;
+          font-weight: 700;
           border: none;
           border-radius: 0;
           min-height: 0;
@@ -344,6 +413,7 @@ in
         #idle_inhibitor,
         #custom-weather,
         #custom-sysinfo,
+        #custom-fcitx5,
         #custom-nix-updates,
         #network,
         #pulseaudio,
@@ -389,7 +459,7 @@ in
           padding: 2px 5px;
           margin: 0px 1px;
           font-size: 13px;
-          font-weight: 500;
+          font-weight: 700;
         }
 
         #workspaces button.active {
@@ -440,6 +510,11 @@ in
         }
 
         /* ── Right ── */
+
+        #custom-fcitx5 {
+          color: #7dcfff;
+          font-weight: 700;
+        }
 
         #custom-weather {
           color: #e0af68;
@@ -499,6 +574,14 @@ in
 
         #tray {
           padding: 4px 8px;
+        }
+
+        #tray.empty {
+          min-width: 0;
+          padding: 0;
+          margin: 0;
+          border: none;
+          background: transparent;
         }
 
         #tray > .passive {

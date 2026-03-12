@@ -5,19 +5,17 @@ let cfg = config.features.wm.fcitx5;
 in {
   options.features.wm.fcitx5.enable = mkEnableOption "enable input via fcitx5";
 
-  # TODO: Why is the locations of the nofier for inputMethod always in a random spot
+  # TODO: Why is the location of the notifier for inputMethod always in a random spot
   # TODO: Theme the prompt window (home module? or will that not work)
   config = mkIf cfg.enable {
     i18n.inputMethod = {
       enable = true;
       type = "fcitx5";
       fcitx5 = {
-
         waylandFrontend = true;
         addons = with pkgs; [
           fcitx5-gtk
-          qt6Packages.fcitx5-skk-qt
-          fcitx5-rime
+          fcitx5-mozc
           qt6Packages.fcitx5-chinese-addons
         ];
         ignoreUserConfig = true;
@@ -28,81 +26,28 @@ in {
               "Default Layout" = "us";
               "DefaultIM" = "pinyin";
             };
-
-            "Groups/0/Items/0" = {
-              "Name" = "keyboard-us";
-              "Layout" = "";
-            };
-
-            "Groups/0/Items/1" = {
-              "Name" = "pinyin";
-              "Layout" = "us";
-            };
-
+            "Groups/0/Items/0" = { "Name" = "keyboard-us"; "Layout" = ""; };
+            "Groups/0/Items/1" = { "Name" = "pinyin";      "Layout" = "us"; };
+            "Groups/0/Items/2" = { "Name" = "mozc";        "Layout" = "us"; };
             "GroupOrder" = { "0" = "Default"; };
           };
           globalOptions = {
-            "Hotkey" = {
-              "EnumerateWithTriggerKeys" = true;
-              "EnumerateForwardKeys" = "";
-              "EnumerateBackwardKeys" = "";
-              "EnumerateSkipFirst" = false;
-              "EnumerateGroupForwardKeys" = "";
-              "EnumerateGroupBackwardKeys" = "";
-            };
-
-            "Hotkey/TriggerKeys" = {
-              "0" = "Super+space";
-              "1" = "Zenkaku_Hankaku";
-              "2" = "Hangul";
-            };
-
-            "Hotkey/AltTriggerKeys" = { "0" = "Shift_L"; };
-
-            "Hotkey/ActivateKeys" = { "0" = "Hangul_Hanja"; };
-
-            "Hotkey/DeactivateKeys" = { "0" = "Hangul_Romaja"; };
-
-            "Hotkey/PrevPage" = { "0" = "Up"; };
-
-            "Hotkey/NextPage" = { "0" = "Down"; };
-
+            # EnumerateWithTriggerKeys enables cycling through all IMs with Super+space
+            "Hotkey"               = { "EnumerateWithTriggerKeys" = true; };
+            "Hotkey/TriggerKeys"   = { "0" = "Super+space"; };
+            "Hotkey/AltTriggerKeys" = { };
+            "Hotkey/PrevPage"      = { "0" = "Up"; };
+            "Hotkey/NextPage"      = { "0" = "Down"; };
             "Hotkey/PrevCandidate" = { "0" = "Shift+Tab"; };
-
             "Hotkey/NextCandidate" = { "0" = "Tab"; };
-
             "Hotkey/TogglePreedit" = { "0" = "Control+Alt+P"; };
-
-            "Behavior" = {
-              "ActiveByDefault" = false;
-              "resetStateWhenFocusIn" = "No";
-              "ShareInputState" = "No";
-              "PreeditEnabledByDefault" = true;
-              "ShowInputMethodInformation" = true;
-              "showInputMethodInformationWhenFocusIn" = false;
-              "CompactInputMethodInformation" = true;
-              "ShowFirstInputMethodInformation" = true;
-              "DefaultPageSize" = 5;
-              "OverrideXkbOption" = false;
-              "CustomXkbOption" = "";
-              "EnabledAddons" = "";
-              "DisabledAddons" = "";
-              "PreloadInputMethod" = true;
-              "AllowInputMethodForPassword" = false;
-              "ShowPreeditForPassword" = false;
-              "AutoSavePeriod" = 30;
-            };
+            "Behavior"                = { "CompactInputMethodInformation" = true; };
+            "Behavior/DisabledAddons" = { "0" = "notificationitem"; "1" = "cloudpinyin"; };
           };
-
           # Classic UI addon settings for tray icon appearance
-          addons = {
-            classicui.globalSection = {
-              # Show text label in tray (e.g., "EN", "拼") instead of graphical icon
-              # "PreferTextIcon" = true;
-              "Vertical Candidate List" = false;
-              # Show tooltip when switching
-              "ShowLayoutNameWhenSwitching" = true;
-            };
+          addons.classicui.globalSection = {
+            "Vertical Candidate List"     = false;
+            "ShowLayoutNameWhenSwitching" = true;
           };
         };
       };
