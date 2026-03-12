@@ -35,7 +35,6 @@ in {
       zathura # pdf viewer  
       feh # image viewer
       transmission_4-gtk # torrent client
-      cmus # music player # NOTE: potenitally replace with MPD and Client
     ];
 
     # NOTE: On Darwin, mpv uses pkgs.stable to avoid Swift build failures on unstable.

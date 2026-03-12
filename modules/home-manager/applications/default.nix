@@ -16,6 +16,7 @@
     ./electron.nix
     ./productivity.nix
     ./ghostty.nix
+    ./mpd.nix
   ];
 
   home.packages = with pkgs;

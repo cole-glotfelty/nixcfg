@@ -50,6 +50,7 @@
 
     applications = {
       media.enable = lib.mkDefault true;
+      mpd.enable = lib.mkDefault true;
       messaging.enable = lib.mkDefault true;
       brave.enable = lib.mkDefault true;
       librewolf.enable = lib.mkDefault true;

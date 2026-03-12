@@ -25,6 +25,7 @@
       kitty.enable = lib.mkDefault false;
       alacritty.enable = lib.mkDefault true;
       media.enable = lib.mkDefault true;
+      mpd.enable = lib.mkDefault true;
     };
   };
 }
