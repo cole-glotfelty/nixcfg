@@ -4,7 +4,6 @@
   # Necessary for using flakes on this system.
   nix.settings = {
     experimental-features = "nix-command flakes";
-    # TODO: Look into having [ root ] ++ _meta.users or something of the sort
     trusted-users = [ "root" "coleglotfelty" ];
   };
 

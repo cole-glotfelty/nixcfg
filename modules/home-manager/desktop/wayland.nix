@@ -42,20 +42,14 @@ in {
       }
     ];
 
-    # NOTE: All commented out packages deserve to be researched at a later date
     home.packages = with pkgs; [
       grim
       slurp
       qt5.qtwayland
       qt6.qtwayland
-      # waypipe
-      # wf-recorder
-      # wl-mirror
       wl-clipboard
       wlogout
       networkmanager_dmenu
-      # wtype
-      # ydotool
     ];
 
     xdg.configFile."networkmanager-dmenu/config.ini".text = ''

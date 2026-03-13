@@ -52,6 +52,22 @@
         "type": "github"
       }
     },
+    "fcitx5-ori-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1721062590,
+        "narHash": "sha256-46O/wCRphjVkYCbr29QqyiGBG27u3UG2DnrInZSQkIA=",
+        "owner": "Reverier-Xu",
+        "repo": "Ori-fcitx5",
+        "rev": "d2cf5df38f11e4e14dcf9436af5b9f8fa0087c55",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Reverier-Xu",
+        "repo": "Ori-fcitx5",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -192,6 +208,7 @@
         "apple-emoji": "apple-emoji",
         "blocklist-hosts": "blocklist-hosts",
         "disko": "disko",
+        "fcitx5-ori-theme": "fcitx5-ori-theme",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",

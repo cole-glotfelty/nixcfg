@@ -177,6 +177,11 @@
       flake = false;
     };
 
+    fcitx5-ori-theme = {
+      url = "github:Reverier-Xu/Ori-fcitx5";
+      flake = false;
+    };
+
     waybar-nixos-updates = {
       url = "github:guttermonk/waybar-nixos-updates";
       inputs.nixpkgs.follows = "nixpkgs";

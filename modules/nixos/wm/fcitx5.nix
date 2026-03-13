@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 with lib;
-let cfg = config.features.wm.fcitx5;
+let
+  cfg = config.features.wm.fcitx5;
+  ori-theme = pkgs.linkFarm "fcitx5-ori-theme" {
+    "share/fcitx5/themes/OriDark" = "${inputs.fcitx5-ori-theme}/OriDark";
+    "share/fcitx5/themes/OriLight" = "${inputs.fcitx5-ori-theme}/OriLight";
+  };
 in {
   options.features.wm.fcitx5.enable = mkEnableOption "enable input via fcitx5";
 
@@ -17,6 +22,7 @@ in {
           fcitx5-gtk
           fcitx5-mozc
           qt6Packages.fcitx5-chinese-addons
+          ori-theme
         ];
         ignoreUserConfig = true;
         settings = {
@@ -48,6 +54,7 @@ in {
           addons.classicui.globalSection = {
             "Vertical Candidate List"     = false;
             "ShowLayoutNameWhenSwitching" = true;
+            "Theme"                       = "OriDark";
           };
         };
       };
