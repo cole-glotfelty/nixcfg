@@ -40,7 +40,8 @@ in {
     # NOTE: On Darwin, mpv uses pkgs.stable to avoid Swift build failures on unstable.
     programs.mpv = {
       enable = true;
-      package = if pkgs.stdenv.isDarwin then pkgs.stable.mpv else pkgs.mpv;
+      # package = if pkgs.stdenv.isDarwin then pkgs.stable.mpv else pkgs.mpv;
+      package = pkgs.stable.mpv;
       config = {
         # Hardware acceleration
         hwdec = "auto";

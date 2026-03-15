@@ -10,8 +10,6 @@ let
 in {
   options.features.wm.fcitx5.enable = mkEnableOption "enable input via fcitx5";
 
-  # TODO: Why is the location of the notifier for inputMethod always in a random spot
-  # TODO: Theme the prompt window (home module? or will that not work)
   config = mkIf cfg.enable {
     i18n.inputMethod = {
       enable = true;

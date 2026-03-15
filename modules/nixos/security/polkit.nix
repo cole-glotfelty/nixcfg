@@ -20,10 +20,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # TODO: come back here if there's ever an issue (it's bound to happen)
     security.polkit = {
       enable = true;
-      # package = pkgs.hyprpolkitagent;
     };
   };
 }

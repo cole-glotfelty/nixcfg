@@ -42,11 +42,6 @@ in {
     };
 
     # Display Manager
-    # TODO: Reference Sascha Koenig's Setup
-    # TODO: I shouldn't need this line, but I do
-    # figure out what's making lightDM get installed (pam.d)
-    # services.xserver.displayManager.lightdm.enable = mkForce false;
-    # services.xserver.displayManager.lightdm.enable = false;
     services.displayManager.ly.enable = true;
 
     # Setup Polkit
