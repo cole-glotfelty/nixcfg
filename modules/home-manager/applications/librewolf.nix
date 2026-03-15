@@ -16,14 +16,13 @@ in {
       - Font rendering optimizations
       - Auto-install extensions enabled
 
-      Dependencies: pkgs.librewolf-wayland (from stable)
     '');
   };
 
   config = mkIf cfg.enable {
     programs.librewolf = {
       enable = true;
-      package = mkDefault pkgs.stable.librewolf-wayland;
+      package = mkDefault pkgs.librewolf;
 
       settings = mkDefault {
         # Search Engine

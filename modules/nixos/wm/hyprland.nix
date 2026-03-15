@@ -2,8 +2,8 @@
 
 with lib;
 let
-  # pkgs-hyprland =
-  #   inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  pkgs-hyprland =
+    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   # This module automatically enables when any home-manager user has Hyprland enabled
   # No manual configuration needed - it's purely reactive to user preferences
@@ -63,9 +63,9 @@ in {
 
     programs.hyprland = {
       enable = true;
-      # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       xwayland.enable = true;
-      # portalPackage = pkgs-hyprland.xdg-desktop-portal-hyprland;
+      portalPackage = pkgs-hyprland.xdg-desktop-portal-hyprland;
       # withUWSM = true;
     };
 
