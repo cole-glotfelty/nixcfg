@@ -22,9 +22,32 @@ in {
     fonts.fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = [ "Times New Roman" "Noto Serif" "Liberation Serif" ];
-        sansSerif = [ "TeX Gyre Heros" "Noto Sans" "Liberation Sans" ];
-        monospace = [ "FiraCode Nerd Font Mono" "Liberation Mono" ];
+        serif = [
+          "Times New Roman"
+          "Noto Serif"
+          "Noto Serif CJK JP"
+          "Noto Serif CJK SC"
+          "Noto Serif CJK TC"
+          "Noto Serif CJK KR"
+          "Liberation Serif"
+        ];
+        sansSerif = [
+          "TeX Gyre Heros"
+          "Noto Sans"
+          "Noto Sans CJK JP"
+          "Noto Sans CJK SC"
+          "Noto Sans CJK TC"
+          "Noto Sans CJK KR"
+          "Liberation Sans"
+        ];
+        monospace = [
+          "FiraCode Nerd Font Mono"
+          "Noto Sans Mono CJK JP"
+          "Noto Sans Mono CJK SC"
+          "Noto Sans Mono CJK TC"
+          "Noto Sans Mono CJK KR"
+          "Liberation Mono"
+        ];
         emoji = [ "Apple Color Emoji" "Noto Color Emoji" ];
       };
     };

@@ -60,9 +60,18 @@ in {
       ];
 
       commandLineArgs = mkDefault [
+        # Wayland and IME support
+        "--enable-wayland-ime"
+        "--gtk-version=4"
+        "--ozone-platform=wayland"
+
+        # CJK font rendering fix (disable GPU compositing if fonts render blank)
+        # Remove this line if CJK works, to restore GPU acceleration
+        "--disable-gpu-compositing"
+
         # Disable Brave features that work via command line (limited effectiveness)
         "--disable-features=MediaRouter,TranslateUI"
-        
+
         # Privacy and security enhancements
         "--disable-background-networking"
         "--disable-background-timer-throttling"
