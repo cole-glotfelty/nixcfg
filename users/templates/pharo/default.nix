@@ -36,11 +36,12 @@
       waybar.enable = lib.mkDefault true;
       udiskie.enable = lib.mkDefault true;
       notifications.enable = lib.mkDefault true;
-      defaultFonts.enable = lib.mkDefault true;
     };
 
     style = {
+      colors.enable = lib.mkDefault true;
       darkmode.enable = lib.mkDefault true;
+      fonts.enable = lib.mkDefault true;
     };
 
     xdg = {

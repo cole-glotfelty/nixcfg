@@ -19,6 +19,29 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.fuzzel = { enable = true; };
+    programs.fuzzel = let
+      colors = config.features.style.colors.palette.dark;
+    in {
+      enable = true;
+      settings = mkDefault {
+        main = {
+          font = "FiraCode Nerd Font Mono:size=12";
+          terminal = config.custom.defaults.terminal;
+        };
+        colors = {
+          background = "${colors.bg}ee";
+          text = "${colors.fg}ff";
+          match = "${colors.blue}ff";
+          selection = "${colors.selection}ff";
+          selection-text = "${colors.fg}ff";
+          selection-match = "${colors.cyan}ff";
+          border = "${colors.blue}ff";
+        };
+        border = {
+          width = 2;
+          radius = 10;
+        };
+      };
+    };
   };
 }

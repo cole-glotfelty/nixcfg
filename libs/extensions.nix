@@ -29,6 +29,25 @@ lib: with lib; rec {
     (file: type: if type == "directory" then getDir "${dir}/${file}" else type)
     readDir dir;
 
+  # Color utilities for palette integration
+  hexToInt = hex: let
+    hexChars = {
+      "0" = 0; "1" = 1; "2" = 2; "3" = 3; "4" = 4;
+      "5" = 5; "6" = 6; "7" = 7; "8" = 8; "9" = 9;
+      "a" = 10; "b" = 11; "c" = 12; "d" = 13; "e" = 14; "f" = 15;
+      "A" = 10; "B" = 11; "C" = 12; "D" = 13; "E" = 14; "F" = 15;
+    };
+    chars = lib.stringToCharacters hex;
+  in lib.foldl (acc: c: acc * 16 + hexChars.${c}) 0 chars;
+
+  hexToRgb = hex: let
+    r = hexToInt (builtins.substring 0 2 hex);
+    g = hexToInt (builtins.substring 2 2 hex);
+    b = hexToInt (builtins.substring 4 2 hex);
+  in "${toString r}, ${toString g}, ${toString b}";
+
+  rgba = hex: alpha: "rgba(${hexToRgb hex}, ${toString alpha})";
+
   # Dynamic system user imports from user templates based on host metadata
   # mkSystemUserImports = config: userTemplatesPath: hostsPath:
   #   let

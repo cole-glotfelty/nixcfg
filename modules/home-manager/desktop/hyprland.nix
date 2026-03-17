@@ -172,15 +172,17 @@ in {
         ## LOOK & FEEL ##
         # Refer to https://wiki.hyprland.org/Configuring/Variables/
         # https://wiki.hyprland.org/Configuring/Variables/#general
-        general = {
+        general = let
+          colors = config.features.style.colors.palette.dark;
+        in {
           gaps_in = 5;
           gaps_out = 20;
 
           border_size = 2;
 
           # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
-          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
+          "col.active_border" = "rgba(${colors.cyan}ee) rgba(${colors.green}ee) 45deg";
+          "col.inactive_border" = "rgba(${colors.comment}aa)";
 
           # Set to true enable resizing windows by clicking and dragging on borders and gaps
           resize_on_border = false;
@@ -199,19 +201,21 @@ in {
           active_opacity = 1.0;
           inactive_opacity = 1.0;
 
-          shadow = {
+          shadow = let
+            colors = config.features.style.colors.palette.dark;
+          in {
             enabled = true;
             range = 4;
             render_power = 3;
-            color = "rgba(1a1a1aee)";
+            color = "rgba(${colors.bg}ee)";
           };
 
           # https://wiki.hyprland.org/Configuring/Variables/#blur
           blur = {
             enabled = true;
-            size = 3;
-            passes = 1;
-
+            size = 6;
+            passes = 2;
+            xray = true;
             vibrancy = 0.1696;
           };
         };
@@ -284,6 +288,7 @@ in {
 
         bind = [
           "$mainMod, RETURN, exec, $terminal"
+          "$mainMod SHIFT, RETURN, exec, ghostty-light"
           "$mainMod SHIFT, Q, killactive"
           "$mainMod, D, exec, $menu"
           "$mainMod SHIFT, L, exec, hyprlock"
@@ -400,7 +405,7 @@ in {
         ];
       };
       # Thing I need to use unstable for this to work
-      # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       extraConfig = ''
         ###################
         ### MY PROGRAMS ###

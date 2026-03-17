@@ -48,10 +48,11 @@ in {
       prefix = mkDefault "C-a";
       baseIndex = mkDefault 1;
       terminal = mkDefault "screen-256color";
-      # TODO: Come back here and update colors to match nix-colors
-      extraConfig = ''
+      extraConfig = let
+        colors = config.features.style.colors.palette.dark;
+      in ''
         set -ga terminal-overrides ",screen-256color*:Tc"
-        set -g status-style 'bg=#333333 fg=#5eacd3'
+        set -g status-style 'bg=#${colors.bgDark} fg=#${colors.cyan}'
 
         set-option -g update-environment "PROJECT_DIRS"
 

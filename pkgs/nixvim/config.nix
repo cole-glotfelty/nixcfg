@@ -15,6 +15,9 @@
 
   colorschemes.tokyonight = {
     enable = true;
-    settings.style = "night";
+    settings = {
+      style = "night";
+      transparent = true;
+    };
   };
 }

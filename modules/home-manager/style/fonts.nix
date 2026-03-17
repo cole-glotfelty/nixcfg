@@ -1,9 +1,9 @@
 { config, lib, ... }:
 
 with lib;
-let cfg = config.features.desktop.defaultFonts;
+let cfg = config.features.style.fonts;
 in {
-  options.features.desktop.defaultFonts = {
+  options.features.style.fonts = {
     enable = mkEnableOption (lib.mdDoc ''
       System-wide default font configuration for consistent typography.
       

@@ -3,6 +3,7 @@
 with lib;
 let
   cfg = config.features.desktop.waybar;
+  colors = config.features.style.colors.palette.dark;
 
   weatherScript = pkgs.writeShellScript "waybar-weather" ''
     response=$(${pkgs.curl}/bin/curl -sf --max-time 10 "wttr.in/?format=j1&m" 2>/dev/null)
@@ -13,20 +14,20 @@ let
 
     # Build colored Pango spans for nf-weather-* icons (U+E300 range)
     s() { printf "<span color='%s'>$(printf "$2")</span>" "$1"; }
-    span_sunny=$(s     '#e0af68' '\ue30d')   # yellow   – nf-weather-day_sunny
-    span_pcloudy=$(s   '#a9b1d6' '\ue302')   # gray     – nf-weather-day_cloudy
-    span_cloudy=$(s    '#a9b1d6' '\ue312')   # gray     – nf-weather-cloudy
-    span_fog=$(s       '#565f89' '\ue313')   # dim      – nf-weather-fog
-    span_drizzle=$(s   '#7dcfff' '\ue309')   # lt blue  – nf-weather-day_rain
-    span_rain=$(s      '#7aa2f7' '\ue318')   # blue     – nf-weather-rain
-    span_pouring=$(s   '#7aa2f7' '\ue319')   # blue     – nf-weather-showers
-    span_snow=$(s      '#c0caf5' '\ue31a')   # white    – nf-weather-snow
-    span_snowflake=$(s '#c0caf5' '\ue31f')   # white    – nf-weather-snowflake_cold
-    span_blizzard=$(s  '#c0caf5' '\ue31b')   # white    – nf-weather-snow_wind
-    span_hail=$(s      '#7dcfff' '\ue31e')   # icy blue – nf-weather-hail
-    span_sleet=$(s     '#73daca' '\ue316')   # teal     – nf-weather-rain_mix
-    span_tstorm=$(s    '#bb9af7' '\ue31d')   # purple   – nf-weather-thunderstorm
-    span_lightning=$(s '#bb9af7' '\ue315')   # purple   – nf-weather-lightning
+    span_sunny=$(s     '#${colors.yellow}' '\ue30d')       # yellow   – nf-weather-day_sunny
+    span_pcloudy=$(s   '#${colors.fg}' '\ue302')           # gray     – nf-weather-day_cloudy
+    span_cloudy=$(s    '#${colors.fg}' '\ue312')           # gray     – nf-weather-cloudy
+    span_fog=$(s       '#${colors.fgGutter}' '\ue313')     # dim      – nf-weather-fog
+    span_drizzle=$(s   '#${colors.cyan}' '\ue309')         # lt blue  – nf-weather-day_rain
+    span_rain=$(s      '#${colors.blue}' '\ue318')         # blue     – nf-weather-rain
+    span_pouring=$(s   '#${colors.blue}' '\ue319')         # blue     – nf-weather-showers
+    span_snow=$(s      '#${colors.brightWhite}' '\ue31a')  # white    – nf-weather-snow
+    span_snowflake=$(s '#${colors.brightWhite}' '\ue31f')  # white    – nf-weather-snowflake_cold
+    span_blizzard=$(s  '#${colors.brightWhite}' '\ue31b')  # white    – nf-weather-snow_wind
+    span_hail=$(s      '#${colors.cyan}' '\ue31e')         # icy blue – nf-weather-hail
+    span_sleet=$(s     '#${colors.teal}' '\ue316')         # teal     – nf-weather-rain_mix
+    span_tstorm=$(s    '#${colors.magenta}' '\ue31d')      # purple   – nf-weather-thunderstorm
+    span_lightning=$(s '#${colors.magenta}' '\ue315')      # purple   – nf-weather-lightning
 
     echo "$response" | ${pkgs.jq}/bin/jq -c \
       --arg sunny     "$span_sunny"     \
@@ -63,11 +64,11 @@ let
          elif $code == 200 or $code == 386 or $code == 389 then $tstorm
          elif $code == 392 or $code == 395 then $lightning
          else $sunny end) as $icon |
-        (if   $temp >= 30 then "#f7768e"
-         elif $temp >= 20 then "#ff9e64"
-         elif $temp >= 10 then "#c0caf5"
-         elif $temp >= 0  then "#7dcfff"
-         else "#73daca" end) as $tc |
+        (if   $temp >= 30 then "#${colors.red}"
+         elif $temp >= 20 then "#${colors.orange}"
+         elif $temp >= 10 then "#${colors.brightWhite}"
+         elif $temp >= 0  then "#${colors.cyan}"
+         else "#${colors.teal}" end) as $tc |
         {
           text: "\($icon)  <span color=\"\($tc)\">\($c.temp_C)°C</span>",
           tooltip: "\($c.weatherDesc[0].value)\n\($c.temp_C)°C (feels like \($c.FeelsLikeC)°C)\nHumidity: \($c.humidity)%\nLocation: \($loc)"
@@ -88,7 +89,10 @@ let
 
     span() {
       local pct=$1 text=$2 color
-      [ "$pct" -ge 80 ] && color="#f7768e" || { [ "$pct" -ge 60 ] && color="#e0af68" || color="#9ece6a"; }
+      if [ "$pct" -ge 80 ]; then color="#${colors.red}"
+      elif [ "$pct" -ge 60 ]; then color="#${colors.orange}"
+      elif [ "$pct" -ge 40 ]; then color="#${colors.yellow}"
+      else color="#${colors.fg}"; fi
       printf '<span color="%s">%s</span>' "$color" "$text"
     }
 
@@ -215,7 +219,6 @@ in
       updateLockFile = false;
     };
 
-    # TODO: Replace with system-wide color/theme management when implemented.
     programs.waybar = {
       enable = true;
       settings = mkDefault {
@@ -378,11 +381,6 @@ in
       };
 
       style = mkDefault ''
-        /* Tokyo Night */
-        /* bg: #1a1b26  surface: #1f2335  surface2: #24283b  border: #414868 */
-        /* fg: #c0caf5  blue: #7aa2f7  cyan: #7dcfff  green: #9ece6a        */
-        /* yellow: #e0af68  red: #f7768e  purple: #bb9af7  teal: #73daca     */
-
         * {
           font-family: "FiraCode Nerd Font", "FiraCode Nerd Font Mono", sans-serif;
           font-size: 13px;
@@ -397,8 +395,8 @@ in
         }
 
         #waybar {
-          background-color: #1a1b26;
-          color: #c0caf5;
+          background-color: #${colors.bg};
+          color: #${colors.fg};
           margin: 8px 12px 0px 12px;
           border-radius: 12px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -418,41 +416,40 @@ in
         #pulseaudio,
         #battery,
         #tray {
-          background-color: #1f2335;
-          color: #c0caf5;
+          background-color: #${colors.bgDark};
+          color: #${colors.fg};
           padding: 4px 12px;
           margin: 4px 3px;
           border-radius: 8px;
-          border: 1px solid #414868;
+          border: 1px solid #${colors.comment};
         }
 
         /* ── Left ── */
 
         #idle_inhibitor {
           font-size: 20px;
-          color: #7aa2f7;
-          background: #24283b;
+          color: #${colors.blue};
           padding-left: 7px;
         }
 
         #idle_inhibitor:hover {
-          background: #414868;
-          color: #c0caf5;
+          background: #${colors.comment};
+          color: #${colors.fg};
         }
 
         #idle_inhibitor.activated {
-          color: #9ece6a;
+          color: #${colors.green};
         }
 
         /* Workspaces: plain text, color-only active indicator */
         #workspaces {
-          background-color: #1f2335;
-          border: 1px solid #414868;
+          background-color: #${colors.bgDark};
+          border: 1px solid #${colors.comment};
           padding: 0px 4px;
         }
 
         #workspaces button {
-          color: #414868;
+          color: #${colors.comment};
           background: transparent;
           border: none;
           padding: 2px 5px;
@@ -462,32 +459,32 @@ in
         }
 
         #workspaces button.active {
-          color: #7aa2f7;
+          color: #${colors.brightWhite};
           font-weight: 700;
         }
 
         #workspaces button:hover {
-          color: #c0caf5;
+          color: #${colors.fg};
           background: transparent;
         }
 
         #workspaces button.urgent {
-          color: #f7768e;
-          background-color: rgba(247, 118, 142, 0.15);
-          border-color: #f7768e;
+          color: #${colors.red};
+          background-color: ${lib.rgba colors.red 0.15};
+          border-color: #${colors.red};
         }
 
         /* MPD now-playing */
         #mpd {
-          color: #bb9af7;
+          color: #${colors.magenta};
         }
 
         #mpd.playing {
-          color: #9ece6a;
+          color: #${colors.green};
         }
 
         #mpd.paused {
-          color: #e0af68;
+          color: #${colors.yellow};
         }
 
         /* Hide MPD when stopped or disconnected */
@@ -504,71 +501,71 @@ in
         /* ── Center ── */
 
         #clock {
-          color: #c0caf5;
+          color: #${colors.fg};
           font-weight: 700;
         }
 
         /* ── Right ── */
 
         #custom-fcitx5 {
-          color: #7dcfff;
+          color: #${colors.cyan};
           font-weight: 700;
         }
 
         #custom-weather {
-          color: #e0af68;
+          color: #${colors.yellow};
         }
 
         #custom-sysinfo {
-          color: #c0caf5;
+          color: #${colors.fg};
           font-family: "FiraCode Nerd Font", monospace;
         }
 
         #custom-nix-updates {
-          color: #c0caf5;
+          color: #${colors.fg};
         }
 
         #custom-nix-updates.has-updates {
-          color: #f7768e;
+          color: #${colors.red};
         }
 
         #network {
-          color: #9ece6a;
+          color: #${colors.green};
         }
 
         #network.disconnected {
-          color: #f7768e;
+          color: #${colors.red};
         }
 
         #pulseaudio {
-          color: #7aa2f7;
+          color: #${colors.blue};
         }
 
         #pulseaudio.muted {
-          color: #f7768e;
+          color: #${colors.red};
         }
 
         #battery {
-          color: #9ece6a;
+          color: #${colors.green};
         }
 
         #battery.charging {
-          color: #7dcfff;
+          color: #${colors.cyan};
         }
 
         #battery.warning:not(.charging) {
-          background-color: rgba(224, 175, 104, 0.2);
-          color: #e0af68;
+          background-color: ${lib.rgba colors.yellow 0.2};
+          color: #${colors.yellow};
         }
 
         #battery.critical:not(.charging) {
-          background-color: rgba(247, 118, 142, 0.2);
-          color: #f7768e;
+          background-color: ${lib.rgba colors.red 0.2};
+          color: #${colors.red};
           animation: blink 0.5s linear infinite alternate;
         }
 
         @keyframes blink {
-          to { background-color: rgba(247, 118, 142, 0.05); }
+          to { background-color: ${lib.rgba colors.red 0.05}; }
         }
 
         #tray {
@@ -589,7 +586,7 @@ in
 
         #tray > .needs-attention {
           -gtk-icon-effect: highlight;
-          background-color: rgba(247, 118, 142, 0.3);
+          background-color: ${lib.rgba colors.red 0.3};
         }
       '';
     };

@@ -76,6 +76,9 @@ The flake reads each host's `_meta.users` list and automatically imports the cor
 2. Add username to host's `_meta.users` list
 3. Create `hosts/{hostname}/users/{user}.nix` with host-specific overrides
 
+> [!NOTE]
+> New users using the `messaging.nix` module will have to run `krisp-patcher` once to verify that krisp noise suppression is installed for Discord
+
 ## Module Requirements
 
 Modules use `mkEnableOption` with documentation. Enable features via:
