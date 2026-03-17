@@ -6,7 +6,15 @@ in
 {
   imports = [ inputs.sops-nix.homeManagerModules.sops ];
   
-  options.features.cli.sops.enable = lib.mkEnableOption "enable user-level sops";
+  options.features.cli.sops.enable = lib.mkEnableOption (lib.mdDoc ''
+    User-level SOPS secrets management via home-manager.
+
+    Features:
+    - Imports sops-nix home-manager module
+    - Placeholder for user-specific secrets (SSH keys, GPG, etc.)
+
+    Note: System-level secrets use features.security.sops
+  '');
 
   config = lib.mkIf cfg.enable {
     # User-level sops configuration

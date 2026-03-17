@@ -8,7 +8,18 @@ let
     "share/fcitx5/themes/OriLight" = "${inputs.fcitx5-ori-theme}/OriLight";
   };
 in {
-  options.features.wm.fcitx5.enable = mkEnableOption "enable input via fcitx5";
+  options.features.wm.fcitx5.enable = mkEnableOption (lib.mdDoc ''
+    Fcitx5 input method framework for CJK text input.
+
+    Features:
+    - Japanese input via Mozc
+    - Chinese Pinyin input
+    - Wayland-native frontend
+    - OriDark theme from fcitx5-ori-theme input
+    - Super+Space hotkey to cycle input methods
+
+    Dependencies: Wayland compositor
+  '');
 
   config = mkIf cfg.enable {
     i18n.inputMethod = {

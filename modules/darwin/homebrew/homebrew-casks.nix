@@ -3,8 +3,19 @@
 with lib;
 let cfg = config.features.homebrew.casks;
 in {
-  options.features.homebrew.casks.enable =
-    mkEnableOption "enable homebrew casks";
+  options.features.homebrew.casks.enable = mkEnableOption (lib.mdDoc ''
+    Homebrew Cask applications for macOS GUI apps.
+
+    Included apps:
+    - Media: Audacity, OBS, Blender, GIMP, XLD, MakeMKV
+    - Productivity: DrawIO, Numi, Picard
+    - Communication: Signal, Telegram
+    - Utilities: Mullvad VPN, Transmission, Tor Browser
+    - Games: SuperTuxKart
+    - System: UTM, XQuartz, Raspberry Pi Imager
+
+    Dependencies: features.homebrew.enable
+  '');
 
   config = mkIf cfg.enable {
     homebrew = {

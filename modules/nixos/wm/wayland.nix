@@ -3,7 +3,17 @@
 with lib;
 let cfg = config.features.wm.wayland;
 in {
-  options.features.wm.wayland.enable = mkEnableOption "enable wayland system level support";
+  options.features.wm.wayland.enable = mkEnableOption (lib.mdDoc ''
+    System-level Wayland support and XWayland configuration.
+
+    Features:
+    - Touchpad support via libinput
+    - GNOME keyring integration
+    - XWayland with US keyboard layout
+    - Excludes xterm from X server packages
+
+    Dependencies: Desktop environment or window manager
+  '');
 
   config = mkIf cfg.enable {
     # Enable touchpad support (enabled default in most desktopManager).

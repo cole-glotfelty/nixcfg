@@ -62,7 +62,7 @@ in {
         useEmbeddedBitmaps = mkDefault false;
 
         # Advanced configurations for spacing-related issues
-        localConf = ''
+        localConf = mkDefault ''
           <?xml version="1.0"?>
           <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
           <fontconfig>
@@ -94,6 +94,36 @@ in {
               </edit>
             </match>
 
+            <!-- Apple CJK font substitutions -->
+            <match target="pattern">
+              <test qual="any" name="family"><string>PingFang SC</string></test>
+              <edit name="family" mode="assign" binding="same"><string>Noto Sans CJK SC</string></edit>
+            </match>
+            <match target="pattern">
+              <test qual="any" name="family"><string>PingFang TC</string></test>
+              <edit name="family" mode="assign" binding="same"><string>Noto Sans CJK TC</string></edit>
+            </match>
+            <match target="pattern">
+              <test qual="any" name="family"><string>PingFang HK</string></test>
+              <edit name="family" mode="assign" binding="same"><string>Noto Sans CJK HK</string></edit>
+            </match>
+            <match target="pattern">
+              <test qual="any" name="family"><string>Hiragino Sans</string></test>
+              <edit name="family" mode="assign" binding="same"><string>Noto Sans CJK JP</string></edit>
+            </match>
+            <match target="pattern">
+              <test qual="any" name="family"><string>Hiragino Kaku Gothic Pro</string></test>
+              <edit name="family" mode="assign" binding="same"><string>Noto Sans CJK JP</string></edit>
+            </match>
+            <match target="pattern">
+              <test qual="any" name="family"><string>Hiragino Kaku Gothic ProN</string></test>
+              <edit name="family" mode="assign" binding="same"><string>Noto Sans CJK JP</string></edit>
+            </match>
+            <match target="pattern">
+              <test qual="any" name="family"><string>Apple SD Gothic Neo</string></test>
+              <edit name="family" mode="assign" binding="same"><string>Noto Sans CJK KR</string></edit>
+            </match>
+
             <!-- Prefer sans-serif CJK fonts in the sans-serif fallback chain -->
             <alias>
               <family>sans-serif</family>
@@ -113,6 +143,17 @@ in {
                 <family>Noto Sans Mono CJK SC</family>
                 <family>Noto Sans Mono CJK TC</family>
                 <family>Noto Sans Mono CJK KR</family>
+              </prefer>
+            </alias>
+
+            <!-- Override serif CJK fallback to use sans-serif (prefer consistent sans look) -->
+            <alias>
+              <family>serif</family>
+              <prefer>
+                <family>Noto Sans CJK JP</family>
+                <family>Noto Sans CJK SC</family>
+                <family>Noto Sans CJK TC</family>
+                <family>Noto Sans CJK KR</family>
               </prefer>
             </alias>
 

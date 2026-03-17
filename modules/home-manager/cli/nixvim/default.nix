@@ -7,8 +7,17 @@ in {
     inputs.nixvim.homeModules.nixvim
   ];
 
-  options.features.cli.nixvim.enable =
-    mkEnableOption "enable nixvim configuration";
+  options.features.cli.nixvim.enable = mkEnableOption (lib.mdDoc ''
+    NixVim Neovim configuration with full IDE features.
+
+    Features:
+    - Standalone-first architecture (also runnable via nix run .#nixvim)
+    - LSP, Treesitter, completion, and formatting
+    - TokyoNight colorscheme
+    - Consumes config from pkgs/nixvim/
+
+    Disables basic vim module when enabled
+  '');
 
   config = mkIf cfg.enable {
     programs.vim.enable = mkForce false;

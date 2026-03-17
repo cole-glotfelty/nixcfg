@@ -3,7 +3,17 @@
 with lib;
 let cfg = config.features.style.darkmode;
 in {
-  options.features.style.darkmode.enable = mkEnableOption "enable darkmode";
+  options.features.style.darkmode.enable = mkEnableOption (lib.mdDoc ''
+    System-wide dark mode for GTK, Qt, and desktop applications.
+
+    Theme configuration:
+    - GTK: Adwaita-dark with breeze-dark icons
+    - Qt: adwaita-dark via Adwaita-Qt
+    - Cursor: Bibata-Modern-Classic (size 24)
+
+    Sets environment variables and dconf settings for
+    consistent dark appearance across all applications
+  '');
 
   # TODO: Select matching GTK/QT Theme and Icons 
   config = mkIf cfg.enable {

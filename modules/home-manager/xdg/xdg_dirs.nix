@@ -3,8 +3,17 @@
 with lib;
 let cfg = config.features.xdg.xdg_dirs;
 in {
-  options.features.xdg.xdg_dirs.enable =
-    mkEnableOption "enable xdg_dirs configuration";
+  options.features.xdg.xdg_dirs.enable = mkEnableOption (lib.mdDoc ''
+    XDG user directory configuration with custom paths.
+
+    Directory structure:
+    - ~/Media/{Music,Videos,Pictures,Podcasts,Books,Games}
+    - ~/Documents, ~/Downloads, ~/Templates
+    - ~/Projects, ~/Remote
+    - Disables Desktop and Public directories
+
+    Creates directories automatically on activation
+  '');
 
   config = mkIf cfg.enable {
     xdg = {

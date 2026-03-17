@@ -3,7 +3,16 @@
 with lib;
 let cfg = config.features.wm.plymouth;
 in {
-  options.features.wm.plymouth.enable = mkEnableOption "enable plymouth";
+  options.features.wm.plymouth.enable = mkEnableOption (lib.mdDoc ''
+    Plymouth boot splash screen with silent boot configuration.
+
+    Features:
+    - Animated "rings" theme from adi1090x-plymouth-themes
+    - Silent boot with suppressed kernel messages
+    - Clean graphical boot experience
+
+    Note: Replaces verbose text output during system startup
+  '');
 
   config = mkIf cfg.enable {
     boot = {

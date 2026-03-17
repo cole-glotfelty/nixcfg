@@ -3,8 +3,20 @@
 with lib;
 let cfg = config.features.xdg.mimeApps;
 in {
-  options.features.xdg.mimeApps.enable =
-    mkEnableOption "enable mimeApps configuration";
+  options.features.xdg.mimeApps.enable = mkEnableOption (lib.mdDoc ''
+    MIME type associations for default applications.
+
+    Configured associations:
+    - Text files: custom.defaults.editor
+    - Images: feh
+    - Videos: mpv
+    - PDFs: zathura
+    - Web links: custom.defaults.browser
+    - Email: custom.defaults.mailClient
+    - Discord links: Discord app
+
+    Uses custom.defaults for user-configurable choices
+  '');
 
   config = mkIf cfg.enable {
     xdg = {

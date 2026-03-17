@@ -1,68 +1,105 @@
-# Cole Glotfelty's NixOS Configuration (V3)
+# NixOS Configuration
 
-Advanced NixOS/nix-darwin configuration featuring metadata-driven auto-generation, platform-specific user templates, and cross-platform compatibility.
+NixOS/nix-darwin configuration with metadata-driven auto-generation and cross-platform user templates.
 
-## Systems
-- **Linux**: `casper` (main desktop), `melchior` (secondary)
-- **macOS**: `alpha-1-5`
-
-## Structure
-```
-├── flake.nix              # Auto-discovering flake with metadata-driven generation
-├── hosts/                 # Host-specific system configuration
-│   ├── {hostname}/        # Host configs with _meta and feature toggles
-│   │   ├── default.nix    # Host config with _meta (system, architecture, users)
-│   │   └── users/         # Host-specific user overrides
-│   │       └── {user}.nix # User config with monitor settings, etc.
-├── modules/               # Modular feature system
-│   ├── common/            # Shared platform configuration
-│   ├── nixos/             # NixOS-specific system modules
-│   ├── darwin/            # macOS-specific system modules
-│   └── home-manager/      # Cross-platform user modules
-├── users/                 # User-centric configuration
-│   ├── common/            # Shared user configuration (identity, defaults, paths)
-│   └── templates/         # Platform-specific user templates
-│       └── {user}/        # Per-user template directory
-│           ├── default.nix    # Home-manager features
-│           ├── home.nix       # Platform-specific settings
-│           ├── nixos.nix      # NixOS system user account
-│           └── darwin.nix     # macOS system user account
-├── libs/                  # Extended library functions
-└── pkgs/                  # Custom packages & portable apps
-```
-
-## V3 Architecture Highlights
-- **Metadata-Driven Auto-Generation**: Hosts declare `_meta`, flake auto-generates all configurations
-- **Platform-Specific Templates**: Users have separate `nixos.nix` and `darwin.nix` system configs
-- **Cross-Platform Compatibility**: Same user config works on NixOS, macOS, and standalone Home Manager
-- **Validation System**: Prevents configuration drift between metadata and actual configs
-- **Home-Driven Modules**: Host services auto-enable when users enable corresponding features
-- **Standalone-First Apps**: Portable applications (`nix run .#nixvim`) with seamless home-manager integration
-- **Consolidated User Organization**: All user-related config under `users/` (common + templates)
-
-## V3 Configuration Pattern
-1. **Host metadata** (`_meta`) declares system type, architecture, and users
-2. **Platform-specific templates** auto-imported based on host's `_meta.system`
-3. **User templates** contain complete platform-specific user configuration
-4. **Host user configs** contain only host-specific overrides (monitors, etc.)
-5. **Auto-discovery** generates all flake configurations from metadata and filesystem
-6. **Validation** prevents configuration drift between metadata and actual configs
+## Hosts
+| Host | Platform | Architecture |
+|------|----------|--------------|
+| casper | NixOS | x86_64-linux |
+| melchior | NixOS | x86_64-linux |
+| alpha-1-5 | Darwin | aarch64-darwin |
 
 ## Usage
 ```bash
-# System rebuilds
-sudo nixos-rebuild switch --flake .      # Rebuild NixOS systems
-darwin-rebuild switch --flake .          # Rebuild macOS systems
-
-# Development & validation
-nix flake check                          # Validate configuration and metadata consistency
-
-# Portable applications
-nix run .#nixvim                         # Run portable nixvim
-nix run .#tmux-sessionizer               # Run tmux session manager
-
-# Home Manager (standalone)
-home-manager switch --flake .#pharo@{hostname}
+sudo nixos-rebuild switch --flake .   # NixOS
+darwin-rebuild switch --flake .       # macOS
+nix flake check                       # Validate
+nix run .#nixvim                      # Portable apps
 ```
 
-See [CLAUDE.md](./CLAUDE.md) for comprehensive documentation and architecture details.
+## Structure
+```
+├── hosts/{hostname}/
+│   ├── default.nix          # Host config with _meta (system, arch, users)
+│   └── users/{user}.nix     # Host-specific overrides (monitors, etc.)
+├── modules/
+│   ├── common/              # Shared platform config (nixos/, darwin/)
+│   ├── nixos/               # System modules (hardware, wm, security, apps)
+│   ├── darwin/              # macOS modules (homebrew)
+│   └── home-manager/        # User modules (cli, desktop, applications, style)
+├── users/
+│   ├── common/              # Shared config (identity, defaults, paths)
+│   └── templates/{user}/
+│       ├── default.nix      # Home-manager features (cross-platform)
+│       ├── home.nix         # Home-manager settings (username, paths)
+│       ├── nixos.nix        # NixOS system account definition
+│       └── darwin.nix       # macOS system account definition
+├── pkgs/                    # Custom packages (nixvim, tmux-sessionizer)
+├── libs/                    # Extended lib functions (mkIfAnyHMOpt, etc.)
+└── overlays/                # Nixpkgs overlays (additions, unstable-packages)
+```
+
+## User Template System
+
+Users are defined once in `users/templates/{user}/` with platform-specific files:
+- **default.nix** — Feature toggles and home-manager module imports
+- **home.nix** — Username, home directory, user identity
+- **nixos.nix** — System user account for NixOS (groups, shell, etc.)
+- **darwin.nix** — System user account for macOS
+
+The flake reads each host's `_meta.users` list and automatically imports the correct platform template (`nixos.nix` or `darwin.nix`). Host-specific overrides (like monitor configuration) go in `hosts/{hostname}/users/{user}.nix`.
+
+## Adding a New Host
+
+1. Create `hosts/{hostname}/default.nix` with required `_meta`:
+   ```nix
+   {
+     _meta = {
+       system = "nixos";           # or "darwin"
+       architecture = "x86_64-linux";
+       users = [ "username" ];
+     };
+     imports = [ ../../modules/common/nixos ];
+     features = { /* enable features */ };
+   }
+   ```
+2. Create `hosts/{hostname}/configuration.nix` for hardware config
+3. Create `hosts/{hostname}/users/{user}.nix` for each user in `_meta.users`
+
+## Adding a New User
+
+1. Create `users/templates/{user}/` directory with:
+   - `default.nix` — Import modules, set feature toggles
+   - `home.nix` — Set `home.username`, `home.homeDirectory`, `home.stateVersion`
+   - `nixos.nix` — Define `users.users.{user}` (NixOS only)
+   - `darwin.nix` — Define `users.users.{user}` (macOS only)
+2. Add username to host's `_meta.users` list
+3. Create `hosts/{hostname}/users/{user}.nix` with host-specific overrides
+
+## Module Requirements
+
+Modules use `mkEnableOption` with documentation. Enable features via:
+```nix
+features = {
+  wm.hyprland.enable = true;      # Enables Hyprland compositor
+  hardware.bluetooth.enable = true;
+  security.doas.enable = true;
+  # etc.
+};
+```
+
+Home-manager modules are enabled in user templates:
+```nix
+features = {
+  cli.nixvim.enable = true;
+  desktop.waybar.enable = true;
+  applications.browsers.enable = true;
+  style.darkmode.enable = true;
+};
+```
+
+## Key Features
+- **Auto-generation**: Hosts declare `_meta`, flake generates all configs
+- **Platform templates**: Same user works on NixOS and macOS
+- **Home-driven modules**: User features auto-enable system services
+- **Standalone packages**: `nix run .#nixvim` works anywhere

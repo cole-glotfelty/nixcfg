@@ -3,8 +3,16 @@
 with lib;
 let cfg = config.features.applications.electronTweaks;
 in {
-  options.features.applications.electronTweaks.enable =
-    mkEnableOption "tweaks for electron applications";
+  options.features.applications.electronTweaks.enable = mkEnableOption (lib.mdDoc ''
+    Wayland and IME fixes for Electron applications.
+
+    Features:
+    - Custom .desktop entries with Ozone Wayland flags
+    - IME support for CJK input in Electron apps
+    - NIXOS_OZONE_WL environment variable
+
+    Affected apps: Discord, Todoist
+  '');
   config = mkIf cfg.enable {
     xdg.desktopEntries.discord = {
       name = "Discord";

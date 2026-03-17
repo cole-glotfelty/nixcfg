@@ -3,8 +3,16 @@
 with lib;
 let cfg = config.features.applications.alacritty;
 in {
-  options.features.applications.alacritty.enable =
-    mkEnableOption "enable alacritty application";
+  options.features.applications.alacritty.enable = mkEnableOption (lib.mdDoc ''
+    Alacritty GPU-accelerated terminal emulator.
+
+    Configuration:
+    - FiraCode Nerd Font Mono at size 12
+    - 80% window opacity
+    - Unfocused hollow cursor
+
+    Alternative to: Kitty, Ghostty
+  '');
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ nerd-fonts.fira-code ];
     programs.alacritty = {

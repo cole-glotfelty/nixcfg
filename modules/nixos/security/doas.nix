@@ -3,8 +3,18 @@
 with lib;
 let cfg = config.features.security.doas;
 in {
-  options.features.security.doas.enable =
-    mkEnableOption "enable doas";
+  options.features.security.doas.enable = mkEnableOption (lib.mdDoc ''
+    OpenBSD doas as sudo replacement for privilege escalation.
+
+    Features:
+    - Lightweight alternative to sudo
+    - Auto-configured for wheel group users
+    - Persistent authentication (no repeated password prompts)
+    - Passwordless tee for pipe-to-root patterns
+    - Provides "sudo" wrapper script for compatibility
+
+    Security: Disables sudo entirely when enabled
+  '');
 
   config = mkIf cfg.enable {
     # Doas instead of sudo

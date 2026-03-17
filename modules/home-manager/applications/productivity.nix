@@ -3,8 +3,16 @@
 with lib;
 let cfg = config.features.applications.productivity;
 in {
-  options.features.applications.productivity.enable =
-    mkEnableOption "enable productivity applications";
+  options.features.applications.productivity.enable = mkEnableOption (lib.mdDoc ''
+    Productivity applications for documents and note-taking.
+
+    Included apps:
+    - Obsidian: Markdown-based knowledge management
+    - LibreOffice: Full office suite
+
+    Note: LibreOffice requires manual dark mode configuration
+    for white document backgrounds (see module comments)
+  '');
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       obsidian

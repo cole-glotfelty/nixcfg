@@ -6,7 +6,18 @@ in {
 
   # imports = [ inputs.sops-nix.nixosModule.sops ];
 
-  options.features.security.sops.enable = mkEnableOption "enable sops";
+  options.features.security.sops.enable = mkEnableOption (lib.mdDoc ''
+    SOPS secrets management for system-level secrets.
+
+    Features:
+    - Age-based encryption using host SSH keys
+    - Automatic key generation if missing
+    - User password management via sops secrets
+    - Immutable users (passwords managed by sops)
+
+    Files: secrets.yaml in repository root
+    Dependencies: SSH host keys at /etc/ssh/
+  '');
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ sops ];
