@@ -6,6 +6,7 @@
     ../../common
     ../../../modules/home-manager/cli
     ../../../modules/home-manager/applications
+    ../../../modules/home-manager/style
   ];
   # Host-specific overrides are automatically included by the flake
 
@@ -19,6 +20,10 @@
       nixvim.enable = lib.mkDefault true;
       devenv.enable = lib.mkDefault true;
       sops.enable = lib.mkDefault false;
+    };
+
+    style = {
+      colors.enable = lib.mkDefault true;
     };
 
     applications = {
