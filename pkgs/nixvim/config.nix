@@ -17,7 +17,7 @@
     enable = true;
     settings = {
       style = "night";
-      transparent = true;
+      transparent = if pkgs.stdenv.isDarwin then false else true;
     };
   };
 }
