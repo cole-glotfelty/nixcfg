@@ -214,7 +214,7 @@ in
     programs.waybar-nixos-updates = {
       enable = true;
       nixosConfigPath = builtins.toString config.custom.paths.nixcfg;
-      updateInterval = 3600;
+      updateInterval = 604800;  # Weekly (7 days)
       skipAfterBoot = true;
       updateLockFile = false;
     };
@@ -231,7 +231,7 @@ in
           modules-right = [
             "custom/weather"
             "custom/sysinfo"
-            "custom/nix-updates"
+            # "custom/nix-updates" HACK: This needs to be resolved in the future with a way that doesn't crash my PC
             "network"
             "pulseaudio"
             "custom/fcitx5"

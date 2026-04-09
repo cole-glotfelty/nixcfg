@@ -61,6 +61,7 @@
       kitty.enable = lib.mkDefault true;
       ghostty.enable = lib.mkDefault true;
       alacritty.enable = lib.mkDefault false;
+      vscode.enable = lib.mkDefault true;
     };
   };
 }

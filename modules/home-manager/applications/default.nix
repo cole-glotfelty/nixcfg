@@ -17,6 +17,7 @@
     ./productivity.nix
     ./ghostty.nix
     ./mpd.nix
+    ./vscode.nix
   ];
 
   home.packages = with pkgs;
