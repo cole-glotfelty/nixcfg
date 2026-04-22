@@ -28,16 +28,11 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ devenv ];
     
-    programs = {
-      direnv = {
-        enable = true;
-        enableZshIntegration = true;
-        nix-direnv.enable = true;
-      };
-      zsh = {
-        enable = true;
-        initContent = ''eval "$(direnv hook zsh)"'';
-      };
+    programs.direnv = {
+      enable = true;
+      package = pkgs.unstable.direnv;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
     };
 
     # Add devenv binary cache for faster builds

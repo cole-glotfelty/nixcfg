@@ -37,8 +37,9 @@ in {
       transmission_4-gtk # torrent client
     ];
 
+    # Use Homebrew cask on macOS due to nixpkgs build issues
     programs.mpv = {
-      enable = true;
+      enable = pkgs.stdenv.isLinux;
       config = {
         # Hardware acceleration
         hwdec = "auto";
