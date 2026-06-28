@@ -20,6 +20,10 @@
     ./vscode.nix
   ];
 
-  home.packages = with pkgs;
-    lib.optionals stdenv.isLinux [ via ];
+  home.packages =
+    with pkgs;
+    lib.optionals stdenv.isLinux [
+      via
+      parsec-bin
+    ];
 }
