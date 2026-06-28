@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, config, ... }:
 
 let
   # pkgs-hyprland =
@@ -67,5 +67,8 @@ in {
     configPackages =
       [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   };
+  # GTX 1080 (Pascal) dropped from stable driver (595.x+); requires legacy_580
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+
   system.stateVersion = "24.11"; # Did you read the comment? DO NOT CHANGE
 }

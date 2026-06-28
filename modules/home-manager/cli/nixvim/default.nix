@@ -25,6 +25,7 @@ in {
       enable = true;
       # Home-manager specific settings that aren't in standalone
       vimdiffAlias = true; # this could cause problems
+      nixpkgs.source = inputs.nixpkgs;
     };
   };
 }

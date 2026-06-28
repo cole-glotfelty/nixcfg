@@ -70,7 +70,7 @@ in {
     home.packages = with pkgs; [
       pavucontrol
       networkmanagerapplet
-      swww
+      awww
       hyprpicker
       playerctl
     ];
@@ -120,6 +120,8 @@ in {
 
     wayland.windowManager.hyprland = {
       enable = true;
+      # TODO: Change to "lua" once it becomes more established
+      configType = "hyprlang";
       # systemd.enable = false;
       xwayland.enable = true;
       package = null;
@@ -145,10 +147,10 @@ in {
 
         ## AUTOSTART ##
         exec-once = [
-          "swww-daemon &"
-          "swww img ${../../../users/common/mountain_oblisk.jpg} &"
+          "awww-daemon &"
           "waybar &"
-          "sleep 2 && mullvad-vpn &"
+          "sleep 0.5 && mullvad-vpn &"
+          "awww img ${../../../users/common/mountain_oblisk.jpg} &"
           "fcitx5 &"
           "hypridle &"
         ];
