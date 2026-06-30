@@ -20,7 +20,7 @@ in {
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "America/Chicago";
   services.timesyncd.enable = true;
 
   # Select internationalisation properties.
