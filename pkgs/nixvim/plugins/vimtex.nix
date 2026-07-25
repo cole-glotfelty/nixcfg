@@ -10,7 +10,7 @@
 # <leader> li : view system commands executing compiler
 # <leader> lo : inspect compiler output
 
-{ ... }:
+{ pkgs, ... }:
 
 {
   plugins.vimtex = {
@@ -18,8 +18,8 @@
     settings = {
       compiler_method = "latexmk";
       latexmk_engines = { _ = "pdflatex"; };
-      view_method = "zathura";
-      viewer_options = [ "-sync" "-unique" ];
+      view_method = if pkgs.stdenv.isDarwin then "skim" else "zathura";
+      viewer_options = if pkgs.stdenv.isDarwin then [] else [ "-sync" "-unique" ];
     };
   };
 }

@@ -7,7 +7,7 @@ in {
     Homebrew Cask applications for macOS GUI apps.
 
     Included apps:
-    - Media: Audacity, OBS, Blender, GIMP, XLD, MakeMKV, MPV
+    - Media: Audacity, OBS, Blender, GIMP, XLD, MakeMKV
     - Productivity: DrawIO, Numi, Picard
     - Communication: Signal, Telegram
     - Utilities: Mullvad VPN, Transmission, Tor Browser
@@ -25,7 +25,6 @@ in {
         "blender"
         "drawio"
         "makemkv"
-        "mpv"
         "mullvad-vpn"
         "museeks"
         "musicbrainz-picard"

@@ -39,7 +39,8 @@ in {
 
     # Use Homebrew cask on macOS due to nixpkgs build issues
     programs.mpv = {
-      enable = pkgs.stdenv.isLinux;
+      # enable = pkgs.stdenv.isLinux;
+      enable = true;
       config = {
         # Hardware acceleration
         hwdec = "auto";
