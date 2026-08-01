@@ -43,6 +43,7 @@ in
         extraEnv = {
           GAMEMODERUN = "1";
         };
+        extraPkgs = pkgs: with pkgs; [ mono ];
       };
     };
 
