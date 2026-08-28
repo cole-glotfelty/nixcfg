@@ -15,6 +15,7 @@
     ./abcde.nix
     ./nixvim
     ./sops.nix
+    ./rclone.nix
   ];
 
   # NOTE: You may have to change some of these in the future

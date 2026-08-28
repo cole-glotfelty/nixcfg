@@ -38,9 +38,20 @@ in {
     hardware.nvidia = {
 		open = mkDefault false;
 		modesetting.enable = mkDefault true;
-		powerManagement.enable = mkDefault false;
+		# Saves/restores VRAM across S3/hibernate via nvidia-{suspend,resume,hibernate}.service
+		# and NVreg_PreserveVideoMemoryAllocations=1. Without it the GPU channels are
+		# invalid on resume (Xid 13), killing Hyprland and hyprlock.
+		powerManagement.enable = mkDefault true;
 		nvidiaSettings = mkDefault true;
 		package = mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
 	};
+
+    # Required for NVIDIA on Wayland (Hyprland/XWayland) and Wayland-native GLFW apps
+    environment.sessionVariables = mkDefault {
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      GBM_BACKEND = "nvidia-drm";
+      LIBVA_DRIVER_NAME = "nvidia";
+      GLFW_PLATFORM = "wayland";
+    };
   };
 }

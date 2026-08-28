@@ -27,6 +27,7 @@
       devenv.enable = lib.mkDefault true;
       abcde.enable = lib.mkDefault true;
       sops.enable = lib.mkDefault false;
+      rclone.enable = lib.mkDefault true;
     };
 
     desktop = {

@@ -42,7 +42,8 @@ in {
     };
 
     # Display Manager
-    services.displayManager.ly.enable = true;
+    services.displayManager.ly.enable = false;
+    features.wm.tuigreet.enable = true;
 
     # Setup Polkit
     environment.systemPackages = with pkgs; [ hyprpolkitagent ];

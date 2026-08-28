@@ -297,7 +297,7 @@ in {
       # NOTE: This is specific to hyprland. also, this will need to be tested
       loginExtra = ''
         if [[ $(tty) == "/dev/tty1" ]]; then
-          exec Hyprland &> /dev/null
+          exec start-hyprland &> /dev/null
         fi
 
         # if uwsm check may-start; then
