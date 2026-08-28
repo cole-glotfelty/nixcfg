@@ -16,6 +16,7 @@
     ./nixvim
     ./sops.nix
     ./claude-code.nix
+    ./rclone.nix
   ];
 
   # NOTE: You may have to change some of these in the future

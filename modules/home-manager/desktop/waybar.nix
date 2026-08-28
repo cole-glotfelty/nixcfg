@@ -221,6 +221,10 @@ in
 
     programs.waybar = {
       enable = true;
+      # Let systemd own a single waybar instance, started with graphical-session.target
+      # (Hyprland activates this via systemd.variables = ["--all"]). Prevents the
+      # duplicate instances that arise from launching waybar manually per-monitor.
+      systemd.enable = true;
       settings = mkDefault {
         mainBar = {
           height = 30;
