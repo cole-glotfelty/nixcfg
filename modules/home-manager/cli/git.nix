@@ -1,7 +1,10 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-let cfg = config.features.cli.git;
+let
+  cfg = config.features.cli.git;
+  # Tokyo Night Storm palette (same convention as tmux.nix).
+  c = config.features.style.colors.palette.dark;
 in {
   options.features.cli.git = {
     enable = mkEnableOption (lib.mdDoc ''
@@ -46,6 +49,41 @@ in {
     ];
 
     home.packages = with pkgs; [ gh ];
+
+    # Delta pager: syntax-highlighted diffs with a Tokyo Night Storm theme.
+    # `navigate` enables n/N to jump between files. Top-level programs.delta
+    # (not programs.git.delta) is the current home-manager option.
+    programs.delta = {
+      enable = true;
+      enableGitIntegration = true;
+      options = {
+        syntax-theme = "ansi";
+        dark = true;
+        keep-plus-minus-markers = true;
+        navigate = true;
+        line-numbers = true;
+        line-numbers-left-format = "";
+        line-numbers-right-format = "{np:>5}";
+        line-numbers-left-style = "#${c.fgDark}";
+        line-numbers-right-style = "#${c.fgDark}";
+        line-numbers-zero-style = "#${c.fgDark}";
+        line-numbers-plus-style = "#${c.fgDark} #365846";
+        line-numbers-minus-style = "#${c.fgDark} #603844";
+        plus-style = "#b9e987 #365846";
+        plus-non-emph-style = "#b9e987 #365846";
+        plus-emph-style = "bold #d0f5a4 #48735a";
+        minus-style = "#ff899d #603844";
+        minus-non-emph-style = "#ff899d #603844";
+        minus-emph-style = "bold #ffb0bd #7a4655";
+        file-modified-label = "modified:";
+        file-style = "bold #${c.fg} #3d59a1";
+        file-decoration-style = "#${c.blue} box";
+        hunk-header-style = "file line-number syntax #343a52";
+        hunk-header-file-style = "bold #${c.blue}";
+        hunk-header-line-number-style = "bold #${c.magenta}";
+        hunk-header-decoration-style = "#${c.comment} box";
+      };
+    };
 
     programs.git = {
       enable = true;

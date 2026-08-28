@@ -292,6 +292,12 @@ in {
         la = "${pkgs.eza}/bin/eza -la --icons";
         tree = "${pkgs.eza}/bin/eza -T --icons";
         cat = "${pkgs.bat}/bin/bat";
+
+        # AI CLIs: cx = codex; c{s,o,h} = claude with teammate-mode on a model.
+        cx = "codex";
+        cs = "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --teammate-mode auto --model sonnet --permission-mode auto";
+        co = "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --teammate-mode auto --model opus --permission-mode auto";
+        ch = "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --teammate-mode auto --model haiku --permission-mode auto";
       };
 
       # NOTE: This is specific to hyprland. also, this will need to be tested
