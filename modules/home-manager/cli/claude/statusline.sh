@@ -80,15 +80,73 @@ if [ -n "$used_pct" ]; then
   ctx_seg="${bar_color}${bar} ${used_int}%${RESET}"
 fi
 
-# --- working dir / git repo + diff +/- -------------------------------------
+# --- 5h rate limit dot ---------------------------------------------------
+# True-color (24-bit) gradient through the Tokyo Night Storm accent stops
+# (green -> yellow -> orange -> red, see style/colors.nix palette.dark),
+# instead of a hard 3-stop threshold. Relies on COLORTERM=truecolor.
+gradient_color() {
+  awk -v p="$1" 'BEGIN {
+    t = p / 100
+    if (t < 0) t = 0
+    if (t > 1) t = 1
+    split("158 206 106", c0) # #9ece6a green
+    split("224 175 104", c1) # #e0af68 yellow
+    split("255 158 100", c2) # #ff9e64 orange
+    split("247 118 142", c3) # #f7768e red
+    if (t < 1/3) { st = t / (1/3); for (i = 1; i <= 3; i++) o[i] = c0[i] + (c1[i] - c0[i]) * st }
+    else if (t < 2/3) { st = (t - 1/3) / (1/3); for (i = 1; i <= 3; i++) o[i] = c1[i] + (c2[i] - c1[i]) * st }
+    else { st = (t - 2/3) / (1/3); for (i = 1; i <= 3; i++) o[i] = c2[i] + (c3[i] - c2[i]) * st }
+    printf "\033[38;2;%d;%d;%dm", o[1], o[2], o[3]
+  }'
+}
+five_h_pct="$(get '.rate_limits.five_hour.used_percentage // empty')"
+usage_seg=""
+[ -n "$five_h_pct" ] && usage_seg="$(gradient_color "$five_h_pct")⏺${RESET}"
+
+# --- working dir / git repo + branch status + diff +/- ----------------------
 dir="$(get '.workspace.current_dir // .cwd // empty')"
 dir_seg=""
+branch_status_seg=""
 git_seg=""
 if [ -n "$dir" ]; then
   if git -C "$dir" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     repo="$(basename "$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null)")"
     branch="$(git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null)"
     dir_seg="${BLUE}${repo}${RESET}${GRAY}/${RESET}${YELLOW}${branch}${RESET}"
+
+    # Branch status flags, mirroring the starship prompt's git_status symbols:
+    # conflicted= stashed=$ deleted=x renamed=r modified=! staged=+ untracked=?
+    # plus ahead=> behind=< diverged=<>. Empty (no segment) when up to date.
+    ahead=0; behind=0
+    conflicted=""; stashed=""; deleted=""; renamed=""
+    modified=""; staged=""; untracked=""
+    while IFS= read -r porcelain_line; do
+      case "$porcelain_line" in
+        "# branch.ab "*)
+          set -- $porcelain_line
+          ahead="${3#+}"; behind="${4#-}"
+          ;;
+        "# stash "*) stashed="\$" ;;
+        "1 "*|"2 "*)
+          xy="${porcelain_line:2:2}"
+          [ "${xy:0:1}" != "." ] && staged="+"
+          [ "${xy:1:1}" != "." ] && modified="!"
+          case "$xy" in *D*) deleted="x" ;; esac
+          [ "${porcelain_line:0:1}" = "2" ] && renamed="r"
+          ;;
+        "u "*) conflicted="=" ;;
+        "? "*) untracked="?" ;;
+      esac
+    done <<EOF
+$(git -C "$dir" --no-optional-locks status --porcelain=v2 --branch --show-stash 2>/dev/null)
+EOF
+    ahead_behind=""
+    if [ "$ahead" -gt 0 ] && [ "$behind" -gt 0 ]; then ahead_behind="<>"
+    elif [ "$ahead" -gt 0 ]; then ahead_behind=">"
+    elif [ "$behind" -gt 0 ]; then ahead_behind="<"
+    fi
+    flags="${conflicted}${stashed}${deleted}${renamed}${modified}${staged}${untracked}${ahead_behind}"
+    [ -n "$flags" ] && branch_status_seg="${BOLD}${RED}[${flags}]${RESET}"
 
     stats="$( { git -C "$dir" --no-optional-locks diff --numstat 2>/dev/null; git -C "$dir" --no-optional-locks diff --cached --numstat 2>/dev/null; } | awk '{a+=$1; d+=$2} END{printf "%d %d", a+0, d+0}')"
     added="${stats%% *}"
@@ -109,10 +167,12 @@ line=" "
 [ -n "$vim_seg" ] && line="${line}${vim_seg}${SEP}"
 if [ -n "$dir_seg" ]; then
   line="${line}${dir_seg}"
+  [ -n "$branch_status_seg" ] && line="${line} ${branch_status_seg}"
   [ -n "$git_seg" ] && line="${line} ${git_seg}"
   line="${line}${SEP}"
 fi
 line="${line}${model_seg}"
+[ -n "$usage_seg" ] && line="${line} ${usage_seg}"
 [ -n "$effort_seg" ] && line="${line}${SEP}${effort_seg}"
 [ -n "$icons" ] && line="${line} ${icons}"
 [ -n "$ctx_seg" ] && line="${line}${SEP}${ctx_seg}"

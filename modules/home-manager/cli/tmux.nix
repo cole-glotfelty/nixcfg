@@ -99,8 +99,8 @@ in {
         set -g status-style "bg=#${c.bgDark},fg=#${c.fg}"
         set -g status-left-length 40
         set -g status-right-length 90
-        set -g status-left "#[fg=#${c.magenta},bold]  #S #[default]"
-        set -g status-right "#(${continuumSave})${batterySeg}#[fg=#${c.cyan}] %H:%M #[fg=#${c.comment}]%d-%b #[default]"
+        set -g status-left "#[fg=#${c.magenta},bold]  #S #[default]"
+        set -g status-right "#(${continuumSave})${batterySeg}#[fg=#${c.cyan}]  %H:%M #[fg=#${c.comment}]%d-%b #[default]"
 
         # Claude-window naming + per-command Nerd Font icons in the window tabs.
         # Red block = Claude Code is awaiting input (set by the claude-code

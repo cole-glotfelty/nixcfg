@@ -32,6 +32,7 @@ let
     };
 
     outputStyle = "Concise";
+    tui = "fullscreen";
     advisorModel = "opus";
     skipWorkflowUsageWarning = true;
     theme = "dark";
