@@ -18,6 +18,7 @@
       fzf.enable = lib.mkDefault true;
       zoxide.enable = lib.mkDefault true;
       tmux.enable = lib.mkDefault true;
+      claude-code.enable = lib.mkDefault true;
       latex.enable = lib.mkDefault true;
       vim.enable = lib.mkDefault false;
       nixvim.enable = lib.mkDefault true;
@@ -27,7 +28,6 @@
       devenv.enable = lib.mkDefault true;
       abcde.enable = lib.mkDefault true;
       sops.enable = lib.mkDefault false;
-      rclone.enable = lib.mkDefault true;
     };
 
     desktop = {

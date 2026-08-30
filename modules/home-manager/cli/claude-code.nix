@@ -63,7 +63,9 @@ in {
       jsonFormat.generate "claude-settings.json" settings;
 
     home.file.".claude/statusline.sh" = {
-      source = ./claude/statusline.sh;
+      source = pkgs.replaceVars ./claude/statusline.sh {
+        jq = "${pkgs.jq}/bin/jq";
+      };
       executable = true;
     };
   };

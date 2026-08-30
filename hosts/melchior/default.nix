@@ -40,6 +40,11 @@ rec {
       mullvad-vpn.enable = true;
       steam.enable = true;
       nixd.enable = true;
+      tailscale.enable = true;
+      rclone-webdav = {
+        enable = true;
+        path = "/home/pharo/Documents/Obsidian/Mother Vault";
+      };
     };
 
     wm = {

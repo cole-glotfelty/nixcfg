@@ -22,7 +22,7 @@ BBLUE=$'\033[94m'
 ORANGE=$'\033[38;5;208m'
 SEP="${GRAY} │ ${RESET}"
 
-get() { printf '%s' "$input" | jq -r "$1" 2>/dev/null; }
+get() { printf '%s' "$input" | @jq@ -r "$1" 2>/dev/null; }
 
 # --- vim mode -----------------------------------------------------------
 vim_mode="$(get '.vim.mode // empty')"
