@@ -26,7 +26,13 @@ rec {
       opengl.enable = true;
       udisks2.enable = true;
       printing.enable = true;
-      nvidia.enable = true;
+      nvidia = {
+        enable = true;
+        # GTX 1080 (Pascal). Needed for pkgs.ollama-cuda to actually build
+        # GPU-targeted code for this card instead of silently falling back
+        # to CPU-only inference.
+        cudaCapabilities = [ "6.1" ];
+      };
     };
 
     security = {
@@ -41,9 +47,10 @@ rec {
       steam.enable = true;
       nixd.enable = true;
       tailscale.enable = true;
+      ollama.enable = true;
       rclone-webdav = {
         enable = true;
-        path = "/home/pharo/Documents/Obsidian/Mother Vault";
+        path = "/home/pharo/Documents/Obsidian";
       };
     };
 

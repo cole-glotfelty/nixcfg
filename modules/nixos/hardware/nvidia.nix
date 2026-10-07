@@ -18,6 +18,26 @@ in {
       Dependencies: NVIDIA GPU hardware
       Note: Linux only - has no effect on macOS
     '');
+
+    cudaCapabilities = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      example = [ "6.1" ];
+      description = lib.mdDoc ''
+        CUDA compute capability of this GPU (e.g. "6.1" for Pascal/GTX 10-series).
+
+        nixpkgs' default CUDA build only targets Turing and newer
+        (compute capability >= 7.5); `pkgs.ollama-cuda` silently falls
+        back to CPU-only inference on older cards unless a consumer
+        (e.g. features.apps.ollama) rebuilds it for this capability,
+        since its compiled binaries don't include the older architecture
+        at all. Not applied globally (setting `nixpkgs.config.cudaCapabilities`
+        directly breaks CUDA packages such as cuDNN that don't support
+        pre-Turing architectures at all).
+
+        Find your card's value at https://developer.nvidia.com/cuda-gpus.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
