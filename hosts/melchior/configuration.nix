@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ inputs, pkgs, config, ... }:
+{ inputs, pkgs, lib, config, ... }:
 
 let
   # pkgs-hyprland =
@@ -67,8 +67,22 @@ in {
     configPackages =
       [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   };
-  # GTX 1080 (Pascal) dropped from stable driver (595.x+); requires legacy_580
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+  # zenKernel (7.2.9) outpaced the pinned nixpkgs' legacy_580 build
+  # (580.173.02, still needed since Pascal was dropped from the stable
+  # driver at 595.x+): NVIDIA's own os-interface.c called the kernel's
+  # strncpy(), which 7.2.9 removed. nixpkgs-unstable already carries
+  # NVIDIA's 580.178.04, which fixed this upstream (switched to
+  # strscpy()) against the identical 7.2.9 kernel, so pull both the
+  # kernel and the matching driver from that scope to keep them
+  # ABI-matched instead of patching the driver source ourselves.
+  #
+  # TODO: revert both lines back to the plain `pkgs.linuxPackages_zen` /
+  # `config.boot.kernelPackages.nvidiaPackages.legacy_580` once a future
+  # `nix flake update` brings the pinned (stable) nixpkgs' legacy_580 up
+  # to >= 580.178.04 (or nixpkgs otherwise patches this).
+  boot.kernelPackages = lib.mkForce pkgs.unstable.linuxPackages_zen;
+  hardware.nvidia.package =
+    pkgs.unstable.linuxPackages_zen.nvidiaPackages.legacy_580;
 
   system.stateVersion = "24.11"; # Did you read the comment? DO NOT CHANGE
 }
