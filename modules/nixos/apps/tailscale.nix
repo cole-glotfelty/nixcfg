@@ -22,5 +22,21 @@ in {
     services.tailscale.enable = true;
     networking.firewall.trustedInterfaces = [ "tailscale0" ];
     networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+
+    # Mullvad's kill switch blocks all traffic outside its own tunnel,
+    # and its "local network sharing" allowlist doesn't cover Tailscale's
+    # CGNAT range (100.64.0.0/10) so it can't be allowlisted that way.
+    # The GUI's split tunneling view only launches desktop apps through
+    # mullvad-exclude, which doesn't help a systemd service started at
+    # boot. Launch tailscaled through mullvad-exclude directly instead,
+    # via a drop-in that clears and replaces its packaged ExecStart.
+    systemd.services.tailscaled = mkIf config.features.apps.mullvad-vpn.enable {
+      after = [ "mullvad-daemon.service" ];
+      wants = [ "mullvad-daemon.service" ];
+      serviceConfig.ExecStart = [
+        ""
+        "${config.security.wrapperDir}/mullvad-exclude ${config.services.tailscale.package}/bin/tailscaled --state=/var/lib/tailscale/tailscaled.state --socket=/run/tailscale/tailscaled.sock --port=\${PORT} $FLAGS"
+      ];
+    };
   };
 }
