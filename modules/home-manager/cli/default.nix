@@ -54,7 +54,7 @@
     pandoc
     imagemagick
     hugo
-    claude-code
+    unstable.claude-code
     gemini-cli
   ];
 }
