@@ -19,6 +19,8 @@ in
       - Bottles: Wine prefix manager
       - Modrinth: Modded Minecraft Launcher
       - Prism Launcher: FOSS Minecraft Launcher
+      - CKAN: Kerbal Space Program mod manager
+      - Heroic: Epic/GOG/Amazon games launcher
 
       Note: For Steam, use features.apps.steam (system-level)
     ''
@@ -29,6 +31,8 @@ in
       bottles
       modrinth-app
       prismlauncher
+      ckan
+      heroic
     ];
   };
 }
